@@ -14,21 +14,21 @@
     if ($payload) {
         $email = $payload['email'];
         //verify student
-        // if($db->query("SELECT id FROM `students` WHERE `email` = '$email'")->fetch_assoc()) {
-        //     setcookie('student_login_key', $id_token, time() + (86400 * 30 * 3), "/");
-        //     setcookie('admin_login_key', '', time() - 3600, '/');
-        //     $db->query("UPDATE `students` SET `login_key` = '$id_token' WHERE `email` = '$email'");
-        //     echo 'successful student';
-        // } elseif ($db->query("SELECT id FROM `admin` WHERE `email` = '$email'")->fetch_assoc()) {
-        //     setcookie('admin_login_key', $id_token, time() + (86400 * 30 * 3), "/");
-        //     setcookie('student_login_key', '', time() - 3600, '/');
-        //     $db->query("UPDATE `admin` SET `login_key` = '$id_token' WHERE `email` = '$email'");
-        //     echo 'successful admin';
-        // } else {
-        //     echo 'invalid';
-        // }
+        if($db->query("SELECT id FROM `students` WHERE `email` = '$email'")->num_rows()) {
+            setcookie('student_login_key', $id_token, time() + (86400 * 30 * 3), "/");
+            setcookie('admin_login_key', '', time() - 3600, '/');
+            $db->query("UPDATE `students` SET `login_key` = '$id_token' WHERE `email` = '$email'");
+            echo '2';
+        } elseif ($db->query("SELECT id FROM `admin` WHERE `email` = '$email'")->num_rows()) {
+            setcookie('admin_login_key', $id_token, time() + (86400 * 30 * 3), "/");
+            setcookie('student_login_key', '', time() - 3600, '/');
+            $db->query("UPDATE `admin` SET `login_key` = '$id_token' WHERE `email` = '$email'");
+            echo '1';
+        } else {
+            echo '0';
+        }
     } else {
-        echo 'invalid';
+        echo '0';
     }
 
 ?>
