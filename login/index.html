@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>PSCS Stickering Login</title>
+
+    <link href='../assets/css/style.css' rel='stylesheet' type='text/css'>
+
+    <link href='../assets/media/favicon.ico' type='image/x-icon' rel='shortcut icon'>
+
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script>
+        function init() {
+            if (window.location.href.split('?')[1] == 'inv') {
+                alert('Invalid user, please use your PSCS account.')
+            }
+        }
+        window.onload = init;
+    </script>
+    <meta name="google-signin-client_id" content="570971308489-6sthc174hdunccki2cqa7rrtj2hsgth7.apps.googleusercontent.com">
+</head>
+
+<body>
+    <p>
+        <div class="g-signin2" style='display: inline-block;' data-onsuccess="onSignIn"></div>
+        <br>to PSCS Stickering
+    </p>
+
+    <script>
+        function onSignIn(googleUser) {
+
+            var id_token = googleUser.getAuthResponse().id_token;
+            
+
+        }
+    </script>
+</body>
+
+</html>
