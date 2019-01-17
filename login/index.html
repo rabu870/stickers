@@ -5,6 +5,7 @@
     <title>PSCS Stickering Login</title>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <meta name="google-signin-client_id" content="570971308489-6sthc174hdunccki2cqa7rrtj2hsgth7.apps.googleusercontent.com">
+    <link href='../assets/scripts/libraries/axios.min.js'>
 </head>
 
 <body>
@@ -16,6 +17,11 @@
     <script>
         function onSignIn(googleUser) {
             var id_token = googleUser.getAuthResponse().id_token;
+            axios.post('./authenticate.php', {
+                idtoken: id_token
+            }).then(function(response) {
+
+            });
         }
     </script>
 </body>
