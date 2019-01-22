@@ -15,12 +15,24 @@
     </p>
 
     <script>
+        function signOut() {
+
+        }
+
         function onSignIn(googleUser) {
             var id_token = googleUser.getAuthResponse().id_token;
             axios.post('./authenticate.php', {
                 idtoken: id_token
             }).then(function(response) {
-
+                if(response.data == '1') {
+                    window.location.href = '../admin.php';
+                } else if (response.data == '2') {
+                    window.location.href = '../';
+                } else if (response.data == '3') {
+                    alert('It seems you\'re not in our database. Please try a different email.');
+                } else {
+                    alert('Google doesn\t think you\'re legitimate. Please try again.');
+                }
             });
         }
     </script>
