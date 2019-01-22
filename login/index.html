@@ -5,7 +5,7 @@
     <title>PSCS Stickering Login</title>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <meta name="google-signin-client_id" content="570971308489-6sthc174hdunccki2cqa7rrtj2hsgth7.apps.googleusercontent.com">
-    <link href='../assets/scripts/libraries/axios.min.js'>
+    <script src='../assets/scripts/libraries/axios.min.js'></script>
 </head>
 
 <body>
@@ -15,23 +15,27 @@
     </p>
 
     <script>
-        function signOut() {
-
-        }
 
         function onSignIn(googleUser) {
             var id_token = googleUser.getAuthResponse().id_token;
-            axios.post('./authenticate.php', {
-                idtoken: id_token
-            }).then(function(response) {
+            axios.get('./authenticate.php?idtoken=' + id_token)
+            .then(function(response) {
                 if(response.data == '1') {
                     window.location.href = '../admin.php';
                 } else if (response.data == '2') {
                     window.location.href = '../';
                 } else if (response.data == '3') {
-                    alert('It seems you\'re not in our database. Please try a different email.');
+                    var auth2 = gapi.auth2.getAuthInstance();
+                    auth2.signOut().then(function () {
+                        alert('It seems you\'re not in our database. Please try a different email.');
+                        window.location.href = window.location.href;
+                    });
                 } else {
-                    alert('Google doesn\t think you\'re legitimate. Please try again.');
+                    var auth2 = gapi.auth2.getAuthInstance();
+                    auth2.signOut().then(function () {
+                        alert('Google doesn\t think you\'re legitimate. Please try again.');
+                        window.location.href = window.location.href;
+                    });
                 }
             });
         }
