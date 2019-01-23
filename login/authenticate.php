@@ -5,7 +5,7 @@
 
     $id_token = $_GET['idtoken'];
 
-    $client = new Google_Client(['client_id' => '570971308489-6sthc174hdunccki2cqa7rrtj2hsgth7.apps.googleusercontent.com']);
+    $client = new Google_Client(['client_id' => '570971308489-6golgnijuhqlvon7s2av7getpv2j4h4d.apps.googleusercontent.com']);
     $guzzleClient = new \GuzzleHttp\Client(array( 'curl' => array( CURLOPT_SSL_VERIFYPEER => false, ), ));
     $client->setHttpClient($guzzleClient);
 

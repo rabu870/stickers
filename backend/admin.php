@@ -1,6 +1,6 @@
 <?php
     //require_once 'verify.php';
-    require_once 'connection.php';
+    require_once './connection.php';
 
     if($_GET['func'] == 'load') {
         $result = $db->query('SELECT id, first_name, last_name, email, grad_year FROM students');
