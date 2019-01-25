@@ -10,7 +10,7 @@ if($db->query("SELECT id FROM `students` WHERE `login_key` = '$key'")->num_rows)
 } else {
     $access = 0;
 }
-if($_GET['client']) {
+if(!empty($_GET['client'])) {
     echo $access;
 }
 ?>
