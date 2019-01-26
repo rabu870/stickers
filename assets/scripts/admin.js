@@ -14,11 +14,11 @@ Vue.component('student-table', {
                 <td><input type="text" v-model="student.lastName" @focus='check' /></td>
                 <td><input type="email" v-model="student.email" @focus='check' /></td>
                 <td><input type="number" min="2018" max="2099" step="1" value="2019" v-model="student.gradYear" @focus='check' /></td>
-                <td><button class='btn btn-error s-circle' @click='deletestudent(index)' @focus='check'><i class='icon icon-delete'></i></button></td>
+                <td><button class='btn btn-error btn-action' @click='deletestudent(index)' @focus='check'><i class='icon icon-delete'></i></button></td>
             </tr>
         </table>
         <div class='buttons'>
-            <button class='btn btn-primary s-circle' @click='addStudent'><i class='icon icon-plus'></i></button>
+            <button class='btn btn-primary btn-action' @click='addStudent'><i class='icon icon-plus'></i></button>
             <button class='btn btn-primary save-changes-button' @click='save'>Save changes</button>
         </div>
     </div>`,
