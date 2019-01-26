@@ -12,8 +12,8 @@ Vue.component('student-table', {
             <tr v-for="(student,index) in $root.students">
                 <td><input type="text" v-model="student.firstName" /></td>
                 <td><input type="text" v-model="student.lastName" /></td>
-                <td><input type="text" v-model="student.email" /></td>
-                <td><input type="text" v-model="student.gradYear" /></td>
+                <td><input type="email" v-model="student.email" /></td>
+                <td><input type="number" min="2018" max="2099" step="1" value="2019" v-model="student.gradYear" /></td>
                 <td><button class='btn btn-error s-circle' @click='deletestudent(index)'><i class='icon icon-delete'></i></button></td>
             </tr>
         </table>
@@ -33,8 +33,8 @@ Vue.component('student-table', {
 						'<div class="form-group">' +
 						'<input class="form-input" type="text" id="add-fname" placeholder="First name"><br>' +
 						'<input class="form-input" type="text" id="add-lname" placeholder="Last name"><br>' +
-						'<input class="form-input" type="text" id="add-email" placeholder="Email"><br>' +
-						'<input class="form-input" type="text" id="add-gradyear" placeholder="Graduation year">' +
+						'<input class="form-input" type="email" id="add-email" placeholder="Email"><br>' +
+						'<input class="form-input" type="number" min="2018" max="2099" step="1" value="2019" id="add-gradyear" placeholder="Graduation year">' +
 						'</div>',
 					focusConfirm: false,
 					showCloseButton: false,

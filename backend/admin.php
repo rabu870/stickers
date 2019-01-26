@@ -10,7 +10,7 @@
             $db->query("DELETE FROM `students` WHERE true");
             foreach($students as $student){
                 if($student['id']){
-                    if($student['loginKey']){
+                    if($student['loginKey'] || !$student['loginKey'] == ''){
                         $key = mysqli_real_escape_string($db,$student['loginKey']);
                     }else{
                         $key = 0;
