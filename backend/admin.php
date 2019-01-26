@@ -15,12 +15,10 @@
                     }else{
                         $key = 0;
                     }
-                    $query = "INSERT INTO `students`(`id`, `first_name`, `last_name`, `email`, `grad_year`, `login_key`) VALUES (".mysqli_real_escape_string($db,$student['id']).",\"".mysqli_real_escape_string($db,$student['firstName'])."\",\"".mysqli_real_escape_string($db,$student['lastName'])."\",\"".mysqli_real_escape_string($db,$student['email'])."\",".mysqli_real_escape_string($db,$student['gradYear']).",\"".$key."\")";
+                    $query = "INSERT INTO `students`(`id`, `first_name`, `last_name`, `email`, `grad_year`, `login_key`) VALUES (\"".mysqli_real_escape_string($db,$student['id'])."\",\"".mysqli_real_escape_string($db,$student['firstName'])."\",\"".mysqli_real_escape_string($db,$student['lastName'])."\",\"".mysqli_real_escape_string($db,$student['email'])."\",\"".mysqli_real_escape_string($db,$student['gradYear'])."\",\"".$key."\")";
                 }else{
                     $query = "INSERT INTO `students`(`first_name`, `last_name`, `email`, `grad_year`) VALUES (\"".mysqli_real_escape_string($db,$student['firstName'])."\",\"".mysqli_real_escape_string($db,$student['lastName'])."\",\"".mysqli_real_escape_string($db,$student['email'])."\",".mysqli_real_escape_string($db,$student['gradYear']).")";
                 }
-
-                print_r($query);
                 $db->query($query);
             }
         }
