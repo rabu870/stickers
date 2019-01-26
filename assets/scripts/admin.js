@@ -10,20 +10,21 @@ Vue.component('student-table', {
                 <th></th>
             </tr>
             <tr v-for="(student,index) in $root.students">
-                <td><input type="text" v-model="student.firstName" /></td>
-                <td><input type="text" v-model="student.lastName" /></td>
-                <td><input type="email" v-model="student.email" /></td>
-                <td><input type="number" min="2018" max="2099" step="1" value="2019" v-model="student.gradYear" /></td>
-                <td><button class='btn btn-error s-circle' @click='deletestudent(index)'><i class='icon icon-delete'></i></button></td>
+                <td><input type="text" v-model="student.firstName" @focus='check' /></td>
+                <td><input type="text" v-model="student.lastName" @focus='check' /></td>
+                <td><input type="email" v-model="student.email" @focus='check' /></td>
+                <td><input type="number" min="2018" max="2099" step="1" value="2019" v-model="student.gradYear" @focus='check' /></td>
+                <td><button class='btn btn-error s-circle' @click='deletestudent(index)' @focus='check'><i class='icon icon-delete'></i></button></td>
             </tr>
         </table>
         <div class='buttons'>
             <button class='btn btn-primary s-circle' @click='addStudent'><i class='icon icon-plus'></i></button>
-            <button class='btn btn-primary' @click='save'>Save changes</button>
+            <button class='btn btn-primary save-changes-button' @click='save'>Save changes</button>
         </div>
     </div>`,
 	methods: {
 		addStudent: function() {
+			$('.save-changes-button').html('Save changes');
 			var self = this;
 
 			(async function getFormValues() {
@@ -69,6 +70,7 @@ Vue.component('student-table', {
 			})();
 		},
 		save: function() {
+			$('.save-changes-button').addClass('loading');
 			var self = this;
 			axios
 				.get(
@@ -77,10 +79,15 @@ Vue.component('student-table', {
 				)
 				.then(function(response) {
 					self.$root.query();
+					$('.save-changes-button').removeClass('loading');
+					$('.save-changes-button').html('Changes saved!');
 				});
 		},
 		deletestudent: function(student) {
 			this.$root.students.splice(student, 1);
+		},
+		check: function() {
+			$('.save-changes-button').html('Save changes');
 		}
 	}
 });
