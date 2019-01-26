@@ -62,7 +62,8 @@ Vue.component('student-table', {
 						firstName: formValues[0],
 						lastName: formValues[1],
 						email: formValues[2],
-						gradYear: formValues[3]
+						gradYear: formValues[3],
+						loginKey: ''
 					});
 				}
 			})();
@@ -112,7 +113,8 @@ var vm = new Vue({
 						firstName: student.first_name,
 						lastName: student.last_name,
 						email: student.email,
-						gradYear: student.grad_year
+						gradYear: student.grad_year,
+						loginKey: student.login_key
 					});
 				});
 
