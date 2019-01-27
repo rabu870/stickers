@@ -10,10 +10,10 @@ Vue.component('student-table', {
                 <th></th>
             </tr>
             <tr v-for="(student,index) in $root.students">
-                <td><input type="text" v-model="student.firstName" @focus='check' /></td>
-                <td><input type="text" v-model="student.lastName" @focus='check' /></td>
-                <td><input type="email" v-model="student.email" @focus='check' /></td>
-                <td><input type="number" min="2018" max="2099" step="1" value="2019" v-model="student.gradYear" @focus='check' /></td>
+                <td><input type="text" class='form-input' v-model="student.firstName" @focus='check' /></td>
+                <td><input type="text" class='form-input' v-model="student.lastName" @focus='check' /></td>
+                <td><input type="email" class='form-input' v-model="student.email" @focus='check' /></td>
+                <td><input type="number" class='form-input' min="2018" max="2099" step="1" value="2019" v-model="student.gradYear" @focus='check' /></td>
                 <td><button class='btn btn-error btn-action' @click='deletestudent(index)' @focus='check'><i class='icon icon-delete'></i></button></td>
             </tr>
         </table>
