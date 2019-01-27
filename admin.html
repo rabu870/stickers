@@ -13,6 +13,7 @@
 		<script src="./assets/scripts/libraries/vue.js"></script>
 		<script src="./assets/scripts/libraries/moment.min.js"></script>
 		<script src="./assets/scripts/libraries/jquery.min.js"></script>
+		<script src="./assets/scripts/libraries/vue-tabs.js"></script>
 
 		<link
 			href="./assets/css/libraries/spectre.min.css"
@@ -28,7 +29,15 @@
 		<link href="./assets/css/admin.css" rel="stylesheet" type="text/css" />
 	</head>
 	<body>
-		<div id="admin-page"><student-table></student-table></div>
+		<div id="admin-page">
+			<vue-tabs>
+				<v-tab title="Students">
+					<student-table></student-table>
+				</v-tab>
+				<v-tab title="Admins">admin table</v-tab>
+				<v-tab title="Controls">controls</v-tab>
+			</vue-tabs>
+		</div>
 	</body>
 	<script src="./assets/scripts/admin.js"></script>
 </html>
