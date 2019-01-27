@@ -92,10 +92,100 @@ Vue.component('student-table', {
 	}
 });
 
+Vue.component('admin-table', {
+	template: `
+    <div>
+        <table class='admin-table table'>
+            <tr>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Email</th>
+                <th></th>
+            </tr>
+            <tr v-for="(admin,index) in $root.admins">
+                <td><input type="text" class='form-input' v-model="admin.firstName" @focus='check' /></td>
+                <td><input type="text" class='form-input' v-model="admin.lastName" @focus='check' /></td>
+                <td><input type="email" class='form-input' v-model="admin.email" @focus='check' /></td>
+                <td><button class='btn btn-error btn-action' @click='deleteadmin(index)' @focus='check'><i class='icon icon-delete'></i></button></td>
+            </tr>
+        </table>
+        <div class='buttons'>
+            <button class='btn btn-primary btn-action' @click='addAdmin'><i class='icon icon-plus'></i></button>
+            <button class='btn btn-primary a-save-changes-button' @click='save'>Save changes</button>
+        </div>
+    </div>`,
+	methods: {
+		addAdmin: function() {
+			$('.a-save-changes-button').html('Save changes');
+			var self = this;
+
+			(async function getFormValues() {
+				const { value: formValues } = await Swal.fire({
+					title: 'Add an admin',
+					html:
+						'<div class="form-group">' +
+						'<input class="form-input" type="text" id="a-add-fname" placeholder="First name"><br>' +
+						'<input class="form-input" type="text" id="a-add-lname" placeholder="Last name"><br>' +
+						'<input class="form-input" type="email" id="a-add-email" placeholder="Email"><br>' +
+						'</div>',
+					focusConfirm: false,
+					showCloseButton: false,
+					showCancelButton: true,
+					focusConfirm: false,
+					confirmButtonText: '<i class="icon icon-check"></i>',
+					confirmButtonAriaLabel: 'Add an admin',
+					confirmButtonColor: '#4b48d6',
+					cancelButtonText: '<i class="icon icon-cross"></i>',
+					cancelButtonAriaLabel: 'Cancel',
+					cancelButtonColor: '#aaa',
+					preConfirm: () => {
+						return [
+							$('#a-add-fname').val(),
+							$('#a-add-lname').val(),
+							$('#a-add-email').val()
+						];
+					}
+				});
+
+				if (formValues) {
+					self.$root.admins.push({
+						id: '',
+						firstName: formValues[0],
+						lastName: formValues[1],
+						email: formValues[2],
+						loginKey: ''
+					});
+				}
+			})();
+		},
+		save: function() {
+			$('.a-save-changes-button').addClass('loading');
+			var self = this;
+			axios
+				.get(
+					'./backend/admin.php?func=admins&admins=' +
+						JSON.stringify(self.$root.admins)
+				)
+				.then(function(response) {
+					self.$root.query();
+					$('.a-save-changes-button').removeClass('loading');
+					$('.a-save-changes-button').html('Changes saved!');
+				});
+		},
+		deleteadmin: function(admin) {
+			this.$root.admins.splice(admin, 1);
+		},
+		check: function() {
+			$('.a-save-changes-button').html('Save changes');
+		}
+	}
+});
+
 var vm = new Vue({
 	el: '#admin-page',
 	data: {
-		students: Array
+		students: Array,
+		admins: Array
 	},
 	methods: {
 		verify: function() {
@@ -114,7 +204,7 @@ var vm = new Vue({
 			axios.get('./backend/admin.php?func=load').then(function(response) {
 				//compile list of students
 				var studentList = [];
-				response.data.forEach(student => {
+				response.data[0].forEach(student => {
 					studentList.push({
 						id: student.id,
 						firstName: student.first_name,
@@ -126,6 +216,20 @@ var vm = new Vue({
 				});
 
 				self.students = studentList;
+
+				//compile list of admins
+				var adminList = [];
+				response.data[1].forEach(admin => {
+					adminList.push({
+						id: admin.id,
+						firstName: admin.first_name,
+						lastName: admin.last_name,
+						email: admin.email,
+						loginKey: admin.login_key
+					});
+				});
+
+				self.admins = adminList;
 			});
 		}
 	},

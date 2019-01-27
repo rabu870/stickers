@@ -3,8 +3,9 @@
     require_once './connection.php';
     if($access == 1) {
         if($_GET['func'] == 'load') {
-            $result = $db->query('SELECT * FROM students');
-            echo json_encode($result->fetch_all(MYSQLI_ASSOC), JSON_PRETTY_PRINT);
+            $s = $db->query('SELECT * FROM students')->fetch_all(MYSQLI_ASSOC);
+            $a = $db->query('SELECT * FROM `admin`')->fetch_all(MYSQLI_ASSOC);
+            echo "[" . json_encode($s, JSON_PRETTY_PRINT) . ", " . json_encode($a, JSON_PRETTY_PRINT) . "]";
         }elseif($_GET['func'] == 'students'){
             $students = json_decode($_GET['students'],$assoc = true);
             $db->query("DELETE FROM `students` WHERE true");
@@ -18,6 +19,22 @@
                     $query = "INSERT INTO `students`(`id`, `first_name`, `last_name`, `email`, `grad_year`, `login_key`) VALUES (\"".mysqli_real_escape_string($db,$student['id'])."\",\"".mysqli_real_escape_string($db,$student['firstName'])."\",\"".mysqli_real_escape_string($db,$student['lastName'])."\",\"".mysqli_real_escape_string($db,$student['email'])."\",\"".mysqli_real_escape_string($db,$student['gradYear'])."\",\"".$key."\")";
                 }else{
                     $query = "INSERT INTO `students`(`first_name`, `last_name`, `email`, `grad_year`) VALUES (\"".mysqli_real_escape_string($db,$student['firstName'])."\",\"".mysqli_real_escape_string($db,$student['lastName'])."\",\"".mysqli_real_escape_string($db,$student['email'])."\",".mysqli_real_escape_string($db,$student['gradYear']).")";
+                }
+                $db->query($query);
+            }
+        } elseif($_GET['func'] == 'admins'){
+            $admins = json_decode($_GET['admins'],$assoc = true);
+            $db->query("DELETE FROM `admin` WHERE true");
+            foreach($admins as $admin){
+                if($admin['id']){
+                    if($admin['loginKey'] || !$admin['loginKey'] == ''){
+                        $key = mysqli_real_escape_string($db,$admin['loginKey']);
+                    }else{
+                        $key = 0;
+                    }
+                    $query = "INSERT INTO `admin`(`id`, `first_name`, `last_name`, `email`, `login_key`) VALUES (\"".mysqli_real_escape_string($db,$admin['id'])."\",\"".mysqli_real_escape_string($db,$admin['firstName'])."\",\"".mysqli_real_escape_string($db,$admin['lastName'])."\",\"".mysqli_real_escape_string($db,$admin['email'])."\",\"".$key."\")";
+                }else{
+                    $query = "INSERT INTO `admin`(`first_name`, `last_name`, `email`) VALUES (\"".mysqli_real_escape_string($db,$admin['firstName'])."\",\"".mysqli_real_escape_string($db,$admin['lastName'])."\",\"".mysqli_real_escape_string($db,$admin['email'])."\")";
                 }
                 $db->query($query);
             }
