@@ -1,3 +1,54 @@
+Vue.component('meta-edit', {
+	template: `
+    <div>
+        <table class='student-table table'>
+            <tr>
+                <th>Stickering active</th>
+                <th>Black stickers allotted</th>
+                <th>Grey stickers allotted</th>
+                <th>Block greys allotted</th>
+                <th>Block blacks allotted</th>
+            </tr>
+            <tr>
+				<td>
+					<div class="form-group">
+						<label class="form-switch">
+						<input type="checkbox" class='form-input' v-model="$root.meta.stickeringActive" @focus='check'>
+							<i class="form-icon"></i>
+						</label>
+					</div>
+				</td>
+				<td><input type="number" class='form-input' :disabled='$root.meta.stickeringActive' v-model="$root.meta.blacksAllotted" @focus='check'></td>
+				<td><input type="number" class='form-input' :disabled='$root.meta.stickeringActive' v-model="$root.meta.greysAllotted" @focus='check'></td>
+				<td><input type="number" class='form-input' :disabled='$root.meta.stickeringActive' v-model="$root.meta.blacksAllottedBlock" @focus='check'></td>
+				<td><input type="number" class='form-input' :disabled='$root.meta.stickeringActive' v-model="$root.meta.greysAllottedBlock" @focus='check'></td>
+            </tr>
+        </table>
+		<div class='buttons'>
+            <button class='btn btn-primary save-changes-button' @click='save'>Save changes</button>
+        </div>
+    </div>`,
+	methods: {
+		save: function() {
+			$('.save-changes-button').addClass('loading');
+			var self = this;
+			axios
+				.get(
+					'./backend/admin.php?func=meta&meta=' +
+						JSON.stringify(self.$root.meta)
+				)
+				.then(function(response) {
+					self.$root.query();
+					$('.save-changes-button').removeClass('loading');
+					$('.save-changes-button').html('Changes saved!');
+				});
+		},
+		check: function() {
+			$('.save-changes-button').html('Save changes');
+		}
+	}
+});
+
 Vue.component('student-table', {
 	template: `
     <div>
@@ -185,7 +236,8 @@ var vm = new Vue({
 	el: '#admin-page',
 	data: {
 		students: Array,
-		admins: Array
+		admins: Array,
+		meta: Object
 	},
 	methods: {
 		verify: function() {
@@ -230,6 +282,21 @@ var vm = new Vue({
 				});
 
 				self.admins = adminList;
+
+				//meta
+
+				var metaList = {};
+				response.data[2].forEach(data => {
+					metaList = {
+						stickeringActive: data.stickering_active,
+						blacksAllotted: data.blacks_allotted,
+						greysAllotted: data.greys_allotted,
+						blacksAllottedBlock: data.blacks_allotted_block,
+						greysAllottedBlock: data.greys_allotted_block
+					};
+				});
+
+				self.meta = metaList;
 			});
 		}
 	},

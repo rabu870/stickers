@@ -5,7 +5,8 @@
         if($_GET['func'] == 'load') {
             $s = $db->query('SELECT * FROM students')->fetch_all(MYSQLI_ASSOC);
             $a = $db->query('SELECT * FROM `admin`')->fetch_all(MYSQLI_ASSOC);
-            echo "[" . json_encode($s, JSON_PRETTY_PRINT) . ", " . json_encode($a, JSON_PRETTY_PRINT) . "]";
+            $c = $db->query('SELECT * FROM `meta`')->fetch_all(MYSQLI_ASSOC);
+            echo "[" . json_encode($s, JSON_PRETTY_PRINT) . ", " . json_encode($a, JSON_PRETTY_PRINT) . ", " . json_encode($c, JSON_PRETTY_PRINT) . "]";
         }elseif($_GET['func'] == 'students'){
             $students = json_decode($_GET['students'],$assoc = true);
             $db->query("DELETE FROM `students` WHERE true");
@@ -38,6 +39,11 @@
                 }
                 $db->query($query);
             }
+        } elseif($_GET['func'] == 'meta') {
+            $meta = json_decode($_GET['meta'],$assoc = true);
+            $db->query("DELETE FROM `meta` WHERE true");
+            $query = "INSERT INTO `meta`(`stickering_active`, `blacks_allotted` , `greys_allotted` , `blacks_allotted_block` , `greys_allotted_block`) VALUES (\"".mysqli_real_escape_string($db,$meta['stickeringActive'])."\",\"".mysqli_real_escape_string($db,$meta['blacksAllotted'])."\" ,\"".mysqli_real_escape_string($db,$meta['greysAllotted'])."\" ,\"".mysqli_real_escape_string($db,$meta['blacksAllottedBlock'])."\" ,\"".mysqli_real_escape_string($db,$meta['greysAllottedBlock'])."\")";
+            $db->query($query);
         }
     } else {
         die();
