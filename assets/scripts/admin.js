@@ -32,6 +32,8 @@ Vue.component('meta-edit', {
 		save: function() {
 			$('.save-changes-button').addClass('loading');
 			var self = this;
+			self.$root.meta.stickeringActive =
+				self.$root.meta.stickeringActive == true ? '1' : '0';
 			axios
 				.get(
 					'./backend/admin.php?func=meta&meta=' +
@@ -288,7 +290,8 @@ var vm = new Vue({
 				var metaList = {};
 				response.data[2].forEach(data => {
 					metaList = {
-						stickeringActive: data.stickering_active,
+						stickeringActive:
+							data.stickering_active == '1' ? true : false,
 						blacksAllotted: data.blacks_allotted,
 						greysAllotted: data.greys_allotted,
 						blacksAllottedBlock: data.blacks_allotted_block,
