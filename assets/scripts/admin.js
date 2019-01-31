@@ -155,7 +155,7 @@ Vue.component('admin-table', {
                 <th>Email</th>
                 <th></th>
             </tr>
-            <tr v-for="(admin,index) in $root.admins">
+            <tr v-for="(admin,index) in $root.admin">
                 <td><input type="text" class='form-input' v-model="admin.firstName" @focus='check' /></td>
                 <td><input type="text" class='form-input' v-model="admin.lastName" @focus='check' /></td>
                 <td><input type="email" class='form-input' v-model="admin.email" @focus='check' /></td>
@@ -201,7 +201,7 @@ Vue.component('admin-table', {
 				});
 
 				if (formValues) {
-					self.$root.admins.push({
+					self.$root.admin.push({
 						id: '',
 						firstName: formValues[0],
 						lastName: formValues[1],
@@ -216,8 +216,8 @@ Vue.component('admin-table', {
 			var self = this;
 			axios
 				.get(
-					'./backend/admin.php?func=admins&admins=' +
-						JSON.stringify(self.$root.admins)
+					'./backend/admin.php?func=admin&admin=' +
+						JSON.stringify(self.$root.admin)
 				)
 				.then(function(response) {
 					self.$root.query();
@@ -226,7 +226,7 @@ Vue.component('admin-table', {
 				});
 		},
 		deleteadmin: function(admin) {
-			this.$root.admins.splice(admin, 1);
+			this.$root.admin.splice(admin, 1);
 		},
 		check: function() {
 			$('.a-save-changes-button').html('Save changes');
@@ -238,7 +238,7 @@ var vm = new Vue({
 	el: '#admin-page',
 	data: {
 		students: Array,
-		admins: Array,
+		admin: Array,
 		meta: Object
 	},
 	methods: {
@@ -271,7 +271,7 @@ var vm = new Vue({
 
 				self.students = studentList;
 
-				//compile list of admins
+				//compile list of admin
 				var adminList = [];
 				response.data[1].forEach(admin => {
 					adminList.push({
@@ -283,7 +283,7 @@ var vm = new Vue({
 					});
 				});
 
-				self.admins = adminList;
+				self.admin = adminList;
 
 				//meta
 
