@@ -47,6 +47,8 @@
                     }$db->query($query);
                     
                 }else die();
+            } else if($db->query("SELECT `stickering_active` FROM `meta` WHERE true")->fetch_row()[0] == "1") {
+                $db->query("DELETE FROM `classes` WHERE true;");
             }
             $db->query("DELETE FROM `meta` WHERE true");
             $query = "INSERT INTO `meta`(`stickering_active`, `blacks_allotted` , `greys_allotted` , `blacks_allotted_block` , `greys_allotted_block`) VALUES (".sqlize($meta['stickeringActive']).",".sqlize($meta['greysAllotted'])." ,".sqlize($meta['blacksAllotted'])." ,".sqlize($meta['blacksAllottedBlock'])." ,".sqlize($meta['greysAllottedBlock']).")";
