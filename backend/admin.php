@@ -46,7 +46,7 @@
                         }
                     }$db->query($query);
                     
-                }
+                }else die();
             }
             $db->query("DELETE FROM `meta` WHERE true");
             $query = "INSERT INTO `meta`(`stickering_active`, `blacks_allotted` , `greys_allotted` , `blacks_allotted_block` , `greys_allotted_block`) VALUES (".sqlize($meta['stickeringActive']).",".sqlize($meta['greysAllotted'])." ,".sqlize($meta['blacksAllotted'])." ,".sqlize($meta['blacksAllottedBlock'])." ,".sqlize($meta['greysAllottedBlock']).")";
