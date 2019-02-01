@@ -28,8 +28,28 @@
             }
         }elseif($_GET['func'] == 'meta') {
             $meta = json_decode($_GET['meta'],$assoc = true);
+            if($meta['stickeringActive'] == '1') {
+                $active = $db->query("SELECT `stickering_active` FROM `meta` WHERE true")->fetch_row();
+                if($active[0] == "0"){
+                    $db->query("DELETE FROM `classes` WHERE true;");
+                    $fac = "Michael Coffey";
+                    $mega = 0;
+                    $block = 0;
+                    $html = json_decode(json_encode(simplexml_load_file('https://classes.pscs.org/feed')), $assoc = true);
+                    $query = "INSERT into `classes` (`class_name`, `link`, `facilitator`, `is_mega`, `is_block`) VALUES (";
+                    foreach($html['channel']['item'] as $class){
+                        $query = $query.sqlize($class['title']).", ".sqlize($class['link']).", ".sqlize($fac).", ".sqlize($mega).", ".sqlize($block).")";
+                        if($class != $html['channel']['item'][count($html['channel']['item'])-1]){
+                            $query = $query.",(";
+                        }else{
+                            $query = $query.';';
+                        }
+                    }$db->query($query);
+                    
+                }
+            }
             $db->query("DELETE FROM `meta` WHERE true");
-            $query = "INSERT INTO `meta`(`stickering_active`, `blacks_allotted` , `greys_allotted` , `blacks_allotted_block` , `greys_allotted_block`) VALUES (\"".mysqli_real_escape_string($db,$meta['stickeringActive'])."\",\"".mysqli_real_escape_string($db,$meta['blacksAllotted'])."\" ,\"".mysqli_real_escape_string($db,$meta['greysAllotted'])."\" ,\"".mysqli_real_escape_string($db,$meta['blacksAllottedBlock'])."\" ,\"".mysqli_real_escape_string($db,$meta['greysAllottedBlock'])."\")";
+            $query = "INSERT INTO `meta`(`stickering_active`, `blacks_allotted` , `greys_allotted` , `blacks_allotted_block` , `greys_allotted_block`) VALUES (".sqlize($meta['stickeringActive']).",".sqlize($meta['greysAllotted'])." ,".sqlize($meta['blacksAllotted'])." ,".sqlize($meta['blacksAllottedBlock'])." ,".sqlize($meta['greysAllottedBlock']).")";
             $db->query($query);
         }
     } else {
