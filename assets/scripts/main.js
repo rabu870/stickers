@@ -26,12 +26,12 @@ var vm = new Vue({
                     var classList = [];
                     response.data[1].forEach(currentClass => {
                         classList.push({
-                            id: currentClass.id,
-                            className: currentClass.class_name,
-                            link: currentClass.link,
-                            facilitator: currentClass.facilitator,
-                            isMega: currentClass.is_mega,
-                            isBlock: currentClass.is_block
+                            id: currentClass[0],
+                            className: currentClass[1],
+                            link: currentClass[2],
+                            facilitator: currentClass[3],
+                            isMega: currentClass[4],
+                            isBlock: currentClass[5]
                         })
                     });
                     self.classes = classList;

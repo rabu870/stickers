@@ -14,8 +14,8 @@ if ($access == 2) {
             for ($i = 1; $i < 4; $i++) {
                 array_push($stickers, $db->query("SELECT `class_id` FROM `stickers` WHERE `student_id` = " . $id . " AND `priority` = " . $i . " AND `is_block` = true")->fetch_all());
             }
-            $classes = $db->query("SELECT * FROM `classes` WHERE true")->fetch_all(MYSQLI_ASSOC);
-            echo "[" . json_encode($stickers, JSON_PRETTY_PRINT) . ", " . json_encode($classes, JSON_PRETTY_PRINT) . ", " . json_encode($allotted, JSON_PRETTY_PRINT) . "]";
+            $classes = $db->query("SELECT * FROM `classes` WHERE true")->fetch_all();
+            echo "[" . json_encode(utf8ize($stickers), JSON_PRETTY_PRINT) . ", " . json_encode(utf8ize($classes), JSON_PRETTY_PRINT) . ", " . json_encode(utf8ize($allotted), JSON_PRETTY_PRINT) . "]";
         } elseif ($_GET['func'] == 'update') {
             $stickers = json_decode($_GET['stickers']);
             $allottedlist = array($allotted[0], $allotted[1], '', $allotted[2], $allotted[3], '');
