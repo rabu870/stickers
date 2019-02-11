@@ -1,6 +1,7 @@
 <?php
 require_once './verify.php';
 require_once './connection.php';
+require_once './functions.php';
 if ($access == 1) {
     if ($_GET['func'] == 'load') {
         $s = $db->query('SELECT * FROM students')->fetch_all(MYSQLI_ASSOC);
@@ -58,9 +59,4 @@ if ($access == 1) {
     }
 } else {
     die();
-}
-function sqlize($value)
-{
-    global $db;
-    return "\"" . mysqli_real_escape_string($db, $value) . "\"";
 }
