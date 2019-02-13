@@ -42,7 +42,24 @@
                     <div v-for="item in stickers[2]" :key="item.id">{{item.className}}</div>
                 </draggable>
             </v-tab>
-            <v-tab title="Block"></v-tab>
+            <v-tab title="Block">
+                <h2>All classes</h2>
+                <draggable v-model='notStickeredBlock' :options="{group:'block'}" style='min-height: 25px;'>
+                    <div v-for="item in notStickeredBlock" :key="item.id">{{item.className}}</div>
+                </draggable>
+                <h2>Black stickers</h2>
+                <draggable v-model='stickers[3]' :options="{group:'block'}" style='min-height: 25px;'>
+                    <div v-for="item in stickers[3]" :key="item.id">{{item.className}}</div>
+                </draggable>
+                <h2>Grey stickers</h2>
+                <draggable v-model='stickers[4]' :options="{group:'block'}" style='min-height: 25px;'>
+                    <div v-for="item in stickers[4]" :key="item.id">{{item.className}}</div>
+                </draggable>
+                <h2>White stickers</h2>
+                <draggable v-model='stickers[5]' :options="{group:'block'}" style='min-height: 25px;'>
+                    <div v-for="item in stickers[5]" :key="item.id">{{item.className}}</div>
+                </draggable>
+            </v-tab>
         </vue-tabs>
     </div>
 </body>
