@@ -70,6 +70,16 @@ var vm = new Vue({
                 }
             });
         },
+        update: function () {
+            self = this;
+            var stickerList = [];
+            self.stickers.forEach((category, index) => {
+                stickerList[index] = category.map(x => x.id);
+            });
+            axios.get('./backend/main.php?func=update&stickers=' + JSON.stringify(stickerList)).then(function () {
+                self.query();
+            });
+        }
     },
     beforeMount() {
         this.verify();
