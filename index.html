@@ -4,6 +4,7 @@
 <head>
     <title>PSCS Stickering</title>
     <link href="./assets/media/favicon.ico" type="image/x-icon" rel="shortcut icon" />
+    <meta charset="utf-8" />
 
     <script src="./assets/scripts/libraries/axios.min.js"></script>
     <script src="./assets/scripts/libraries/sweetalert.min.js"></script>
@@ -11,6 +12,8 @@
     <script src="./assets/scripts/libraries/moment.min.js"></script>
     <script src="./assets/scripts/libraries/jquery.min.js"></script>
     <script src="./assets/scripts/libraries/vue-tabs.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sortablejs@1.7.0/Sortable.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.17.0/vuedraggable.min.js"></script>
 
     <link href="./assets/css/libraries/spectre.min.css" rel="stylesheet" type="text/css" />
     <link href="./assets/css/libraries/spectre-icons.min.css" rel="stylesheet" type="text/css" />
@@ -20,7 +23,27 @@
 
 <body>
     <div id="main-page">
-
+        <vue-tabs>
+            <v-tab title="Regular">
+                <h2>All classes</h2>
+                <draggable v-model='notStickered' :options="{group:'regular'}" style='min-height: 25px;'>
+                    <div v-for="item in notStickered" :key="item.id">{{item.className}}</div>
+                </draggable>
+                <h2>Black stickers</h2>
+                <draggable v-model='stickers[0]' :options="{group:'regular'}" style='min-height: 25px;'>
+                    <div v-for="item in stickers[0]" :key="item.id">{{item.className}}</div>
+                </draggable>
+                <h2>Grey stickers</h2>
+                <draggable v-model='stickers[1]' :options="{group:'regular'}" style='min-height: 25px;'>
+                    <div v-for="item in stickers[1]" :key="item.id">{{item.className}}</div>
+                </draggable>
+                <h2>White stickers</h2>
+                <draggable v-model='stickers[2]' :options="{group:'regular'}" style='min-height: 25px;'>
+                    <div v-for="item in stickers[2]" :key="item.id">{{item.className}}</div>
+                </draggable>
+            </v-tab>
+            <v-tab title="Block"></v-tab>
+        </vue-tabs>
     </div>
 </body>
 <script src="./assets/scripts/main.js"></script>

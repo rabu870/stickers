@@ -1,12 +1,14 @@
 var vm = new Vue({
     el: '#main-page',
     data: {
-        classes: Array,
+        classes: [],
         blacksAllotted: Number,
         greysAllotted: Number,
         blacksAllottedBlock: Number,
         greysAllottedBlock: Number,
-        stickers: Array
+        notStickered: [],
+        notStickeredBlock: [],
+        stickers: []
     },
     methods: {
         verify: function () {
@@ -26,12 +28,12 @@ var vm = new Vue({
                     var classList = [];
                     response.data[1].forEach(currentClass => {
                         classList.push({
-                            id: currentClass[0],
+                            id: parseInt(currentClass[0]),
                             className: currentClass[1],
                             link: currentClass[2],
                             facilitator: currentClass[3],
-                            isMega: currentClass[4],
-                            isBlock: currentClass[5]
+                            isMega: parseInt(currentClass[4]) == "1" ? true : false,
+                            isBlock: parseInt(currentClass[5]) == "1" ? true : false
                         })
                     });
                     self.classes = classList;
@@ -48,16 +50,26 @@ var vm = new Vue({
                     response.data[0].forEach((category, index) => {
                         stickerList[index] = [];
                         category.forEach(sticker => {
-                            stickerList[index].push(parseInt(sticker));
+                            stickerList[index].push(self.classes.find(x => x.id ===
+                                parseInt(sticker)));
                         })
                     });
 
                     self.stickers = stickerList;
 
+                    self.notStickered = self.classes.filter(tempClass => tempClass.isBlock == false && !self.stickers[0].find(x => x.id ===
+                        tempClass.id) && !self.stickers[1].find(x => x.id ===
+                        tempClass.id) && !self.stickers[2].find(x => x.id ===
+                        tempClass.id));
+                    self.notStickeredBlock = self.classes.filter(tempClass => tempClass.isBlock == true && !self.stickers[3].find(x => x.id ===
+                        tempClass.id) && !self.stickers[4].find(x => x.id ===
+                        tempClass.id) && !self.stickers[5].find(x => x.id ===
+                        tempClass.id));
+
                     //axios.get('./backend/main.php?func=update&stickers=' + JSON.stringify(self.stickers));
                 }
             });
-        }
+        },
     },
     beforeMount() {
         this.verify();
