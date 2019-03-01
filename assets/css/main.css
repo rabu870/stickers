@@ -10,6 +10,7 @@
 }
 
 .tab-block li {
+	max-width: 125px;
 }
 
 .no-margin-button {
