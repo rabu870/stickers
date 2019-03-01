@@ -8,3 +8,32 @@
 	height: 300px;
 	width: 500px;
 }
+
+.tab-block li {
+}
+
+.no-margin-button {
+	margin-top: 0;
+	margin-left: 10px;
+}
+
+.no-shadow {
+	box-shadow: none;
+	user-select: none;
+}
+
+.class-style {
+	cursor: pointer;
+}
+
+.pad {
+	margin: 10px;
+}
+
+.column {
+	margin: 10px;
+}
+
+.h5 {
+	font-size: 1rem;
+}
