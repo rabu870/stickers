@@ -15,7 +15,8 @@ var vm = new Vue({
         notStickeredBlock: [],
         stickers: [],
         imgurl: "",
-        init: false
+        init: false,
+        edited: false
     },
     methods: {
         verify: function () {
@@ -80,6 +81,7 @@ var vm = new Vue({
                     }
                     $('.main-loader').css('display', 'none');
                     $('.pad').css('display', 'block');
+                    self.edited = false;
                     self.init = true;
                 }
             });
@@ -148,6 +150,9 @@ var vm = new Vue({
                 }
                 return res;
             }
+        },
+        onEnd: function () {
+            this.edited = true;
         }
     },
     beforeMount() {
@@ -161,6 +166,11 @@ var vm = new Vue({
             $('.update-button').click(function () {
                 self.update();
             });
+        });
+        $(window).bind('beforeunload', function () {
+            if (self.edited == true) {
+                return "You have unsaved changes, are you sure you want to leave?";
+            }
         });
     }
 });
