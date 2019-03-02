@@ -1,3 +1,8 @@
+function getCookieValue(a) {
+    var b = document.cookie.match('(^|;)\\s*' + a + '\\s*=\\s*([^;]+)');
+    return b ? b.pop() : '';
+}
+
 var vm = new Vue({
     el: '#main-page',
     data: {
@@ -8,7 +13,9 @@ var vm = new Vue({
         greysAllottedBlock: Number,
         notStickered: [],
         notStickeredBlock: [],
-        stickers: []
+        stickers: [],
+        imgurl: "",
+        init: false
     },
     methods: {
         verify: function () {
@@ -66,6 +73,14 @@ var vm = new Vue({
                         tempClass.id) && !self.stickers[4].find(x => x.id ===
                         tempClass.id) && !self.stickers[5].find(x => x.id ===
                         tempClass.id));
+
+                    self.imgurl = decodeURIComponent(getCookieValue('pic'));
+                    if (self.init == false) {
+                        $('.nav-tabs').append('<section class="navbar-section"><a href="./login" class="no-outline tooltip tooltip-left" data-tooltip="Log out"><figure class="avatar" style="height: 28px; width: 28px; margin-right: 10px;"><img src="' + self.imgurl + '"></figure></a></section>');
+                    }
+                    $('.main-loader').css('display', 'none');
+                    $('.pad').css('display', 'block');
+                    self.init = true;
                 }
             });
         },
@@ -118,6 +133,21 @@ var vm = new Vue({
                 }
             }
             return res;
+        },
+        genTags: function (item) {
+            var res = [];
+            if (item) {
+                if (item.isMega) {
+                    res.push('Mega');
+                }
+                if (item.tags.indexOf('hs-only') != -1) {
+                    res.push('HS only');
+                }
+                if (item.tags.indexOf('ms-only') != -1) {
+                    res.push('MS only');
+                }
+                return res;
+            }
         }
     },
     beforeMount() {
@@ -127,7 +157,7 @@ var vm = new Vue({
     mounted() {
         var self = this;
         $('.nav-tabs').arrive("#t-Block", function () {
-            $('.nav-tabs').append('<li class="no-margin-button"><button class="update-button btn btn-primary btn-sm">Save changes</button></li>');
+            $('.tab-section').append('<li class="no-margin-button"><button class="update-button btn btn-primary btn-sm">Save changes</button></li>');
             $('.update-button').click(function () {
                 self.update();
             });

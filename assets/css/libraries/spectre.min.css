@@ -2481,8 +2481,8 @@ summary.accordion-header::-webkit-details-marker {
     margin: 0;
     min-width: 180px;
     padding: .4rem;
-    transform: translateY(.2rem);
-    z-index: 300
+    /*transform: translateY(.2rem);
+    z-index: 300;*/
 }
 
 .menu.menu-nav {
@@ -2491,7 +2491,7 @@ summary.accordion-header::-webkit-details-marker {
 }
 
 .menu .menu-item {
-    margin-top: 0;
+    margin-top: .2rem;
     padding: 0 .4rem;
     position: relative;
     text-decoration: none
@@ -2524,9 +2524,9 @@ summary.accordion-header::-webkit-details-marker {
     margin: .1rem 0
 }
 
-.menu .menu-item+.menu-item {
+/* .menu .menu-item+.menu-item {
     margin-top: .2rem
-}
+} */
 
 .menu .menu-badge {
     align-items: center;
@@ -2918,12 +2918,6 @@ summary.accordion-header::-webkit-details-marker {
     color: #5755d9
 }
 
-.tab .tab-item.tab-action {
-    -ms-flex: 1 0 auto;
-    flex: 1 0 auto;
-    text-align: right
-}
-
 .tab .tab-item .btn-clear {
     margin-top: -.2rem
 }
@@ -2937,6 +2931,13 @@ summary.accordion-header::-webkit-details-marker {
 .tab.tab-block .tab-item a {
     margin: 0
 }
+
+.tab .tab-item.tab-action {
+    -ms-flex: 1 0 auto;
+    flex: 1 0 auto;
+    text-align: right
+}
+
 
 .tab.tab-block .tab-item .badge[data-badge]::after {
     position: absolute;

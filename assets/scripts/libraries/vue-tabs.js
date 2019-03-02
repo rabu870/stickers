@@ -3,19 +3,19 @@
  * (c) 2018-present cristij <joracristi@gmail.com>
  * Released under the MIT License.
  */
-(function(global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined'
-		? factory(exports)
-		: typeof define === 'function' && define.amd
-		? define(['exports'], factory)
-		: factory((global.vueTabs = {}));
-})(this, function(exports) {
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ?
+		factory(exports) :
+		typeof define === 'function' && define.amd ?
+		define(['exports'], factory) :
+		factory((global.vueTabs = {}));
+})(this, function (exports) {
 	'use strict';
 
 	var nestRE = /^(attrs|props|on|nativeOn|class|style|hook)$/;
 
 	var babelHelperVueJsxMergeProps = function mergeJSXProps(objs) {
-		return objs.reduce(function(a, b) {
+		return objs.reduce(function (a, b) {
 			var aa, bb, key, nestedKey, temp;
 			for (key in b) {
 				aa = a[key];
@@ -60,7 +60,7 @@
 	};
 
 	function mergeFn(a, b) {
-		return function() {
+		return function () {
 			a.apply(this, arguments);
 			b.apply(this, arguments);
 		};
@@ -173,14 +173,14 @@
 			},
 			getTabs: function getTabs() {
 				if (this.$slots.default) {
-					return this.$slots.default.filter(function(comp) {
+					return this.$slots.default.filter(function (comp) {
 						return comp.componentOptions;
 					});
 				}
 				return [];
 			},
 			findTabAndActivate: function findTabAndActivate(tabNameOrIndex) {
-				var indexToActivate = this.tabs.findIndex(function(tab, index) {
+				var indexToActivate = this.tabs.findIndex(function (tab, index) {
 					return (
 						tab.title === tabNameOrIndex || index === tabNameOrIndex
 					);
@@ -194,9 +194,9 @@
 			},
 			renderTabTitle: function renderTabTitle(index) {
 				var position =
-					arguments.length > 1 && arguments[1] !== undefined
-						? arguments[1]
-						: 'top';
+					arguments.length > 1 && arguments[1] !== undefined ?
+					arguments[1] :
+					'top';
 				var h = this.$createElement;
 
 				if (this.tabs.length === 0) return;
@@ -204,12 +204,13 @@
 				var active = tab.active,
 					title = tab.title;
 
-				var titleStyles = { color: this.activeTabColor };
+				var titleStyles = {
+					color: this.activeTabColor
+				};
 				if (position === 'center')
 					titleStyles.color = this.activeTextColor;
 				var simpleTitle = h(
-					'span',
-					{
+					'span', {
 						class: 'title title_' + position,
 						style: active ? titleStyles : {}
 					},
@@ -234,7 +235,9 @@
 				var tab = this.tabs[index];
 				var icon = tab.icon;
 
-				var simpleIcon = h('i', { class: icon }, ['\xA0']);
+				var simpleIcon = h('i', {
+					class: icon
+				}, ['\xA0']);
 				if (!tab.$slots.title && icon) return simpleIcon;
 			},
 			tabStyles: function tabStyles(tab) {
@@ -251,7 +254,7 @@
 
 				var h = this.$createElement;
 
-				return this.tabs.map(function(tab, index) {
+				return this.tabs.map(function (tab, index) {
 					if (!tab) return;
 					var route = tab.route,
 						id = tab.id,
@@ -262,8 +265,7 @@
 					var active = _this.activeTabIndex === index;
 					return h(
 						'li',
-						babelHelperVueJsxMergeProps([
-							{
+						babelHelperVueJsxMergeProps([{
 								attrs: {
 									name: 'tab',
 									id: 't-' + tabId,
@@ -274,8 +276,12 @@
 
 								class: [
 									'tab-item',
-									{ active: active },
-									{ disabled: tab.disabled }
+									{
+										active: active
+									},
+									{
+										disabled: tab.disabled
+									}
 								],
 								key: title
 							},
@@ -287,14 +293,12 @@
 												attrs = Array(
 													_len > 1 ? _len - 1 : 0
 												),
-												_key = 1;
-											_key < _len;
-											_key++
+												_key = 1; _key < _len; _key++
 										) {
 											attrs[_key - 1] = arguments[_key];
 										}
 
-										(function() {
+										(function () {
 											return (
 												!tab.disabled &&
 												_this.navigateToTab(
@@ -312,22 +316,21 @@
 						]),
 						[
 							_this.textPosition === 'top' &&
-								_this.renderTabTitle(index, _this.textPosition),
+							_this.renderTabTitle(index, _this.textPosition),
 							h(
 								'a',
-								babelHelperVueJsxMergeProps([
-									{
+								babelHelperVueJsxMergeProps([{
 										attrs: {
 											href: '#',
 
 											role: 'tab'
 										},
 
-										style: active
-											? _this.activeTabStyle
-											: _this.tabStyles(tab),
-										class: [
-											{ active_tab: active },
+										style: active ?
+											_this.activeTabStyle : _this.tabStyles(tab),
+										class: [{
+												active_tab: active
+											},
 											'tabs__link'
 										]
 									},
@@ -336,21 +339,19 @@
 											click: function click($event) {
 												for (
 													var _len2 =
-															arguments.length,
+														arguments.length,
 														attrs = Array(
-															_len2 > 1
-																? _len2 - 1
-																: 0
+															_len2 > 1 ?
+															_len2 - 1 :
+															0
 														),
-														_key2 = 1;
-													_key2 < _len2;
-													_key2++
+														_key2 = 1; _key2 < _len2; _key2++
 												) {
 													attrs[_key2 - 1] =
 														arguments[_key2];
 												}
 
-												(function(e) {
+												(function (e) {
 													e.preventDefault();
 													return false;
 												}.apply(
@@ -363,17 +364,17 @@
 								]),
 								[
 									_this.textPosition !== 'center' &&
-										!tab.$slots.title &&
-										_this.renderIcon(index),
+									!tab.$slots.title &&
+									_this.renderIcon(index),
 									_this.textPosition === 'center' &&
-										_this.renderTabTitle(
-											index,
-											_this.textPosition
-										)
+									_this.renderTabTitle(
+										index,
+										_this.textPosition
+									)
 								]
 							),
 							_this.textPosition === 'bottom' &&
-								_this.renderTabTitle(index, _this.textPosition)
+							_this.renderTabTitle(index, _this.textPosition)
 						]
 					);
 				});
@@ -383,41 +384,55 @@
 			var h = arguments[0];
 
 			var tabList = this.renderTabs();
-			return h('div', { class: ['vue-tabs', this.stackedClass] }, [
+			return h('div', {
+				class: ['vue-tabs', this.stackedClass]
+			}, [
 				h(
-					'div',
-					{
-						class: [
-							{ 'nav-tabs-navigation': !this.isStacked },
-							{ 'left-vertical-tabs': this.isStacked }
+					'div', {
+						class: [{
+								'nav-tabs-navigation': !this.isStacked
+							},
+							{
+								'left-vertical-tabs': this.isStacked
+							}
 						]
 					},
 					[
 						h(
-							'div',
-							{ class: ['nav-tabs-wrapper', this.stackedClass] },
+							'div', {
+								class: ['nav-tabs-wrapper', this.stackedClass]
+							},
 							[
 								h(
-									'ul',
-									{
-										class: this.classList,
+									'header', {
+										class: this.classList + ' navbar',
 										attrs: {
 											role: 'tablist',
 											class: 'tab tab-block'
 										}
 									},
-									[tabList]
+									[
+										h(
+											'section', {
+												attrs: {
+													class: 'navbar-section tab-section'
+												}
+											},
+											[tabList]
+										)
+									]
 								)
 							]
 						)
 					]
 				),
 				h(
-					'div',
-					{
+					'div', {
 						class: [
 							'tab-content',
-							{ 'right-text-tabs': this.isStacked }
+							{
+								'right-text-tabs': this.isStacked
+							}
 						]
 					},
 					[this.$slots.default]
@@ -503,20 +518,17 @@
 			var h = arguments[0];
 
 			return h(
-				'section',
-				{
+				'section', {
 					class: 'tab-container',
 					attrs: {
 						id: 'p-' + this.tabId,
 						'aria-labelledby': 't-' + this.tabId,
 						role: 'tabpanel'
 					},
-					directives: [
-						{
-							name: 'show',
-							value: this.active
-						}
-					]
+					directives: [{
+						name: 'show',
+						value: this.active
+					}]
 				},
 				[this.$slots.default]
 			);
@@ -539,5 +551,7 @@
 	exports.VueTabs = VueTabs;
 	exports.VTab = VTab;
 
-	Object.defineProperty(exports, '__esModule', { value: true });
+	Object.defineProperty(exports, '__esModule', {
+		value: true
+	});
 });

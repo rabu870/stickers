@@ -19,37 +19,45 @@
 <body style='background-color: #f7f8f9'>
     <div class="empty center">
         <div class="empty-icon">
-          <i class="icon icon-3x icon-people"></i>
+            <i class="icon icon-3x icon-people"></i>
         </div>
-        <p class="empty-title h5"><div class="g-signin2" style='display: inline-block;' data-onsuccess="onSignIn"></div><br>to PSCS stickering</p>
-      </div>
+        <p class="empty-title h5">
+            <div class="g-signin2" style='display: inline-block;' data-onsuccess="onSignIn"></div><br>to PSCS
+            stickering
+        </p>
+    </div>
 
     <script>
         function onSignIn(googleUser) {
             var id_token = googleUser.getAuthResponse().id_token;
+            var avatar = googleUser.getBasicProfile().getImageUrl();
             gapi.auth2.getAuthInstance().disconnect().then(function () {
                 axios.get('./authenticate.php?idtoken=' + id_token)
-                .then(function(response) {
-                    if(response.data == '1') {
-                        window.location.href = '../admin.html';
-                    } else if (response.data == '2') {
-                        window.location.href = '../';
-                    } else if (response.data == '3') {
-                        Swal.fire({
-                            title: 'It seems you\'re not in our database.',
-                            text: 'Please try a different email.',
-                            type: 'error',
-                            confirmButtonText: 'OK'
-                        });
-                    } else {
-                        Swal.fire({
-                            title: "Google doesn't think you're legitimate.",
-                            text: 'Please try again.',
-                            type: 'error',
-                            confirmButtonText: 'OK'
-                        });
-                    }
-                });
+                    .then(function (response) {
+                        if (response.data == '1') {
+                            document.cookie = "pic=" + encodeURIComponent(avatar) +
+                                "; expires=Thu, 18 Dec 3000 12:00:00 UTC; path=/";
+                            window.location.href = '../admin.html';
+                        } else if (response.data == '2') {
+                            document.cookie = "pic=" + encodeURIComponent(avatar) +
+                                "; expires=Thu, 18 Dec 3000 12:00:00 UTC; path=/";
+                            window.location.href = '../';
+                        } else if (response.data == '3') {
+                            Swal.fire({
+                                title: 'It seems you\'re not in our database.',
+                                text: 'Please try a different email.',
+                                type: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        } else {
+                            Swal.fire({
+                                title: "Google doesn't think you're legitimate.",
+                                text: 'Please try again.',
+                                type: 'error',
+                                confirmButtonText: 'OK'
+                            });
+                        }
+                    });
             });
         }
     </script>
