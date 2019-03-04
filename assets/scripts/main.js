@@ -77,7 +77,7 @@ var vm = new Vue({
 
                     self.imgurl = decodeURIComponent(getCookieValue('pic'));
                     if (self.init == false) {
-                        $('.nav-tabs').append('<section class="navbar-section"><a href="./login" class="no-outline tooltip tooltip-left" data-tooltip="Log out"><figure class="avatar" style="height: 28px; width: 28px; margin-right: 10px;"><img src="' + self.imgurl + '"></figure></a></section>');
+                        $('.nav-tabs').append('<section class="navbar-center"><img src="./assets/media/logo.svg" style="width: 40px; height: 40px;"></section><section style="height: 42px" class="navbar-section"><a href="./login" class="no-outline tooltip tooltip-left" data-tooltip="Log out"><figure class="avatar" style="height: 33px; width: 33px; margin-right: 10px; margin-bottom: 4px;"><img src="' + self.imgurl + '"></figure></a></section>');
                     }
                     $('.main-loader').css('display', 'none');
                     $('.pad').css('display', 'block');
@@ -153,6 +153,13 @@ var vm = new Vue({
         },
         onEnd: function () {
             this.edited = true;
+        },
+        onMove: function (evt) {
+            if ($('.popover').is(":hover")) {
+                return false;
+            } else {
+                return true;
+            }
         }
     },
     beforeMount() {

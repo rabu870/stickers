@@ -12,8 +12,8 @@
     <script src="./assets/scripts/libraries/moment.min.js"></script>
     <script src="./assets/scripts/libraries/jquery.min.js"></script>
     <script src="./assets/scripts/libraries/vue-tabs.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sortablejs@1.7.0/Sortable.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.17.0/vuedraggable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.7.0/Sortable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.17.0/vuedraggable.min.js"></script>
     <script src="./assets/scripts/libraries/arrive.min.js"></script>
 
     <link href="./assets/css/libraries/spectre.min.css" rel="stylesheet" type="text/css" />
@@ -44,12 +44,12 @@
                                     <label class="chip" for="tag-3">Mega</label>
                                 </div>
                                 <div class='filter-body'>
-                                    <draggable v-model='notStickered' @end='onEnd' :options="{group:'regular', sort: false}"
+                                    <draggable v-model='notStickered' @end='onEnd' :options="{group:'regular', sort: false, onMove: onMove}"
                                         style='width: 100%; min-height: 25px; display: grid; grid-template-columns: repeat(auto-fill,minmax(220px, 1fr));'>
                                         <div style='width: 100%;' class='menu-item class-style filter-item' :data-tag='checkTags(item)'
                                             v-for="item in notStickered" :key="item.id">
                                             <div class='a-c'>
-                                                {{item.className}}
+                                                <span class='class-name'>{{item.className}}</span>
                                                 <div style='float: right;' class="popover popover-bottom">
                                                     <i class='show-hover icon icon-more-horiz'></i>
                                                     <div class="popover-container">
@@ -80,7 +80,8 @@
                                 <label class="accordion-header" for="reg-black-accordion">
                                     <i class="icon icon-arrow-right mr-1"></i>
                                     <span class='h5'>Black stickers</span> <span v-if='stickers[0]'>
-                                        <div class="label label-primary">{{blacksAllotted - stickers[0].length}}
+                                        <div class="label label-primary">{{blacksAllotted - stickers[0].length > 0 ?
+                                            blacksAllotted - stickers[0].length : "None"}}
                                             left</div>
                                     </span>
                                 </label>
@@ -97,7 +98,8 @@
                                 <label class="accordion-header" for="reg-grey-accordion">
                                     <i class="icon icon-arrow-right mr-1"></i>
                                     <span class='h5'>Grey stickers</span> <span v-if='stickers[0]'>
-                                        <div class="label label-primary">{{greysAllotted - stickers[1].length}}
+                                        <div class="label label-primary">{{greysAllotted - stickers[1].length > 0 ?
+                                            greysAllotted - stickers[1].length : "None"}}
                                             left</div>
                                     </span>
                                 </label>
@@ -179,7 +181,9 @@
                                 <label class="accordion-header" for="block-black-accordion">
                                     <i class="icon icon-arrow-right mr-1"></i>
                                     <span class='h5'>Black stickers</span> <span v-if='stickers[3]'>
-                                        <div class="label label-primary">{{blacksAllottedBlock - stickers[3].length}}
+                                        <div class="label label-primary">{{blacksAllottedBlock - stickers[3].length > 0
+                                            ?
+                                            blacksAllottedBlock - stickers[3].length : "None"}}
                                             left</div>
                                     </span>
                                 </label>
@@ -196,7 +200,9 @@
                                 <label class="accordion-header" for="block-grey-accordion">
                                     <i class="icon icon-arrow-right mr-1"></i>
                                     <span class='h5'>Grey stickers</span> <span v-if='stickers[4]'>
-                                        <div class="label label-primary">{{greysAllottedBlock - stickers[4].length}}
+                                        <div class="label label-primary">{{greysAllottedBlock - stickers[4].length > 0
+                                            ?
+                                            greysAllottedBlock - stickers[4].length : "None"}}
                                             left</div>
                                     </span>
                                 </label>
