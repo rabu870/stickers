@@ -1,3 +1,8 @@
+function getCookieValue(a) {
+    var b = document.cookie.match('(^|;)\\s*' + a + '\\s*=\\s*([^;]+)');
+    return b ? b.pop() : '';
+}
+
 var vm = new Vue({
     el: '#main-page',
     data: {
@@ -8,7 +13,10 @@ var vm = new Vue({
         greysAllottedBlock: Number,
         notStickered: [],
         notStickeredBlock: [],
-        stickers: []
+        stickers: [],
+        imgurl: "",
+        init: false,
+        edited: false
     },
     methods: {
         verify: function () {
@@ -32,8 +40,9 @@ var vm = new Vue({
                             className: currentClass[1],
                             link: currentClass[2],
                             facilitator: currentClass[3],
-                            isMega: parseInt(currentClass[4]) == "1" ? true : false,
-                            isBlock: parseInt(currentClass[5]) == "1" ? true : false
+                            isMega: parseInt(currentClass[4]) == 1 ? true : false,
+                            isBlock: parseInt(currentClass[5]) == 1 ? true : false,
+                            tags: currentClass[6]
                         })
                     });
                     self.classes = classList;
@@ -42,8 +51,8 @@ var vm = new Vue({
 
                     self.blacksAllotted = parseInt(response.data[2][0]);
                     self.greysAllotted = parseInt(response.data[2][1]);
-                    self.blacksAllottedBlock = parseInt(response.data[2][3]);
-                    self.greysAllottedBlock = parseInt(response.data[2][4]);
+                    self.blacksAllottedBlock = parseInt(response.data[2][2]);
+                    self.greysAllottedBlock = parseInt(response.data[2][3]);
 
                     //put the stickers for this student in their respective arrays
                     var stickerList = [];
@@ -66,23 +75,109 @@ var vm = new Vue({
                         tempClass.id) && !self.stickers[5].find(x => x.id ===
                         tempClass.id));
 
-                    //axios.get('./backend/main.php?func=update&stickers=' + JSON.stringify(self.stickers));
+                    self.imgurl = decodeURIComponent(getCookieValue('pic'));
+                    if (self.init == false) {
+                        $('.nav-tabs').append('<section class="navbar-center"><img src="./assets/media/logo.svg" style="width: 40px; height: 40px;"></section><section style="height: 42px" class="navbar-section"><a href="./login" class="no-outline tooltip tooltip-left" data-tooltip="Log out"><figure class="avatar" style="height: 33px; width: 33px; margin-right: 10px; margin-bottom: 4px;"><img src="' + self.imgurl + '"></figure></a></section>');
+                    }
+                    $('.main-loader').css('display', 'none');
+                    $('.pad').css('display', 'block');
+                    self.edited = false;
+                    self.init = true;
                 }
             });
         },
         update: function () {
             self = this;
+            $('.update-button').addClass('loading');
             var stickerList = [];
             self.stickers.forEach((category, index) => {
                 stickerList[index] = category.map(x => x.id);
             });
             axios.get('./backend/main.php?func=update&stickers=' + JSON.stringify(stickerList)).then(function () {
                 self.query();
+                $('.update-button').removeClass('loading');
+                $('.update-button').html('Changes saved!');
+                setTimeout(
+                    function () {
+                        $('.update-button').html('Save changes');
+                    }, 3000);
             });
+        },
+        checkTags: function (item) {
+            var res = "";
+            if (item) {
+                if (item.isMega) {
+                    res += 'tag-3 ';
+                }
+                if (item.tags.indexOf('hs-only') != -1) {
+                    res += 'tag-1 ';
+                }
+                if (item.tags.indexOf('ms-only') != -1) {
+                    res += 'tag-2 ';
+                }
+                if (res == "") {
+                    res = 'tag-0';
+                }
+            }
+            return res;
+        },
+        checkTagsBlock: function (item) {
+            var res = "";
+            if (item) {
+                if (item.tags.indexOf('hs-only') != -1) {
+                    res += 'tag-5 ';
+                }
+                if (item.tags.indexOf('ms-only') != -1) {
+                    res += 'tag-6 ';
+                }
+                if (res == "") {
+                    res = 'tag-10';
+                }
+            }
+            return res;
+        },
+        genTags: function (item) {
+            var res = [];
+            if (item) {
+                if (item.isMega) {
+                    res.push('Mega');
+                }
+                if (item.tags.indexOf('hs-only') != -1) {
+                    res.push('HS only');
+                }
+                if (item.tags.indexOf('ms-only') != -1) {
+                    res.push('MS only');
+                }
+                return res;
+            }
+        },
+        onEnd: function () {
+            this.edited = true;
+        },
+        onMove: function (evt) {
+            if ($('.popover').is(":hover")) {
+                return false;
+            } else {
+                return true;
+            }
         }
     },
     beforeMount() {
         this.verify();
         this.query();
+    },
+    mounted() {
+        var self = this;
+        $('.nav-tabs').arrive("#t-Block", function () {
+            $('.tab-section').append('<li class="no-margin-button"><button class="update-button btn btn-primary btn-sm">Save changes</button></li>');
+            $('.update-button').click(function () {
+                self.update();
+            });
+        });
+        $(window).bind('beforeunload', function () {
+            if (self.edited == true) {
+                return "You have unsaved changes, are you sure you want to leave?";
+            }
+        });
     }
 });
