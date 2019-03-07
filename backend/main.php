@@ -20,14 +20,18 @@ if ($access == 2) {
             $stickers = json_decode($_GET['stickers']);
             $allottedlist = array($allotted[0], $allotted[1], '', $allotted[2], $allotted[3], '');
             $db->query("DELETE FROM `stickers` WHERE `student_id` = " . $id);
+            $check = false;
             foreach ($stickers as $key => $stickerlist) {
                 if ($key % 3 != 2 && count($stickerlist) > $allottedlist[$key]) {
                     die();
                 } else {
                     foreach ($stickerlist as $sticker) {
+                        $check = true;
                         $db->query("INSERT INTO `stickers` (`student_id`, `class_id`, `priority`, `is_block`) VALUES (" . $id . ", " . sqlize($sticker) . ", " . sqlize(($key % 3) + 1) . ", " . sqlize((int) floor($key / 3)) . ")");
                     }
                 }
+            }if($check){
+                $db->query("UPDATE `students` SET `stickered` = 1 WHERE `student_id` = " . $id);
             }
         }
     } else {
