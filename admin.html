@@ -1,43 +1,47 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>PSCS Stickering Admin</title>
-		<link
-			href="./assets/media/favicon.ico"
-			type="image/x-icon"
-			rel="shortcut icon"
-		/>
 
-		<script src="./assets/scripts/libraries/axios.min.js"></script>
-		<script src="./assets/scripts/libraries/sweetalert.min.js"></script>
-		<script src="./assets/scripts/libraries/vue.js"></script>
-		<script src="./assets/scripts/libraries/moment.min.js"></script>
-		<script src="./assets/scripts/libraries/jquery.min.js"></script>
-		<script src="./assets/scripts/libraries/vue-tabs.js"></script>
+<head>
+	<title>PSCS Stickering Admin</title>
+	<link href="./assets/media/favicon.ico" type="image/x-icon" rel="shortcut icon" />
 
-		<link
-			href="./assets/css/libraries/spectre.min.css"
-			rel="stylesheet"
-			type="text/css"
-		/>
-		<link
-			href="./assets/css/libraries/spectre-icons.min.css"
-			rel="stylesheet"
-			type="text/css"
-		/>
+	<script src="./assets/scripts/libraries/axios.min.js"></script>
+	<script src="./assets/scripts/libraries/sweetalert.min.js"></script>
+	<script src="./assets/scripts/libraries/vue.js"></script>
+	<script src="./assets/scripts/libraries/moment.min.js"></script>
+	<script src="./assets/scripts/libraries/jquery.min.js"></script>
+	<script src="./assets/scripts/libraries/vue-tabs.js"></script>
 
-		<link href="./assets/css/admin.css" rel="stylesheet" type="text/css" />
-	</head>
-	<body>
-		<div id="admin-page">
-			<vue-tabs>
-				<v-tab title="Students">
-					<student-table></student-table>
-				</v-tab>
-				<v-tab title="Admins"> <admin-table></admin-table> </v-tab>
-				<v-tab title="Controls"><meta-edit></meta-edit></v-tab>
-			</vue-tabs>
-		</div>
-	</body>
-	<script src="./assets/scripts/admin.js"></script>
+	<link href="./assets/css/libraries/spectre.min.css" rel="stylesheet" type="text/css" />
+	<link href="./assets/css/libraries/spectre-icons.min.css" rel="stylesheet" type="text/css" />
+
+	<link href="./assets/css/admin.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+	<div id="admin-page">
+		<vue-tabs>
+			<v-tab title="Students">
+				<student-table></student-table>
+			</v-tab>
+			<v-tab title="Admins">
+				<admin-table></admin-table>
+			</v-tab>
+			<v-tab title="Controls">
+				<meta-edit></meta-edit>
+			</v-tab>
+			<v-tab title="Student Stats">
+				<div v-if='notStickered.length > 0' class='havent-stickered'>
+					<h4>Students that haven't finished stickering:</h4>
+					<ul>
+						<li v-for='student of notStickered'>{{student}}</li>
+					</ul>
+					<button class='reminder-button btn btn-primary' @click='reminder'>Send reminder email</button>
+				</div>
+			</v-tab>
+		</vue-tabs>
+	</div>
+</body>
+<script src="./assets/scripts/admin.js"></script>
+
 </html>
