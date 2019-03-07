@@ -21,3 +21,7 @@ function utf8ize($d)
 
     return $d;
 }
+function makepdf(){
+    require_once __DIR__ . '/vendor/autoload.php';
+    
+}
