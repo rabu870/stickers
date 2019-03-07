@@ -22,7 +22,7 @@
     <link href="./assets/css/main.css" rel="stylesheet" type="text/css" />
 </head>
 
-<body>
+<body style="background-color: #f7f8f996;">
     <div id="main-page">
         <vue-tabs>
             <v-tab title="Regular">
@@ -75,10 +75,8 @@
                             </div>
                         </div>
                         <div class='column menu'>
-                            <div v-if='stickers[0]' class="accordion">
-                                <input type="checkbox" id="reg-black-accordion" name="accordion-checkbox" hidden>
-                                <label class="accordion-header" for="reg-black-accordion">
-                                    <i class="icon icon-arrow-right mr-1"></i>
+                            <div v-if='stickers[0]'>
+                                <label class="accordion-header">
                                     <span class='h5'>Black stickers</span> <span v-if='stickers[0]'>
                                         <div class="label label-primary">{{blacksAllotted - stickers[0].length > 0 ?
                                             blacksAllotted - stickers[0].length : "None"}}
@@ -93,10 +91,8 @@
                                     </draggable>
                                 </div>
                             </div>
-                            <div v-if='stickers[1]' class="accordion">
-                                <input type="checkbox" id="reg-grey-accordion" name="accordion-checkbox" hidden>
-                                <label class="accordion-header" for="reg-grey-accordion">
-                                    <i class="icon icon-arrow-right mr-1"></i>
+                            <div v-if='stickers[1]'>
+                                <label class="accordion-header">
                                     <span class='h5'>Grey stickers</span> <span v-if='stickers[0]'>
                                         <div class="label label-primary">{{greysAllotted - stickers[1].length > 0 ?
                                             greysAllotted - stickers[1].length : "None"}}
@@ -111,10 +107,8 @@
                                     </draggable>
                                 </div>
                             </div>
-                            <div class="accordion">
-                                <input type="checkbox" id="reg-white-accordion" name="accordion-checkbox" hidden>
-                                <label class="accordion-header" for="reg-white-accordion">
-                                    <i class="icon icon-arrow-right mr-1"></i>
+                            <div>
+                                <label class="accordion-header">
                                     <span class='h5'>White stickers</span>
                                 </label>
                                 <div class="accordion-body">
@@ -176,10 +170,8 @@
                             </div>
                         </div>
                         <div class='column menu'>
-                            <div v-if='stickers[3]' class="accordion">
-                                <input type="checkbox" id="block-black-accordion" name="accordion-checkbox" hidden>
-                                <label class="accordion-header" for="block-black-accordion">
-                                    <i class="icon icon-arrow-right mr-1"></i>
+                            <div v-if='stickers[3]'>
+                                <label class="accordion-header">
                                     <span class='h5'>Black stickers</span> <span v-if='stickers[3]'>
                                         <div class="label label-primary">{{blacksAllottedBlock - stickers[3].length > 0
                                             ?
@@ -195,10 +187,8 @@
                                     </draggable>
                                 </div>
                             </div>
-                            <div v-if='stickers[4]' class="accordion">
-                                <input type="checkbox" id="block-grey-accordion" name="accordion-checkbox" hidden>
-                                <label class="accordion-header" for="block-grey-accordion">
-                                    <i class="icon icon-arrow-right mr-1"></i>
+                            <div v-if='stickers[4]'>
+                                <label class="accordion-header">
                                     <span class='h5'>Grey stickers</span> <span v-if='stickers[4]'>
                                         <div class="label label-primary">{{greysAllottedBlock - stickers[4].length > 0
                                             ?
@@ -214,10 +204,8 @@
                                     </draggable>
                                 </div>
                             </div>
-                            <div class="accordion">
-                                <input type="checkbox" id="block-white-accordion" name="accordion-checkbox" hidden>
-                                <label class="accordion-header" for="block-white-accordion">
-                                    <i class="icon icon-arrow-right mr-1"></i>
+                            <div>
+                                <label class="accordion-header">
                                     <span class='h5'>White stickers</span>
                                 </label>
                                 <div class="accordion-body">
