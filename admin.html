@@ -31,7 +31,7 @@
 				<meta-edit></meta-edit>
 			</v-tab>
 			<v-tab title="Student Stats">
-				<div v-if='notStickered.length > 0' class='havent-stickered'>
+				<div v-if='notStickered' class='havent-stickered'>
 					<h4>Students that haven't finished stickering:</h4>
 					<ul>
 						<li v-for='student of notStickered'>{{student}}</li>

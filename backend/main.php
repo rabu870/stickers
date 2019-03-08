@@ -5,7 +5,7 @@ require_once './functions.php';
 if ($access == 2) {
     if ($db->query("SELECT stickering_active FROM meta WHERE true;")->fetch_row()[0] == '1') {
         $allotted = $db->query("SELECT `blacks_allotted`, `greys_allotted`, `blacks_allotted_block`, `greys_allotted_block` FROM `meta` WHERE true;")->fetch_row();
-        $id = sqlize($db->query("SELECT `id` FROM `students` WHERE `login_key` = " . sqlize($_COOKIE["login_key"]))->fetch_row()[0]);
+        $id = $db->query("SELECT `id` FROM `students` WHERE `login_key` = " . sqlize($_COOKIE["login_key"]))->fetch_row()[0];
         if ($_GET['func'] == 'load') {
             $stickers = [];
             for ($i = 1; $i < 4; $i++) {
@@ -31,7 +31,7 @@ if ($access == 2) {
                     }
                 }
             }if($check){
-                $db->query("UPDATE `students` SET `stickered` = 1 WHERE `student_id` = " . $id);
+                $db->query("UPDATE `students` SET `stickered` = 1 WHERE `id` = " . $id);
             }
         }
     } else {
