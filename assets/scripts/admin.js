@@ -303,7 +303,7 @@ var vm = new Vue({
 
 				self.meta = metaList;
 
-				self.notStickered = ['Adin', 'Eli', 'Angus'];
+				self.notStickered = response.data[3];
 			});
 		},
 		reminder: function () {
