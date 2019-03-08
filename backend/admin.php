@@ -10,7 +10,7 @@ if ($access == 1) {
         $u;
         foreach($s as $stu){
             if(!$stu['stickered']){
-                array_push($u,$stu['stickered']);
+                array_push($u,$stu);
             }
         }
         echo "[" . json_encode($s, JSON_PRETTY_PRINT) . ", " . json_encode($a, JSON_PRETTY_PRINT) . ", " . json_encode($c, JSON_PRETTY_PRINT) . ", " . json_encode($u, JSON_PRETTY_PRINT) . "]";
