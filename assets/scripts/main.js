@@ -153,13 +153,6 @@ var vm = new Vue({
         },
         onEnd: function () {
             this.edited = true;
-        },
-        onMove: function (evt) {
-            if ($('.popover').is(":hover")) {
-                return false;
-            } else {
-                return true;
-            }
         }
     },
     beforeMount() {

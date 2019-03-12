@@ -44,8 +44,8 @@
                                     <label class="chip" for="tag-3">Mega</label>
                                 </div>
                                 <div class='filter-body'>
-                                    <draggable v-model='notStickered' @end='onEnd' :options="{group:'regular', sort: false, onMove: onMove}"
-                                        style='width: 100%; min-height: 25px; display: grid; grid-template-columns: repeat(auto-fill,minmax(220px, 1fr));'>
+                                    <draggable v-model='notStickered' @end='onEnd' :options="{group:'regular', sort: false, handle: '.a-c'}"
+                                        style='width: 100%; min-height: 25px; display: grid; grid-template-columns: repeat(auto-fill,minmax(310px, 1fr));'>
                                         <div style='width: 100%;' class='menu-item class-style filter-item' :data-tag='checkTags(item)'
                                             v-for="item in notStickered" :key="item.id">
                                             <div class='a-c'>
@@ -139,8 +139,8 @@
                                     <label class="chip" for="tag-6">MS Only</label>
                                 </div>
                                 <div class='filter-body'>
-                                    <draggable v-model='notStickeredBlock' @end='onEnd' :options="{group:'block', sort: false}"
-                                        style='width: 100%; min-height: 25px; display: grid; grid-template-columns: repeat(auto-fill,minmax(220px, 1fr));'>
+                                    <draggable v-model='notStickeredBlock' @end='onEnd' :options="{group:'block', sort: false, handle: '.a-c'}"
+                                        style='width: 100%; min-height: 25px; display: grid; grid-template-columns: repeat(auto-fill,minmax(310px, 1fr));'>
                                         <div style='width: 100%; margin-top: 0;' class='menu-item class-style filter-item'
                                             :data-tag='checkTagsBlock(item)' v-for="item in notStickeredBlock" :key="item.id">
                                             <div class='a-c'>
