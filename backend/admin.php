@@ -86,7 +86,11 @@ if ($access == 1) {
         // //will eventually be something like noreply-stickers@pscs.org
         // $mail->setFrom('eli.kimchi@pscs.org', 'PSCS Stickers');
         // //run this in a for loop for every student, or are we sending seperate emails to each student?
-        // $mail->addAddress('eli.kimchi@pscs.org', 'Name of Student');
+        // $mail->addAddress('noreply-stickers@pscs.org', 'Stickering System')
+        //$students = $db->query("SELECT * FROM `students` WHERE `stickered` = 0;");
+        //foreach($students as $student){
+            // $mail->addBCC($student[email], $student[first_name] . ' ' . $student[last_name][0]);
+        //}
         // //username and password stored in the connection.php file
         // $mail->Username = $mail_username;
         // $mail->Password = $mail_password;
