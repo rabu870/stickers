@@ -7,13 +7,11 @@
     <meta charset="utf-8" />
 
     <script src="./assets/scripts/libraries/axios.min.js"></script>
-    <script src="./assets/scripts/libraries/sweetalert.min.js"></script>
     <script src="./assets/scripts/libraries/vue.js"></script>
-    <script src="./assets/scripts/libraries/moment.min.js"></script>
     <script src="./assets/scripts/libraries/jquery.min.js"></script>
     <script src="./assets/scripts/libraries/vue-tabs.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sortablejs@1.7.0/Sortable.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.17.0/vuedraggable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.7.0/Sortable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.17.0/vuedraggable.min.js"></script>
     <script src="./assets/scripts/libraries/arrive.min.js"></script>
 
     <link href="./assets/css/libraries/spectre.min.css" rel="stylesheet" type="text/css" />
@@ -22,7 +20,7 @@
     <link href="./assets/css/main.css" rel="stylesheet" type="text/css" />
 </head>
 
-<body>
+<body style="background-color: #f7f8f996;">
     <div id="main-page">
         <vue-tabs>
             <v-tab title="Regular">
@@ -44,12 +42,12 @@
                                     <label class="chip" for="tag-3">Mega</label>
                                 </div>
                                 <div class='filter-body'>
-                                    <draggable v-model='notStickered' @end='onEnd' :options="{group:'regular', sort: false}"
-                                        style='width: 100%; min-height: 25px; display: grid; grid-template-columns: repeat(auto-fill,minmax(220px, 1fr));'>
+                                    <draggable v-model='notStickered' @end='onEnd' :options="{group:'regular', sort: false, handle: '.a-c'}"
+                                        style='width: 100%; min-height: 25px; display: grid; grid-template-columns: repeat(auto-fill,minmax(310px, 1fr));'>
                                         <div style='width: 100%;' class='menu-item class-style filter-item' :data-tag='checkTags(item)'
                                             v-for="item in notStickered" :key="item.id">
                                             <div class='a-c'>
-                                                {{item.className}}
+                                                <span class='class-name'>{{item.className}}</span>
                                                 <div style='float: right;' class="popover popover-bottom">
                                                     <i class='show-hover icon icon-more-horiz'></i>
                                                     <div class="popover-container">
@@ -75,12 +73,11 @@
                             </div>
                         </div>
                         <div class='column menu'>
-                            <div v-if='stickers[0]' class="accordion">
-                                <input type="checkbox" id="reg-black-accordion" name="accordion-checkbox" hidden>
-                                <label class="accordion-header" for="reg-black-accordion">
-                                    <i class="icon icon-arrow-right mr-1"></i>
+                            <div v-if='stickers[0]'>
+                                <label class="accordion-header">
                                     <span class='h5'>Black stickers</span> <span v-if='stickers[0]'>
-                                        <div class="label label-primary">{{blacksAllotted - stickers[0].length}}
+                                        <div class="label label-primary">{{blacksAllotted - stickers[0].length > 0 ?
+                                            blacksAllotted - stickers[0].length : "None"}}
                                             left</div>
                                     </span>
                                 </label>
@@ -92,12 +89,11 @@
                                     </draggable>
                                 </div>
                             </div>
-                            <div v-if='stickers[1]' class="accordion">
-                                <input type="checkbox" id="reg-grey-accordion" name="accordion-checkbox" hidden>
-                                <label class="accordion-header" for="reg-grey-accordion">
-                                    <i class="icon icon-arrow-right mr-1"></i>
+                            <div v-if='stickers[1]'>
+                                <label class="accordion-header">
                                     <span class='h5'>Grey stickers</span> <span v-if='stickers[0]'>
-                                        <div class="label label-primary">{{greysAllotted - stickers[1].length}}
+                                        <div class="label label-primary">{{greysAllotted - stickers[1].length > 0 ?
+                                            greysAllotted - stickers[1].length : "None"}}
                                             left</div>
                                     </span>
                                 </label>
@@ -109,10 +105,8 @@
                                     </draggable>
                                 </div>
                             </div>
-                            <div class="accordion">
-                                <input type="checkbox" id="reg-white-accordion" name="accordion-checkbox" hidden>
-                                <label class="accordion-header" for="reg-white-accordion">
-                                    <i class="icon icon-arrow-right mr-1"></i>
+                            <div>
+                                <label class="accordion-header">
                                     <span class='h5'>White stickers</span>
                                 </label>
                                 <div class="accordion-body">
@@ -143,8 +137,8 @@
                                     <label class="chip" for="tag-6">MS Only</label>
                                 </div>
                                 <div class='filter-body'>
-                                    <draggable v-model='notStickeredBlock' @end='onEnd' :options="{group:'block', sort: false}"
-                                        style='width: 100%; min-height: 25px; display: grid; grid-template-columns: repeat(auto-fill,minmax(220px, 1fr));'>
+                                    <draggable v-model='notStickeredBlock' @end='onEnd' :options="{group:'block', sort: false, handle: '.a-c'}"
+                                        style='width: 100%; min-height: 25px; display: grid; grid-template-columns: repeat(auto-fill,minmax(310px, 1fr));'>
                                         <div style='width: 100%; margin-top: 0;' class='menu-item class-style filter-item'
                                             :data-tag='checkTagsBlock(item)' v-for="item in notStickeredBlock" :key="item.id">
                                             <div class='a-c'>
@@ -174,12 +168,12 @@
                             </div>
                         </div>
                         <div class='column menu'>
-                            <div v-if='stickers[3]' class="accordion">
-                                <input type="checkbox" id="block-black-accordion" name="accordion-checkbox" hidden>
-                                <label class="accordion-header" for="block-black-accordion">
-                                    <i class="icon icon-arrow-right mr-1"></i>
+                            <div v-if='stickers[3]'>
+                                <label class="accordion-header">
                                     <span class='h5'>Black stickers</span> <span v-if='stickers[3]'>
-                                        <div class="label label-primary">{{blacksAllottedBlock - stickers[3].length}}
+                                        <div class="label label-primary">{{blacksAllottedBlock - stickers[3].length > 0
+                                            ?
+                                            blacksAllottedBlock - stickers[3].length : "None"}}
                                             left</div>
                                     </span>
                                 </label>
@@ -191,12 +185,12 @@
                                     </draggable>
                                 </div>
                             </div>
-                            <div v-if='stickers[4]' class="accordion">
-                                <input type="checkbox" id="block-grey-accordion" name="accordion-checkbox" hidden>
-                                <label class="accordion-header" for="block-grey-accordion">
-                                    <i class="icon icon-arrow-right mr-1"></i>
+                            <div v-if='stickers[4]'>
+                                <label class="accordion-header">
                                     <span class='h5'>Grey stickers</span> <span v-if='stickers[4]'>
-                                        <div class="label label-primary">{{greysAllottedBlock - stickers[4].length}}
+                                        <div class="label label-primary">{{greysAllottedBlock - stickers[4].length > 0
+                                            ?
+                                            greysAllottedBlock - stickers[4].length : "None"}}
                                             left</div>
                                     </span>
                                 </label>
@@ -208,10 +202,8 @@
                                     </draggable>
                                 </div>
                             </div>
-                            <div class="accordion">
-                                <input type="checkbox" id="block-white-accordion" name="accordion-checkbox" hidden>
-                                <label class="accordion-header" for="block-white-accordion">
-                                    <i class="icon icon-arrow-right mr-1"></i>
+                            <div>
+                                <label class="accordion-header">
                                     <span class='h5'>White stickers</span>
                                 </label>
                                 <div class="accordion-body">

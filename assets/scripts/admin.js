@@ -29,7 +29,7 @@ Vue.component('meta-edit', {
         </div>
     </div>`,
 	methods: {
-		save: function() {
+		save: function () {
 			$('.save-changes-button').addClass('loading');
 			var self = this;
 			self.$root.meta.stickeringActive =
@@ -37,15 +37,15 @@ Vue.component('meta-edit', {
 			axios
 				.get(
 					'./backend/admin.php?func=meta&meta=' +
-						JSON.stringify(self.$root.meta)
+					JSON.stringify(self.$root.meta)
 				)
-				.then(function(response) {
+				.then(function (response) {
 					self.$root.query();
 					$('.save-changes-button').removeClass('loading');
 					$('.save-changes-button').html('Changes saved!');
 				});
 		},
-		check: function() {
+		check: function () {
 			$('.save-changes-button').html('Save changes');
 		}
 	}
@@ -76,15 +76,16 @@ Vue.component('student-table', {
         </div>
     </div>`,
 	methods: {
-		addStudent: function() {
+		addStudent: function () {
 			$('.save-changes-button').html('Save changes');
 			var self = this;
 
 			(async function getFormValues() {
-				const { value: formValues } = await Swal.fire({
+				const {
+					value: formValues
+				} = await Swal.fire({
 					title: 'Add a student',
-					html:
-						'<div class="form-group">' +
+					html: '<div class="form-group">' +
 						'<input class="form-input" type="text" id="add-fname" placeholder="First name"><br>' +
 						'<input class="form-input" type="text" id="add-lname" placeholder="Last name"><br>' +
 						'<input class="form-input" type="email" id="add-email" placeholder="Email"><br>' +
@@ -122,24 +123,24 @@ Vue.component('student-table', {
 				}
 			})();
 		},
-		save: function() {
+		save: function () {
 			$('.save-changes-button').addClass('loading');
 			var self = this;
 			axios
 				.get(
 					'./backend/admin.php?func=students&students=' +
-						JSON.stringify(self.$root.students)
+					JSON.stringify(self.$root.students)
 				)
-				.then(function(response) {
+				.then(function (response) {
 					self.$root.query();
 					$('.save-changes-button').removeClass('loading');
 					$('.save-changes-button').html('Changes saved!');
 				});
 		},
-		deletestudent: function(student) {
+		deletestudent: function (student) {
 			this.$root.students.splice(student, 1);
 		},
-		check: function() {
+		check: function () {
 			$('.save-changes-button').html('Save changes');
 		}
 	}
@@ -168,15 +169,16 @@ Vue.component('admin-table', {
         </div>
     </div>`,
 	methods: {
-		addAdmin: function() {
+		addAdmin: function () {
 			$('.a-save-changes-button').html('Save changes');
 			var self = this;
 
 			(async function getFormValues() {
-				const { value: formValues } = await Swal.fire({
+				const {
+					value: formValues
+				} = await Swal.fire({
 					title: 'Add an admin',
-					html:
-						'<div class="form-group">' +
+					html: '<div class="form-group">' +
 						'<input class="form-input" type="text" id="a-add-fname" placeholder="First name"><br>' +
 						'<input class="form-input" type="text" id="a-add-lname" placeholder="Last name"><br>' +
 						'<input class="form-input" type="email" id="a-add-email" placeholder="Email"><br>' +
@@ -211,24 +213,24 @@ Vue.component('admin-table', {
 				}
 			})();
 		},
-		save: function() {
+		save: function () {
 			$('.a-save-changes-button').addClass('loading');
 			var self = this;
 			axios
 				.get(
 					'./backend/admin.php?func=admin&admin=' +
-						JSON.stringify(self.$root.admin)
+					JSON.stringify(self.$root.admin)
 				)
-				.then(function(response) {
+				.then(function (response) {
 					self.$root.query();
 					$('.a-save-changes-button').removeClass('loading');
 					$('.a-save-changes-button').html('Changes saved!');
 				});
 		},
-		deleteadmin: function(admin) {
+		deleteadmin: function (admin) {
 			this.$root.admin.splice(admin, 1);
 		},
-		check: function() {
+		check: function () {
 			$('.a-save-changes-button').html('Save changes');
 		}
 	}
@@ -239,13 +241,14 @@ var vm = new Vue({
 	data: {
 		students: Array,
 		admin: Array,
-		meta: Object
+		meta: Object,
+		notStickered: Array
 	},
 	methods: {
-		verify: function() {
+		verify: function () {
 			axios
 				.get('./backend/verify.php?client=true')
-				.then(function(response) {
+				.then(function (response) {
 					if (response.data == '0') {
 						window.location.href = 'login/';
 					} else if (response.data == '2') {
@@ -253,9 +256,9 @@ var vm = new Vue({
 					}
 				});
 		},
-		query: function() {
+		query: function () {
 			var self = this;
-			axios.get('./backend/admin.php?func=load').then(function(response) {
+			axios.get('./backend/admin.php?func=load').then(function (response) {
 				//compile list of students
 				var studentList = [];
 				response.data[0].forEach(student => {
@@ -290,8 +293,7 @@ var vm = new Vue({
 				var metaList = {};
 				response.data[2].forEach(data => {
 					metaList = {
-						stickeringActive:
-							data.stickering_active == '1' ? true : false,
+						stickeringActive: data.stickering_active == '1' ? true : false,
 						blacksAllotted: data.blacks_allotted,
 						greysAllotted: data.greys_allotted,
 						blacksAllottedBlock: data.blacks_allotted_block,
@@ -300,7 +302,20 @@ var vm = new Vue({
 				});
 
 				self.meta = metaList;
+
+				self.notStickered = response.data[3];
 			});
+		},
+		reminder: function () {
+			$('.reminder-button').addClass('loading');
+			axios.get('./backend/admin.php?func=reminder')
+				.then(function () {
+					$('.reminder-button').removeClass('loading');
+					$('.reminder-button').html('Reminder email sent!');
+				})
+				.catch(function () {
+					alert("Failed!");
+				});
 		}
 	},
 	beforeMount() {

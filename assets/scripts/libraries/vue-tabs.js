@@ -395,32 +395,28 @@
 							{
 								'left-vertical-tabs': this.isStacked
 							}
-						]
+						],
+						attrs: {
+							style: 'position: fixed; top: 0; right: 0; left: 0; height: 47px; background-color: white; z-index: 300;'
+						}
 					},
 					[
 						h(
-							'div', {
-								class: ['nav-tabs-wrapper', this.stackedClass]
+							'header', {
+								class: this.classList + ' navbar',
+								attrs: {
+									role: 'tablist',
+									class: 'tab tab-block'
+								}
 							},
 							[
 								h(
-									'header', {
-										class: this.classList + ' navbar',
+									'section', {
 										attrs: {
-											role: 'tablist',
-											class: 'tab tab-block'
+											class: 'navbar-section tab-section'
 										}
 									},
-									[
-										h(
-											'section', {
-												attrs: {
-													class: 'navbar-section tab-section'
-												}
-											},
-											[tabList]
-										)
-									]
+									[tabList]
 								)
 							]
 						)
@@ -433,7 +429,10 @@
 							{
 								'right-text-tabs': this.isStacked
 							}
-						]
+						],
+						attrs: {
+							style: 'margin-top: 47px;'
+						}
 					},
 					[this.$slots.default]
 				)

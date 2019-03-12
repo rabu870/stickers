@@ -1,13 +1,28 @@
 <?php
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
+
+require './PHPMailer/src/Exception.php';
+require './PHPMailer/src/PHPMailer.php';
+require './PHPMailer/src/SMTP.php';
+
 require_once './verify.php';
 require_once './connection.php';
 require_once './functions.php';
 if ($access == 1) {
     if ($_GET['func'] == 'load') {
-        $s = $db->query('SELECT * FROM students')->fetch_all(MYSQLI_ASSOC);
+        $s = $db->query('SELECT * FROM `students`')->fetch_all(MYSQLI_ASSOC);
         $a = $db->query('SELECT * FROM `admin`')->fetch_all(MYSQLI_ASSOC);
         $c = $db->query('SELECT * FROM `meta`')->fetch_all(MYSQLI_ASSOC);
-        echo "[" . json_encode($s, JSON_PRETTY_PRINT) . ", " . json_encode($a, JSON_PRETTY_PRINT) . ", " . json_encode($c, JSON_PRETTY_PRINT) . "]";
+        $u = [];
+        foreach($s as $stu){
+            if(strval($stu['stickered']) == '0'){
+                array_push($u,ucwords($stu['first_name'] . ' ' . str_split($stu['last_name'])[0] . '.'));
+            }
+        }
+        echo "[" . json_encode($s, JSON_PRETTY_PRINT) . ", " . json_encode($a, JSON_PRETTY_PRINT) . ", " . json_encode($c, JSON_PRETTY_PRINT) . ", " . json_encode($u, JSON_PRETTY_PRINT) . "]";
     } elseif ($_GET['func'] == 'students' || $_GET['func'] == 'admin') {
         $people = json_decode($_GET[$_GET['func']], $assoc = true);
         $db->query("DELETE FROM `" . $_GET['func'] . "` WHERE true");
@@ -20,7 +35,15 @@ if ($access == 1) {
                 }
                 $query = "INSERT INTO `" . $_GET['func'] . "`(`id`, `first_name`, `last_name`, `email`, `login_key`) VALUES (" . sqlize($person['id']) . "," . sqlize($person['firstName']) . "," . sqlize($person['lastName']) . "," . sqlize($person['email']) . "," . sqlize($key) . ");";
             } else {
-                $query = "INSERT INTO `" . $_GET['func'] . "`(`first_name`, `last_name`, `email`) VALUES (" . sqlize($person['firstName']) . "," . sqlize($person['lastName']) . "," . sqlize($person['email']) . ");";
+                $query = "INSERT INTO `" . $_GET['func'] . "`(`first_name`, `last_name`, `email`";
+                if(!empty($person['gradYear'])){
+                    $query = $query . ", `grad_year`";
+                }
+                $query = $query . ") VALUES (" . sqlize($person['firstName']) . "," . sqlize($person['lastName']) . "," . sqlize($person['email']);
+                if(!empty($person['gradYear'])){
+                    $query = $query . ", " . sqlize($person['gradYear']);
+                }
+                $query = $query . ");";
             }
             $db->query($query);
             if ($_GET['func'] == 'students') {
@@ -32,6 +55,7 @@ if ($access == 1) {
         if ($meta['stickeringActive'] == '1') {
             $active = $db->query("SELECT `stickering_active` FROM `meta` WHERE true")->fetch_row();
             if ($active[0] == "0") {
+                $db->query("UPDATE `students` SET `stickered` = 0 WHERE true");
                 $db->query("DELETE FROM `classes` WHERE true;");
                 $fac = "Michael Coffey";
                 $mega = 0;
@@ -56,6 +80,30 @@ if ($access == 1) {
         $db->query("DELETE FROM `meta` WHERE true");
         $query = "INSERT INTO `meta`(`stickering_active`, `blacks_allotted` , `greys_allotted` , `blacks_allotted_block` , `greys_allotted_block`) VALUES (" . sqlize($meta['stickeringActive']) . "," . sqlize($meta['greysAllotted']) . " ," . sqlize($meta['blacksAllotted']) . " ," . sqlize($meta['blacksAllottedBlock']) . " ," . sqlize($meta['greysAllottedBlock']) . ")";
         $db->query($query);
+    } elseif($_GET['func'] == 'reminder') {
+        $mail = new PHPMailer;
+        $mail->isSMTP();
+        //will eventually be something like noreply-stickers@pscs.org
+        $mail->setFrom('eli.kimchi@pscs.org', 'PSCS Stickers');
+        //$mail->addAddress('noreply-stickers@pscs.org', 'Stickering System');
+        $students = $db->query("SELECT * FROM `students` WHERE `stickered` = 0;");
+        foreach($students as $student){
+            $mail->addBCC($student[email], $student[first_name] . ' ' . $student[last_name]);
+        }
+        //username and password stored in the connection.php file
+        $mail->Username = $mail_username;
+        $mail->Password = $mail_password;
+        $mail->Host = 'email-smtp.us-west-2.amazonaws.com';
+        // The subject line of the email
+        $mail->Subject = 'Stickering reminder';
+        $mail->Body = 'You haven\'t yet stickered! Please do so as soon as possible.';
+        $mail->SMTPAuth = true;
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = 587;
+        $mail->isHTML(true);
+        if(!$mail->send()) {
+            header('HTTP/1.0 400 Bad error');
+        }
     }
 } else {
     die();
