@@ -1,12 +1,12 @@
 <?php
 
-// use PHPMailer\PHPMailer\PHPMailer;
-// use PHPMailer\PHPMailer\Exception;
-// use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
 
-// require './PHPMailer/src/Exception.php';
-// require './PHPMailer/src/PHPMailer.php';
-// require './PHPMailer/src/SMTP.php';
+require './PHPMailer/src/Exception.php';
+require './PHPMailer/src/PHPMailer.php';
+require './PHPMailer/src/SMTP.php';
 
 require_once './verify.php';
 require_once './connection.php';
@@ -81,31 +81,29 @@ if ($access == 1) {
         $query = "INSERT INTO `meta`(`stickering_active`, `blacks_allotted` , `greys_allotted` , `blacks_allotted_block` , `greys_allotted_block`) VALUES (" . sqlize($meta['stickeringActive']) . "," . sqlize($meta['greysAllotted']) . " ," . sqlize($meta['blacksAllotted']) . " ," . sqlize($meta['blacksAllottedBlock']) . " ," . sqlize($meta['greysAllottedBlock']) . ")";
         $db->query($query);
     } elseif($_GET['func'] == 'reminder') {
-        // $mail = new PHPMailer;
-        // $mail->isSMTP();
-        // //will eventually be something like noreply-stickers@pscs.org
-        // $mail->setFrom('eli.kimchi@pscs.org', 'PSCS Stickers');
-        // //run this in a for loop for every student, or are we sending seperate emails to each student?
-        // $mail->addAddress('noreply-stickers@pscs.org', 'Stickering System')
-        //$students = $db->query("SELECT * FROM `students` WHERE `stickered` = 0;");
-        //foreach($students as $student){
-            // $mail->addBCC($student[email], $student[first_name] . ' ' . $student[last_name][0]);
-        //}
-        // //username and password stored in the connection.php file
-        // $mail->Username = $mail_username;
-        // $mail->Password = $mail_password;
-        // $mail->Host = 'email-smtp.us-west-2.amazonaws.com';
-        // // The subject line of the email
-        // $mail->Subject = 'Stickering reminder';
-        // $mail->Body = 'You haven\'t yet stickered! Please do so as soon as possible.';
-        // $mail->SMTPAuth = true;
-        // $mail->SMTPSecure = 'tls';
-        // $mail->Port = 587;
-        // $mail->isHTML(true);
-        // if(!$mail->send()) {
-        //     //fail the ajax request
-        //     echo "Email not sent. " , $mail->ErrorInfo , PHP_EOL;
-        // }
+        $mail = new PHPMailer;
+        $mail->isSMTP();
+        //will eventually be something like noreply-stickers@pscs.org
+        $mail->setFrom('eli.kimchi@pscs.org', 'PSCS Stickers');
+        //$mail->addAddress('noreply-stickers@pscs.org', 'Stickering System');
+        $students = $db->query("SELECT * FROM `students` WHERE `stickered` = 0;");
+        foreach($students as $student){
+            $mail->addBCC($student[email], $student[first_name] . ' ' . $student[last_name]);
+        }
+        //username and password stored in the connection.php file
+        $mail->Username = $mail_username;
+        $mail->Password = $mail_password;
+        $mail->Host = 'email-smtp.us-west-2.amazonaws.com';
+        // The subject line of the email
+        $mail->Subject = 'Stickering reminder';
+        $mail->Body = 'You haven\'t yet stickered! Please do so as soon as possible.';
+        $mail->SMTPAuth = true;
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = 587;
+        $mail->isHTML(true);
+        if(!$mail->send()) {
+            header('HTTP/1.0 400 Bad error');
+        }
     }
 } else {
     die();
