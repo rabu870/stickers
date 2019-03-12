@@ -85,7 +85,7 @@ if ($access == 1) {
         // $mail->isSMTP();
         // //will eventually be something like noreply-stickers@pscs.org
         // $mail->setFrom('eli.kimchi@pscs.org', 'PSCS Stickers');
-        // //run this in a for loop for every student, or are we sending seperate emails to each student?
+        // //run this in a for loop for every student, or are we sending seperate emails to each student? My SMTP server has a max of 14 emails per second so we need to take that into account.
         // $mail->addAddress('eli.kimchi@pscs.org', 'Name of Student');
         // //username and password stored in the connection.php file
         // $mail->Username = $mail_username;

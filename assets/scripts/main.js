@@ -81,7 +81,6 @@ var vm = new Vue({
                     }
                     $('.main-loader').css('display', 'none');
                     $('.pad').css('display', 'block');
-                    self.edited = false;
                     self.init = true;
                 }
             });
@@ -95,6 +94,7 @@ var vm = new Vue({
             });
             axios.get('./backend/main.php?func=update&stickers=' + JSON.stringify(stickerList)).then(function () {
                 self.query();
+                self.edited = false;
                 $('.update-button').removeClass('loading');
                 $('.update-button').html('Changes saved!');
                 setTimeout(
