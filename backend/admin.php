@@ -58,13 +58,14 @@ if ($access == 1) {
                 $db->query("UPDATE `students` SET `stickered` = 0 WHERE true");
                 $db->query("DELETE FROM `classes` WHERE true;");
                 $db->query("DELETE FROM `stickers` WHERE true;");
-                $fac = "Michael Coffey";
-                $mega = 0;
-                $block = 0;
                 $html = json_decode(json_encode(simplexml_load_file('https://classes.pscs.org/feed')), $assoc = true);
                 $query = "INSERT into `classes` (`class_name`, `link`, `facilitator`, `is_mega`, `is_block`, `tags`) VALUES (";
                 foreach ($html['channel']['item'] as $class) {
-                    $query = $query . sqlize($class['title']) . ", " . sqlize($class['link']) . ", " . sqlize($fac) . ", " . sqlize($mega) . ", " . sqlize($block) . ", " . "'ms-only'" . ")";
+                    $fac = "Michael Coffey";
+                    $mega = 0;
+                    $block = 0;
+                    $tags = 'ms-only';
+                    $query = $query . sqlize($class['title']) . ", " . sqlize($class['link']) . ", " . sqlize($fac) . ", " . sqlize($mega) . ", " . sqlize($block) . ", " . sqlize($tags) . ")";
                     if ($class != $html['channel']['item'][count($html['channel']['item']) - 1]) {
                         $query = $query . ",(";
                     } else {
