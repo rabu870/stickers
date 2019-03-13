@@ -26,196 +26,194 @@
             <v-tab title="Regular">
                 <div class='loading loading-lg main-loader'></div>
                 <div class='container pad' style='width: unset;'>
-                    <div class='columns'>
-                        <div class='column menu'>
-                            <h3>Not Stickered</h3>
-                            <div class="filter">
-                                <input type="radio" id="tag-0" class="filter-tag" name="filter-radio" hidden checked>
-                                <input type="radio" id="tag-1" class="filter-tag" name="filter-radio" hidden>
-                                <input type="radio" id="tag-2" class="filter-tag" name="filter-radio" hidden>
-                                <input type="radio" id="tag-3" class="filter-tag" name="filter-radio" hidden>
+                    <div class='menu' style='width: 50%'>
+                        <h3>Not Stickered</h3>
+                        <div class="filter">
+                            <input type="radio" id="tag-0" class="filter-tag" name="filter-radio" hidden checked>
+                            <input type="radio" id="tag-1" class="filter-tag" name="filter-radio" hidden>
+                            <input type="radio" id="tag-2" class="filter-tag" name="filter-radio" hidden>
+                            <input type="radio" id="tag-3" class="filter-tag" name="filter-radio" hidden>
 
-                                <div class="filter-nav" style='margin-bottom: 10px;'>
-                                    <label class="chip" for="tag-0">All</label>
-                                    <label class="chip" for="tag-1">HS Only</label>
-                                    <label class="chip" for="tag-2">MS Only</label>
-                                    <label class="chip" for="tag-3">Mega</label>
-                                </div>
-                                <div class='filter-body'>
-                                    <draggable v-model='notStickered' @end='onEnd' :options="{group:'regular', sort: false, handle: '.a-c'}"
-                                        style='width: 100%; min-height: 25px; display: grid; grid-template-columns: repeat(auto-fill,minmax(310px, 1fr));'>
-                                        <div style='width: 100%;' class='menu-item class-style filter-item' :data-tag='checkTags(item)'
-                                            v-for="item in notStickered" :key="item.id">
-                                            <div class='a-c'>
-                                                <span class='class-name'>{{item.className}}</span>
-                                                <div style='float: right;' class="popover popover-bottom">
-                                                    <i class='show-hover icon icon-more-horiz'></i>
-                                                    <div class="popover-container">
-                                                        <div class="card no-decoration" style='cursor:default; text-decoration: none'>
-                                                            <div style='color: black;' class="card-header">
-                                                                <div class='card-title h5'>{{item.className}}</div>
-                                                                <div class='card-subtitle'>{{item.facilitator}}</div>
-                                                            </div>
-                                                            <div v-if='genTags(item).length > 0' class="card-body">
-                                                                <span v-for='tag in genTags(item)' style='margin-right: 5px;'
-                                                                    class="label label-primary">{{tag}}</span>
-                                                            </div>
-                                                            <div class="card-footer">
-                                                                <a target='_blank' :href='item.link'>Read more</a>
-                                                            </div>
+                            <div class="filter-nav" style='margin-bottom: 10px;'>
+                                <label class="chip" for="tag-0">All</label>
+                                <label class="chip" for="tag-1">HS Only</label>
+                                <label class="chip" for="tag-2">MS Only</label>
+                                <label class="chip" for="tag-3">Mega</label>
+                            </div>
+                            <div class='filter-body'>
+                                <draggable v-model='notStickered' @end='onEnd' :options="{group:'regular', sort: false}"
+                                    style='width: 100%; min-height: 25px; display: grid; grid-template-columns: repeat(auto-fill,minmax(310px, 1fr));'>
+                                    <div style='width: 100%;' class='menu-item class-style filter-item' :data-tag='checkTags(item)'
+                                        v-for="item in notStickered" :key="item.id">
+                                        <div class='a-c'>
+                                            <span class='class-name'>{{item.className}}</span>
+                                            <div style='float: right;' class="popover popover-bottom">
+                                                <i class='show-hover icon icon-more-horiz'></i>
+                                                <div class="popover-container">
+                                                    <div class="card no-decoration" style='cursor:default; text-decoration: none'>
+                                                        <div style='color: black;' class="card-header">
+                                                            <div class='card-title h5'>{{item.className}}</div>
+                                                            <div class='card-subtitle'>{{item.facilitator}}</div>
+                                                        </div>
+                                                        <div v-if='genTags(item).length > 0' class="card-body">
+                                                            <span v-for='tag in genTags(item)' style='margin-right: 5px;'
+                                                                class="label label-primary">{{tag}}</span>
+                                                        </div>
+                                                        <div class="card-footer">
+                                                            <a target='_blank' :href='item.link'>Read more</a>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </draggable>
-                                </div>
-                            </div>
-                        </div>
-                        <div class='column menu'>
-                            <div v-if='stickers[0]'>
-                                <label class="accordion-header">
-                                    <span class='h5'>Black stickers</span> <span v-if='stickers[0]'>
-                                        <div class="label label-primary">{{blacksAllotted - stickers[0].length > 0 ?
-                                            blacksAllotted - stickers[0].length : "None"}}
-                                            left</div>
-                                    </span>
-                                </label>
-                                <div class="accordion-body">
-                                    <draggable v-model='stickers[0]' @end='onEnd' :options="{group: {name: 'regular', put: blacksAllotted - stickers[0].length > 0}, sort: false}"
-                                        style='min-height: 25px;'>
-                                        <div style='width: 100%;' class='menu-item class-style' v-for="item in stickers[0]"
-                                            :key="item.id"><a>{{item.className}}</a></div>
-                                    </draggable>
-                                </div>
-                            </div>
-                            <div v-if='stickers[1]'>
-                                <label class="accordion-header">
-                                    <span class='h5'>Grey stickers</span> <span v-if='stickers[0]'>
-                                        <div class="label label-primary">{{greysAllotted - stickers[1].length > 0 ?
-                                            greysAllotted - stickers[1].length : "None"}}
-                                            left</div>
-                                    </span>
-                                </label>
-                                <div class="accordion-body">
-                                    <draggable v-model='stickers[1]' @end='onEnd' :options="{group:{name: 'regular', put: greysAllotted - stickers[1].length > 0}, sort: false}"
-                                        style='min-height: 25px;'>
-                                        <div style='width: 100%;' class='menu-item class-style' v-for="item in stickers[1]"
-                                            :key="item.id"><a>{{item.className}}</a></div>
-                                    </draggable>
-                                </div>
-                            </div>
-                            <div>
-                                <label class="accordion-header">
-                                    <span class='h5'>White stickers</span>
-                                </label>
-                                <div class="accordion-body">
-                                    <draggable v-model='stickers[2]' @end='onEnd' :options="{group:'regular', sort: false}"
-                                        style='min-height: 25px;'>
-                                        <div style='width: 100%;' class='menu-item class-style' v-for="item in stickers[2]"
-                                            :key="item.id"><a>{{item.className}}</a></div>
-                                    </draggable>
-                                </div>
+                                    </div>
+                                </draggable>
                             </div>
                         </div>
                     </div>
+                    <div class='menu' style='position: fixed; top: 57px; right: 20px; width: 47%; bottom: 10px; overflow-y: scroll; overflow-x:hidden;'>
+                        <div v-if='stickers[0]'>
+                            <label class="accordion-header">
+                                <span class='h5'>Black stickers</span> <span v-if='stickers[0]'>
+                                    <div class="label label-primary">{{blacksAllotted - stickers[0].length > 0 ?
+                                        blacksAllotted - stickers[0].length : "None"}}
+                                        left</div>
+                                </span>
+                            </label>
+                            <div class="accordion-body">
+                                <draggable v-model='stickers[0]' @end='onEnd' :options="{group: {name: 'regular', put: blacksAllotted - stickers[0].length > 0}, sort: false}"
+                                    style='min-height: 25px;'>
+                                    <div style='width: 100%;' class='menu-item class-style' v-for="item in stickers[0]"
+                                        :key="item.id"><a>{{item.className}}</a></div>
+                                </draggable>
+                            </div>
+                        </div>
+                        <div v-if='stickers[1]'>
+                            <label class="accordion-header">
+                                <span class='h5'>Grey stickers</span> <span v-if='stickers[0]'>
+                                    <div class="label label-primary">{{greysAllotted - stickers[1].length > 0 ?
+                                        greysAllotted - stickers[1].length : "None"}}
+                                        left</div>
+                                </span>
+                            </label>
+                            <div class="accordion-body">
+                                <draggable v-model='stickers[1]' @end='onEnd' :options="{group:{name: 'regular', put: greysAllotted - stickers[1].length > 0}, sort: false}"
+                                    style='min-height: 25px;'>
+                                    <div style='width: 100%;' class='menu-item class-style' v-for="item in stickers[1]"
+                                        :key="item.id"><a>{{item.className}}</a></div>
+                                </draggable>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="accordion-header">
+                                <span class='h5'>White stickers</span>
+                            </label>
+                            <div class="accordion-body">
+                                <draggable v-model='stickers[2]' @end='onEnd' :options="{group:'regular', sort: false}"
+                                    style='min-height: 25px;'>
+                                    <div style='width: 100%;' class='menu-item class-style' v-for="item in stickers[2]"
+                                        :key="item.id"><a>{{item.className}}</a></div>
+                                </draggable>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </v-tab>
             <v-tab title="Block">
                 <div class='container pad' style='width: unset;'>
-                    <div class='columns'>
-                        <div class='column menu'>
-                            <h3>Not Stickered</h3>
-                            <div class="filter">
-                                <input type="radio" id="tag-10" class="filter-tag" name="filter-radio" hidden>
-                                <input type="radio" id="tag-5" class="filter-tag" name="filter-radio" hidden>
-                                <input type="radio" id="tag-6" class="filter-tag" name="filter-radio" hidden>
+                    <div class='menu' style='width: 50%'>
+                        <h3>Not Stickered</h3>
+                        <div class="filter">
+                            <input type="radio" id="tag-10" class="filter-tag" name="filter-radio" hidden>
+                            <input type="radio" id="tag-5" class="filter-tag" name="filter-radio" hidden>
+                            <input type="radio" id="tag-6" class="filter-tag" name="filter-radio" hidden>
 
-                                <div class="filter-nav" style='margin-bottom: 10px;'>
-                                    <label class="chip" for="tag-10">All</label>
-                                    <label class="chip" for="tag-5">HS Only</label>
-                                    <label class="chip" for="tag-6">MS Only</label>
-                                </div>
-                                <div class='filter-body'>
-                                    <draggable v-model='notStickeredBlock' @end='onEnd' :options="{group:'block', sort: false, handle: '.a-c'}"
-                                        style='width: 100%; min-height: 25px; display: grid; grid-template-columns: repeat(auto-fill,minmax(310px, 1fr));'>
-                                        <div style='width: 100%; margin-top: 0;' class='menu-item class-style filter-item'
-                                            :data-tag='checkTagsBlock(item)' v-for="item in notStickeredBlock" :key="item.id">
-                                            <div class='a-c'>
-                                                {{item.className}}
-                                                <div style='float: right;' class="popover popover-bottom">
-                                                    <i class='show-hover icon icon-more-horiz'></i>
-                                                    <div class="popover-container">
-                                                        <div class="card no-decoration" style='cursor:default; text-decoration: none'>
-                                                            <div style='color: black;' class="card-header">
-                                                                <div class='card-title h5'>{{item.className}}</div>
-                                                                <div class='card-subtitle'>{{item.facilitator}}</div>
-                                                            </div>
-                                                            <div v-if='genTags(item).length > 0' class="card-body">
-                                                                <span v-for='tag in genTags(item)' style='margin-right: 5px;'
-                                                                    class="label label-primary">{{tag}}</span>
-                                                            </div>
-                                                            <div class="card-footer">
-                                                                <a target='_blank' :href='item.link'>Read more</a>
-                                                            </div>
+                            <div class="filter-nav" style='margin-bottom: 10px;'>
+                                <label class="chip" for="tag-10">All</label>
+                                <label class="chip" for="tag-5">HS Only</label>
+                                <label class="chip" for="tag-6">MS Only</label>
+                            </div>
+                            <div class='filter-body'>
+                                <draggable v-model='notStickeredBlock' @end='onEnd' :options="{group:'block', sort: false, handle: '.a-c'}"
+                                    style='width: 100%; min-height: 25px; display: grid; grid-template-columns: repeat(auto-fill,minmax(310px, 1fr));'>
+                                    <div style='width: 100%; margin-top: 0;' class='menu-item class-style filter-item'
+                                        :data-tag='checkTagsBlock(item)' v-for="item in notStickeredBlock" :key="item.id">
+                                        <div class='a-c'>
+                                            {{item.className}}
+                                            <div style='float: right;' class="popover popover-bottom">
+                                                <i class='show-hover icon icon-more-horiz'></i>
+                                                <div class="popover-container">
+                                                    <div class="card no-decoration" style='cursor:default; text-decoration: none'>
+                                                        <div style='color: black;' class="card-header">
+                                                            <div class='card-title h5'>{{item.className}}</div>
+                                                            <div class='card-subtitle'>{{item.facilitator}}</div>
+                                                        </div>
+                                                        <div v-if='genTags(item).length > 0' class="card-body">
+                                                            <span v-for='tag in genTags(item)' style='margin-right: 5px;'
+                                                                class="label label-primary">{{tag}}</span>
+                                                        </div>
+                                                        <div class="card-footer">
+                                                            <a target='_blank' :href='item.link'>Read more</a>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </draggable>
-                                </div>
-                            </div>
-                        </div>
-                        <div class='column menu'>
-                            <div v-if='stickers[3]'>
-                                <label class="accordion-header">
-                                    <span class='h5'>Black stickers</span> <span v-if='stickers[3]'>
-                                        <div class="label label-primary">{{blacksAllottedBlock - stickers[3].length > 0
-                                            ?
-                                            blacksAllottedBlock - stickers[3].length : "None"}}
-                                            left</div>
-                                    </span>
-                                </label>
-                                <div class="accordion-body">
-                                    <draggable v-model='stickers[3]' @end='onEnd' :options="{group: {name: 'block', put: blacksAllottedBlock - stickers[3].length > 0}, sort: false}"
-                                        style='min-height: 25px;'>
-                                        <div style='width: 100%;' class='menu-item class-style' v-for="item in stickers[3]"
-                                            :key="item.id"><a>{{item.className}}</a></div>
-                                    </draggable>
-                                </div>
-                            </div>
-                            <div v-if='stickers[4]'>
-                                <label class="accordion-header">
-                                    <span class='h5'>Grey stickers</span> <span v-if='stickers[4]'>
-                                        <div class="label label-primary">{{greysAllottedBlock - stickers[4].length > 0
-                                            ?
-                                            greysAllottedBlock - stickers[4].length : "None"}}
-                                            left</div>
-                                    </span>
-                                </label>
-                                <div class="accordion-body">
-                                    <draggable v-model='stickers[4]' @end='onEnd' :options="{group:{name: 'block', put: greysAllottedBlock - stickers[4].length > 0}, sort: false}"
-                                        style='min-height: 25px;'>
-                                        <div style='width: 100%;' class='menu-item class-style' v-for="item in stickers[4]"
-                                            :key="item.id"><a>{{item.className}}</a></div>
-                                    </draggable>
-                                </div>
-                            </div>
-                            <div>
-                                <label class="accordion-header">
-                                    <span class='h5'>White stickers</span>
-                                </label>
-                                <div class="accordion-body">
-                                    <draggable v-model='stickers[5]' @end='onEnd' :options="{group:'block', sort: false}"
-                                        style='min-height: 25px;'>
-                                        <div style='width: 100%;' class='menu-item class-style' v-for="item in stickers[5]"
-                                            :key="item.id"><a>{{item.className}}</a></div>
-                                    </draggable>
-                                </div>
+                                    </div>
+                                </draggable>
                             </div>
                         </div>
                     </div>
+                    <div class='menu' style='position: fixed; top: 57px; right: 20px; width: 47%; bottom: 10px; overflow-y: scroll; overflow-x:hidden;'>
+                        <div v-if='stickers[3]'>
+                            <label class="accordion-header">
+                                <span class='h5'>Black stickers</span> <span v-if='stickers[3]'>
+                                    <div class="label label-primary">{{blacksAllottedBlock - stickers[3].length > 0
+                                        ?
+                                        blacksAllottedBlock - stickers[3].length : "None"}}
+                                        left</div>
+                                </span>
+                            </label>
+                            <div class="accordion-body">
+                                <draggable v-model='stickers[3]' @end='onEnd' :options="{group: {name: 'block', put: blacksAllottedBlock - stickers[3].length > 0}, sort: false}"
+                                    style='min-height: 25px;'>
+                                    <div style='width: 100%;' class='menu-item class-style' v-for="item in stickers[3]"
+                                        :key="item.id"><a>{{item.className}}</a></div>
+                                </draggable>
+                            </div>
+                        </div>
+                        <div v-if='stickers[4]'>
+                            <label class="accordion-header">
+                                <span class='h5'>Grey stickers</span> <span v-if='stickers[4]'>
+                                    <div class="label label-primary">{{greysAllottedBlock - stickers[4].length > 0
+                                        ?
+                                        greysAllottedBlock - stickers[4].length : "None"}}
+                                        left</div>
+                                </span>
+                            </label>
+                            <div class="accordion-body">
+                                <draggable v-model='stickers[4]' @end='onEnd' :options="{group:{name: 'block', put: greysAllottedBlock - stickers[4].length > 0}, sort: false}"
+                                    style='min-height: 25px;'>
+                                    <div style='width: 100%;' class='menu-item class-style' v-for="item in stickers[4]"
+                                        :key="item.id"><a>{{item.className}}</a></div>
+                                </draggable>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="accordion-header">
+                                <span class='h5'>White stickers</span>
+                            </label>
+                            <div class="accordion-body">
+                                <draggable v-model='stickers[5]' @end='onEnd' :options="{group:'block', sort: false}"
+                                    style='min-height: 25px;'>
+                                    <div style='width: 100%;' class='menu-item class-style' v-for="item in stickers[5]"
+                                        :key="item.id"><a>{{item.className}}</a></div>
+                                </draggable>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </v-tab>
         </vue-tabs>
