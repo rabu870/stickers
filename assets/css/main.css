@@ -147,3 +147,7 @@
 .a-c:hover .show-hover {
 	visibility: visible;
 }
+
+.class-display .label {
+	margin-right: 5px;
+}
