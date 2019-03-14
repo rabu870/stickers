@@ -57,10 +57,19 @@
 
         <link href="./assets/css/libraries/spectre.min.css" rel="stylesheet" type="text/css" />
         <link href="./assets/css/main.css" rel="stylesheet" type="text/css" />
+
+        <script>
+        
+        function func () {
+            alert('This page must be printed in Chrome, or there will be formatting issues.');
+            window.print();
+        }
+
+        </script>
         
     </head>
 
-    <body>
+    <body onload='func()'>
         <?php
             global $classes;
             global $stickers;
