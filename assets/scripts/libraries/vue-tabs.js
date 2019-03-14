@@ -431,7 +431,7 @@
 							}
 						],
 						attrs: {
-							style: 'margin-top: 47px;'
+							style: 'margin-top: 57px;'
 						}
 					},
 					[this.$slots.default]

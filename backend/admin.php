@@ -57,19 +57,27 @@ if ($access == 1) {
             if ($active[0] == "0") {
                 $db->query("UPDATE `students` SET `stickered` = 0 WHERE true");
                 $db->query("DELETE FROM `classes` WHERE true;");
-                $fac = "Michael Coffey";
-                $mega = 0;
-                $block = 0;
-                $html = json_decode(json_encode(simplexml_load_file('https://classes.pscs.org/feed')), $assoc = true);
-                $query = "INSERT into `classes` (`class_name`, `link`, `facilitator`, `is_mega`, `is_block`) VALUES (";
+                $db->query("DELETE FROM `stickers` WHERE true;");
+                $html = json_decode(json_encode(simplexml_load_file('https://classes.pscs.org/feed', null, LIBXML_NOCDATA)), $assoc = true);
+                $query = "INSERT into `classes` (`class_name`, `link`, `facilitator`, `is_mega`, `is_block`, `tags`) VALUES (";
                 foreach ($html['channel']['item'] as $class) {
-                    $query = $query . sqlize($class['title']) . ", " . sqlize($class['link']) . ", " . sqlize($fac) . ", " . sqlize($mega) . ", " . sqlize($block) . ")";
+                    $fac = "Michael Coffey";
+                    $mega = in_array('mega', $class['category']) ? 1 : 0;
+                    $block = in_array('block', $class['category']) ? 1 : 0;
+                    $tags = '';
+                    if(in_array('hs-only', $class['category'])) {
+                        $tags = 'hs-only';
+                    } elseif(in_array('ms-only', $class['category'])) {
+                        $tags = 'ms-only';
+                    }
+                    $query = $query . sqlize($class['title']) . ", " . sqlize($class['link']) . ", " . sqlize($fac) . ", " . sqlize($mega) . ", " . sqlize($block) . ", " . sqlize($tags) . ")";
                     if ($class != $html['channel']['item'][count($html['channel']['item']) - 1]) {
                         $query = $query . ",(";
                     } else {
                         $query = $query . ';';
                     }
                 }
+                echo $query;
                 $db->query($query);
 
             } else {
@@ -84,8 +92,8 @@ if ($access == 1) {
         $mail = new PHPMailer;
         $mail->isSMTP();
         //will eventually be something like noreply-stickers@pscs.org
-        $mail->setFrom('eli.kimchi@pscs.org', 'PSCS Stickers');
-        //$mail->addAddress('noreply-stickers@pscs.org', 'Stickering System');
+        $mail->setFrom('no_reply_stickering@pscs.org', 'PSCS Stickers');
+        $mail->addAddress('no_reply_stickers@pscs.org', 'PSCS Stickers');
         $students = $db->query("SELECT * FROM `students` WHERE `stickered` = 0;");
         foreach($students as $student){
             $mail->addBCC($student[email], $student[first_name] . ' ' . $student[last_name]);

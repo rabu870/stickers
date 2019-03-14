@@ -147,3 +147,11 @@
 .a-c:hover .show-hover {
 	visibility: visible;
 }
+
+.class-display .label {
+	margin-right: 5px;
+}
+
+.class-display:nth-child(2n+0) {
+	page-break-after: always
+}

@@ -23,7 +23,7 @@ if ($access == 2) {
             $check = false;
             foreach ($stickers as $key => $stickerlist) {
                 if ($key % 3 != 2 && count($stickerlist) > $allottedlist[$key]) {
-                    die();
+                    die('No cheating');
                 } else {
                     foreach ($stickerlist as $sticker) {
                         $check = true;
