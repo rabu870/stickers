@@ -60,7 +60,7 @@
         
     </head>
 
-    <body>
+    <body onload='window.print()'>
         <?php
             global $classes;
             global $stickers;
