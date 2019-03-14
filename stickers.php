@@ -18,7 +18,7 @@
         $classes = $db->query('SELECT * FROM `classes` WHERE true')->fetch_all($resulttype = MYSQLI_ASSOC);
     }else{
         $stickers = $db->query('SELECT * FROM `stickers` WHERE `class_id` = "' . $_GET['class'] . '"')->fetch_all($resulttype = MYSQLI_ASSOC);
-        array_push($classes, $db->query('SELECT * FROM `classes` WHERE `id` = "' . $_GET['class'] . '"')->fetch_row());
+        array_push($classes, $db->query('SELECT * FROM `classes` WHERE `id` = "' . $_GET['class'] . '"')->fetch_all($resulttype = MYSQLI_ASSOC)[0]);
     }
     
     function printClass($class, $class_info, $class_stickers) {
@@ -33,11 +33,11 @@
         $html .= $class_info['is_block'] == '1' ? "<span class='label label-primary' style='font-size:1rem'>Block</span>" : "";
         $html .= "</div></div>";
        
-        $previouspriority = -3;
+        $previouspriority = 0;
         $html .= "<div>";
         foreach($class_stickers as $sticker){
-            if($sticker['priority'] != $previouspriority){
-                $previouspriority = $sticker['priority'];
+            while($sticker['priority'] != $previouspriority){
+                $previouspriority++;
                 $html .= "</div><div class='sticker_column'>";
             }
             $html .= "<div class='sticker'>" . $students[$sticker['student_id']]['first_name'] . " " . $students[$sticker['student_id']]['last_name'][0] . "</div>";
@@ -64,11 +64,15 @@
         <?php
             global $classes;
             global $stickers;
-            foreach($classes as $c) {
-                printClass($c['id'], $c, array_filter($stickers, function ($s) {
-                    global $c;
-                    return $s['class_id'] == $c['id'];
-                }));
+            if(empty($_GET['class'])){
+                foreach($classes as $c) {
+                    printClass($c['id'], $c, array_filter($stickers, function ($s) {
+                        global $c;
+                        return $s['class_id'] == $c['id'];
+                    }));
+                }
+            }else{
+                printClass($_GET['class'],$classes[0],$stickers);
             }
         ?>
     </body>
