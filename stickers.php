@@ -61,7 +61,7 @@
         
     </head>
 
-    <body onload='window.print()'>
+    <body style='-webkit-print-color-adjust: exact !important;' onload='window.print();'>
         <?php
             global $classes;
             global $stickers;
