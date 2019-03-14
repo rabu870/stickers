@@ -18,10 +18,10 @@ Vue.component('meta-edit', {
 						</label>
 					</div>
 				</td>
-				<td><input type="number" class='form-input' :disabled='$root.meta.stickeringActive' v-model="$root.meta.blacksAllotted" @focus='check'></td>
-				<td><input type="number" class='form-input' :disabled='$root.meta.stickeringActive' v-model="$root.meta.greysAllotted" @focus='check'></td>
-				<td><input type="number" class='form-input' :disabled='$root.meta.stickeringActive' v-model="$root.meta.blacksAllottedBlock" @focus='check'></td>
-				<td><input type="number" class='form-input' :disabled='$root.meta.stickeringActive' v-model="$root.meta.greysAllottedBlock" @focus='check'></td>
+				<td><input type="number" class='form-input' :disabled='$root.stickeringActiveInit' v-model="$root.meta.blacksAllotted" @focus='check'></td>
+				<td><input type="number" class='form-input' :disabled='$root.stickeringActiveInit' v-model="$root.meta.greysAllotted" @focus='check'></td>
+				<td><input type="number" class='form-input' :disabled='$root.stickeringActiveInit' v-model="$root.meta.blacksAllottedBlock" @focus='check'></td>
+				<td><input type="number" class='form-input' :disabled='$root.stickeringActiveInit' v-model="$root.meta.greysAllottedBlock" @focus='check'></td>
             </tr>
         </table>
 		<div class='buttons'>
@@ -242,7 +242,8 @@ var vm = new Vue({
 		students: Array,
 		admin: Array,
 		meta: Object,
-		notStickered: Array
+		notStickered: Array,
+		stickeringActiveInit: true
 	},
 	methods: {
 		verify: function () {
@@ -299,6 +300,7 @@ var vm = new Vue({
 						blacksAllottedBlock: data.blacks_allotted_block,
 						greysAllottedBlock: data.greys_allotted_block
 					};
+					self.stickeringActiveInit = data.stickering_active == '1' ? true : false;
 				});
 
 				self.meta = metaList;
