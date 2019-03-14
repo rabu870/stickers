@@ -14,7 +14,7 @@
     }
     $students = $students_indexed;
     if(empty($_GET['class'])){
-        $stickers = $db->query('SELECT * FROM `stickers` WHERE true ORDER BY `priority` DESC')->fetch_all($resulttype = MYSQLI_ASSOC);
+        $stickers = $db->query('SELECT * FROM `stickers` WHERE true ORDER BY `priority` ASC')->fetch_all($resulttype = MYSQLI_ASSOC);
         $classes = $db->query('SELECT * FROM `classes` WHERE true')->fetch_all($resulttype = MYSQLI_ASSOC);
     }else{
         $stickers = $db->query('SELECT * FROM `stickers` WHERE `class_id` = "' . $_GET['class'] . '"')->fetch_all($resulttype = MYSQLI_ASSOC);
@@ -32,16 +32,18 @@
         $html .= $class_info['is_mega'] == '1' ? "<span class='label label-primary' style='font-size:1rem'>Mega</span>" : "";
         $html .= $class_info['is_block'] == '1' ? "<span class='label label-primary' style='font-size:1rem'>Block</span>" : "";
         $html .= "</div></div>";
-       
         $html .= "<div class='card-body'>";
-        $previouspriority = 0;
-        $html .= "<div>";
+        $html .= "<div class='sticker_column'>";
+        $previouspriority = 1;
         foreach($class_stickers as $sticker){
-            while($sticker['priority'] != $previouspriority){
-                $previouspriority++;
+            while($sticker['priority'] > $previouspriority){
                 $html .= "</div><div class='sticker_column'>";
+                $previouspriority++;
             }
-            $html .= "<div class='sticker'>" . $students[$sticker['student_id']]['first_name'] . " " . $students[$sticker['student_id']]['last_name'][0] . "</div>";
+            $html .= "<div class='sticker'>" . $students[$sticker['student_id']]['first_name'] . " " . $students[$sticker['student_id']]['last_name'][0] . ".</div>";
+        }while($previouspriority < 3){
+            $html .= "</div><div class='sticker_column'>";
+            $previouspriority++;
         }
         $html .= "</div></div></div>";
         echo $html;
