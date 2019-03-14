@@ -33,6 +33,7 @@
         $html .= $class_info['is_block'] == '1' ? "<span class='label label-primary' style='font-size:1rem'>Block</span>" : "";
         $html .= "</div></div>";
        
+        $html .= "<div class='card-body'>";
         $previouspriority = -3;
         $html .= "<div>";
         foreach($class_stickers as $sticker){
@@ -42,7 +43,7 @@
             }
             $html .= "<div class='sticker'>" . $students[$sticker['student_id']]['first_name'] . " " . $students[$sticker['student_id']]['last_name'][0] . "</div>";
         }
-        $html .= "</div></div>";
+        $html .= "</div></div></div>";
         echo $html;
     }
 
