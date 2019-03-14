@@ -152,6 +152,11 @@
 	margin-right: 5px;
 }
 
+.class-display {
+	margin: 10px;
+	height: 388px;
+}
+
 .class-display:nth-child(2n+0) {
 	page-break-after: always
 }
