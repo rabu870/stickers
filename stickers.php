@@ -32,17 +32,17 @@
         $html .= $class_info['is_mega'] == '1' ? "<span class='label label-primary' style='font-size:1rem'>Mega</span>" : "";
         $html .= $class_info['is_block'] == '1' ? "<span class='label label-primary' style='font-size:1rem'>Block</span>" : "";
         $html .= "</div></div>";
-        $html .= "<div class='card-body'>";
-        $html .= "<div class='sticker_column'>";
+        $html .= "<div class='card-body columns'>";
+        $html .= "<div class='sticker-column column'>";
         $previouspriority = 1;
         foreach($class_stickers as $sticker){
             while($sticker['priority'] > $previouspriority){
-                $html .= "</div><div class='sticker_column'>";
+                $html .= "</div><div class='sticker-column column'>";
                 $previouspriority++;
             }
-            $html .= "<div class='sticker'>" . $students[$sticker['student_id']]['first_name'] . " " . $students[$sticker['student_id']]['last_name'][0] . ".</div>";
+            $html .= "<span class='sticker label menu'>" . $students[$sticker['student_id']]['first_name'] . " " . $students[$sticker['student_id']]['last_name'][0] . ".</span>";
         }while($previouspriority < 3){
-            $html .= "</div><div class='sticker_column'>";
+            $html .= "</div><div class='sticker-column column'>";
             $previouspriority++;
         }
         $html .= "</div></div></div>";
@@ -60,10 +60,29 @@
 
         <link href="./assets/css/libraries/spectre.min.css" rel="stylesheet" type="text/css" />
         <link href="./assets/css/main.css" rel="stylesheet" type="text/css" />
+
+        <script src="./assets/scripts/libraries/jquery.min.js"></script>
+
+        <style>
+        
+        @media print {
+
+            @page {size: A4 landscape; }
+        }
+        
+        </style>
+
+        <script>
+        
+        function init() {
+            window.print();
+        }
+        
+        </script>
         
     </head>
 
-    <body style='-webkit-print-color-adjust: exact !important;' onload='window.print();'>
+    <body style='-webkit-print-color-adjust: exact !important;' onload='init();'>
         <?php
             global $classes;
             global $stickers;
