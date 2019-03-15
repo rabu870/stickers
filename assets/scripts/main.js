@@ -3,6 +3,11 @@ function getCookieValue(a) {
     return b ? b.pop() : '';
 }
 
+String.prototype.truncate =
+    function (n) {
+        return this.substr(0, n - 1) + (this.length > n ? '&hellip;' : '');
+    };
+
 var vm = new Vue({
     el: '#main-page',
     data: {
