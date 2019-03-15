@@ -6,8 +6,8 @@ Vue.component('meta-edit', {
                 <th>Stickering active</th>
                 <th>Black stickers allotted</th>
                 <th>Grey stickers allotted</th>
-                <th>Block greys allotted</th>
                 <th>Block blacks allotted</th>
+                <th>Block greys allotted</th>
             </tr>
             <tr>
 				<td>
