@@ -75,6 +75,7 @@
         <script>
         
         function init() {
+            alert('This page has been tested only in chrome and likely won\'t work in other browsers!\n Additionally, if you\'d like to download the stickers for later printing, you can select the "Save as PDF" option in the Chrome print dialog.');
             window.print();
         }
         
