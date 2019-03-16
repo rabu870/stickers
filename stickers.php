@@ -10,7 +10,7 @@
 
     $students = $db->query('SELECT `first_name`, `last_name`, `id` FROM `students` WHERE true')->fetch_all($resulttype = MYSQLI_ASSOC);
     foreach($students as $student){
-        $students_indexed[$student['id']] = $student;
+        $students_indexed[$student['id'] - 1] = $student;
     }
     $students = $students_indexed;
     if(empty($_GET['class'])){
@@ -24,7 +24,7 @@
     function printClass($class, $class_info, $class_stickers) {
         global $students;
         
-        $html = "<div class='class-display card'><div class='card-header'>";
+        $html = "<div class='class-display card' style='border: none;'><div class='card-header'>";
         $html .= "<div class='class-name card-title h1'>" . $class_info['class_name'] . '</div>';
         $html .= "<div class='class-facil card-subtitle h3'>" . $class_info['facilitator'] . '</div><div>';
         $html .= $class_info['tags'] == 'hs-only' ? "<span class='label label-primary' style='font-size:1rem'>HS Only</span>" : "";
