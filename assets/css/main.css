@@ -152,6 +152,33 @@
 	margin-right: 5px;
 }
 
-.class-display:nth-child(2n+0) {
-	page-break-after: always
+.class-display .card-body .label {
+	margin-top: 7px;
+	min-width: 0;
+}
+
+.class-display {
+	margin: 10px;
+	height: 690px;
+	page-break-after: always;
+}
+
+.class-display .column {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: left;
+	align-content: flex-start;
+}
+
+.class-display .column:not(:last-child) {
+	border-right: 1px solid lightgrey;
+}
+
+.class-display .column:first-child .label {
+	background-color: #303131;
+	color: white;
+}
+
+.class-display .column:nth-child(2) .label {
+	background-color: #eef0f3;
 }
