@@ -14,9 +14,31 @@
     <link href='../assets/css/libraries/spectre.min.css' rel='stylesheet' type='text/css'>
     <link href='../assets/css/libraries/spectre-icons.min.css' rel='stylesheet' type='text/css'>
     <link href='../assets/css/main.css' rel='stylesheet' type='text/css'>
+
+    <script>
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        function deleteCookie(name, path) {
+            if (getCookie(name)) {
+                document.cookie = name + "=" +
+                    ((path) ? ";path=" + path : "") +
+                    ";expires=Thu, 01 Jan 1970 00:00:01 GMT";
+            }
+        }
+    </script>
+
 </head>
 
-<body style='background-color: #f7f8f9'>
+<body style='background-color: #f7f8f9' onload='deleteCookie("login_key", "/")'>
     <div class="empty center">
         <div class="empty-icon">
             <i class="icon icon-3x icon-people"></i>
