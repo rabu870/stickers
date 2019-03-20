@@ -28,11 +28,16 @@
                 <div class='container pad' style='width: unset;'>
                     <div class='menu' style='width: 50%'>
                         <h3>Not Stickered</h3>
-                        <div class="filter">
-                            <input type="radio" id="tag-0" class="filter-tag" name="filter-radio" hidden checked>
-                            <input type="radio" id="tag-1" class="filter-tag" name="filter-radio" hidden>
-                            <input type="radio" id="tag-2" class="filter-tag" name="filter-radio" hidden>
-                            <input type="radio" id="tag-3" class="filter-tag" name="filter-radio" hidden>
+                        <input type='text' @keyup='filterReg()' class='search-reg form-input' placeholder='Search'>
+                        <div class="filter" id='filter-men-reg'>
+                            <input type="radio" id="tag-0" @change="chipFilterReg" class="filter-tag" name="filter-radio-rg"
+                                hidden checked>
+                            <input type="radio" id="tag-1" @change="chipFilterReg" class="filter-tag" name="filter-radio-rg"
+                                hidden>
+                            <input type="radio" id="tag-2" @change="chipFilterReg" class="filter-tag" name="filter-radio-rg"
+                                hidden>
+                            <input type="radio" id="tag-3" @change="chipFilterReg" class="filter-tag" name="filter-radio-rg"
+                                hidden>
 
                             <div class="filter-nav" style='margin-bottom: 10px;'>
                                 <label class="chip" for="tag-0">All</label>
@@ -43,8 +48,8 @@
                             <div class='filter-body'>
                                 <draggable v-model='notStickered' @end='onEnd' :options="{group:'regular', handle: '.a-c', sort: false, animation: 150}"
                                     style='width: 100%; min-height: 25px; display: grid; grid-template-columns: repeat(auto-fill,minmax(310px, 1fr));'>
-                                    <div style='width: 100%;' class='menu-item class-style filter-item' :data-tag='checkTags(item)'
-                                        v-for="item in notStickered" :key="item.id">
+                                    <div style='width: 100%;' class='menu-item class-style filter-item reg-ns'
+                                        :data-tag='checkTags(item)' v-for="item in notStickered" :key="item.id">
                                         <div class='a-c'>
                                             <span class='class-name' v-html='item.className.truncate(34)'></span>
                                             <div style='float: right;' class="popover popover-bottom">
@@ -124,10 +129,14 @@
                 <div class='container pad' style='width: unset;'>
                     <div class='menu' style='width: 50%'>
                         <h3>Not Stickered</h3>
+                        <input type='text' @keyup='filterBlock()' class='search-block form-input' placeholder='Search'>
                         <div class="filter">
-                            <input type="radio" id="tag-10" class="filter-tag" name="filter-radio" hidden>
-                            <input type="radio" id="tag-5" class="filter-tag" name="filter-radio" hidden>
-                            <input type="radio" id="tag-6" class="filter-tag" name="filter-radio" hidden>
+                            <input type="radio" id="tag-10" @change="chipFilterBlock" class="filter-tag" name="filter-radio-b"
+                                hidden checked>
+                            <input type="radio" id="tag-5" @change="chipFilterBlock" class="filter-tag" name="filter-radio-b"
+                                hidden>
+                            <input type="radio" id="tag-6" @change="chipFilterBlock" class="filter-tag" name="filter-radio-b"
+                                hidden>
 
                             <div class="filter-nav" style='margin-bottom: 10px;'>
                                 <label class="chip" for="tag-10">All</label>
@@ -137,7 +146,7 @@
                             <div class='filter-body'>
                                 <draggable v-model='notStickeredBlock' @end='onEnd' :options="{group:'block', sort: false, handle: '.a-c', animation: 150}"
                                     style='width: 100%; min-height: 25px; display: grid; grid-template-columns: repeat(auto-fill,minmax(310px, 1fr));'>
-                                    <div style='width: 100%; margin-top: 0;' class='menu-item class-style filter-item'
+                                    <div style='width: 100%;' class='menu-item class-style filter-item block-ns'
                                         :data-tag='checkTagsBlock(item)' v-for="item in notStickeredBlock" :key="item.id">
                                         <div class='a-c'>
                                             <span class='class-name' v-html='item.className.truncate(34)'></span>
