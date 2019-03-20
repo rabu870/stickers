@@ -158,6 +158,70 @@ var vm = new Vue({
         },
         onEnd: function () {
             this.edited = true;
+            $('.search-reg').val('');
+            $('.search-block').val('');
+            this.filterReg();
+            this.chipFilterReg();
+            this.filterBlock();
+            this.chipFilterBlock();
+        },
+        chipFilterReg: function () {
+            $(".reg-ns").each(function () {
+                if ($(this).attr('data-tag').includes($('input[name=filter-radio-rg]:checked').attr('id')) || $('input[name=filter-radio-rg]:checked').attr('id').includes('tag-0')) {
+                    $(this).show().removeClass('hidden-tags');
+                } else {
+                    $(this).hide().addClass('hidden-tags');
+                }
+            });
+        },
+        filterReg: function () {
+            var val = $('.search-reg').val();
+            if (val != '') {
+                $(".reg-ns").each(function () {
+                    if (!$(this).hasClass('hidden-tags')) {
+                        if ($($($(this).children()[0]).children()[0]).html().toLowerCase().match('^' + val.toLowerCase())) {
+                            $(this).show();
+                        } else {
+                            $(this).hide();
+                        }
+                    }
+                });
+            } else {
+                $(".reg-ns").each(function () {
+                    if (!$(this).hasClass('hidden-tags')) {
+                        $(this).show();
+                    }
+                });
+            }
+        },
+        chipFilterBlock: function () {
+            $(".block-ns").each(function () {
+                if ($(this).attr('data-tag').includes($('input[name=filter-radio-b]:checked').attr('id')) || $('input[name=filter-radio-b]:checked').attr('id').includes('tag-10')) {
+                    $(this).show().removeClass('hidden-tags-b');
+                } else {
+                    $(this).hide().addClass('hidden-tags-b');
+                }
+            });
+        },
+        filterBlock: function () {
+            var val = $('.search-block').val();
+            if (val != '') {
+                $(".block-ns").each(function () {
+                    if (!$(this).hasClass('hidden-tags')) {
+                        if ($($($(this).children()[0]).children()[0]).html().toLowerCase().match('^' + val.toLowerCase())) {
+                            $(this).show();
+                        } else {
+                            $(this).hide();
+                        }
+                    }
+                });
+            } else {
+                $(".block-ns").each(function () {
+                    if (!$(this).hasClass('hidden-tags')) {
+                        $(this).show();
+                    }
+                });
+            }
         }
     },
     beforeMount() {
