@@ -207,7 +207,7 @@ var vm = new Vue({
             var val = $('.search-block').val();
             if (val != '') {
                 $(".block-ns").each(function () {
-                    if (!$(this).hasClass('hidden-tags')) {
+                    if (!$(this).hasClass('hidden-tags-b')) {
                         if ($($($(this).children()[0]).children()[0]).html().toLowerCase().match('^' + val.toLowerCase())) {
                             $(this).show();
                         } else {
@@ -217,7 +217,7 @@ var vm = new Vue({
                 });
             } else {
                 $(".block-ns").each(function () {
-                    if (!$(this).hasClass('hidden-tags')) {
+                    if (!$(this).hasClass('hidden-tags-b')) {
                         $(this).show();
                     }
                 });
