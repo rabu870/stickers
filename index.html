@@ -146,7 +146,7 @@
                             <div class='filter-body'>
                                 <draggable v-model='notStickeredBlock' @end='onEnd' :options="{group:'block', sort: false, handle: '.a-c', animation: 150}"
                                     style='width: 100%; min-height: 25px; display: grid; grid-template-columns: repeat(auto-fill,minmax(310px, 1fr));'>
-                                    <div style='width: 100%; margin-top: 0;' class='menu-item class-style filter-item block-ns'
+                                    <div style='width: 100%;' class='menu-item class-style filter-item block-ns'
                                         :data-tag='checkTagsBlock(item)' v-for="item in notStickeredBlock" :key="item.id">
                                         <div class='a-c'>
                                             <span class='class-name' v-html='item.className.truncate(34)'></span>
