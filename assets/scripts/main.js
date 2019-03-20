@@ -233,9 +233,23 @@ var vm = new Vue({
         $('.nav-tabs').arrive("#t-Block", function () {
             $('.tab-section').append('<li class="no-margin-button"><button class="update-button btn btn-primary btn-sm">Save changes</button></li>');
             $('.update-button').click(function () {
-                self.update();
+                if (!self.stickers[3].length && !self.stickers[4].length && !self.stickers[5].length) {
+                    $('.confirmation-modal').addClass('active');
+                } else {
+                    self.update();
+                }
             });
         });
+
+        $('.cancel-save').click(function () {
+            $('.confirmation-modal').removeClass('active');
+        });
+
+        $('.save-anyway').click(function () {
+            $('.confirmation-modal').removeClass('active');
+            self.update();
+        })
+
         $(window).bind('beforeunload', function () {
             if (self.edited == true) {
                 return "You have unsaved changes, are you sure you want to leave?";

@@ -226,6 +226,20 @@
                 </div>
             </v-tab>
         </vue-tabs>
+        <div class="confirmation-modal modal modal-sm">
+            <a class="modal-overlay cancel-save" aria-label="Close"></a>
+            <div class="modal-container" role='document'>
+                <div class="modal-header"><a class="btn btn-clear float-right cancel-save" aria-label="Close"></a>
+                    <div class="modal-title h5">Are you sure?</div>
+                    <br>
+                    <p>You haven't stickered any block classes.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="cancel-save btn btn-primary">Cancel</button><a class="btn btn-link save-anyway"
+                        aria-label="Save changes">Save changes</a>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 <script src="./assets/scripts/main.js"></script>
