@@ -160,10 +160,10 @@ var vm = new Vue({
             this.edited = true;
             $('.search-reg').val('');
             $('.search-block').val('');
-            this.filterReg();
             this.chipFilterReg();
-            this.filterBlock();
             this.chipFilterBlock();
+            this.filterReg();
+            this.filterBlock();
         },
         chipFilterReg: function () {
             $(".reg-ns").each(function () {
