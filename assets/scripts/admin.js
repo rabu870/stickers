@@ -126,14 +126,16 @@ Vue.component('student-table', {
 		save: function () {
 			$('.save-changes-button').addClass('loading');
 			var self = this;
-			$.post("./backend/admin.php", {
-				func: "students",
-				students: JSON.stringify(self.$root.students)
-			}).done(function (data) {
-				self.$root.query();
-				$('.save-changes-button').removeClass('loading');
-				$('.save-changes-button').html('Changes saved!');
-			});
+			axios
+				.get(
+					'./backend/admin.php?func=students&students=' +
+					JSON.stringify(self.$root.students)
+				)
+				.then(function (response) {
+					self.$root.query();
+					$('.save-changes-button').removeClass('loading');
+					$('.save-changes-button').html('Changes saved!');
+				});
 		},
 		deletestudent: function (student) {
 			this.$root.students.splice(student, 1);
@@ -214,14 +216,16 @@ Vue.component('admin-table', {
 		save: function () {
 			$('.a-save-changes-button').addClass('loading');
 			var self = this;
-			$.post("./backend/admin.php", {
-				func: "admin",
-				students: JSON.stringify(self.$root.admin)
-			}).done(function () {
-				self.$root.query();
-				$('.a-save-changes-button').removeClass('loading');
-				$('.a-save-changes-button').html('Changes saved!');
-			});
+			axios
+				.get(
+					'./backend/admin.php?func=admin&admin=' +
+					JSON.stringify(self.$root.admin)
+				)
+				.then(function (response) {
+					self.$root.query();
+					$('.a-save-changes-button').removeClass('loading');
+					$('.a-save-changes-button').html('Changes saved!');
+				});
 		},
 		deleteadmin: function (admin) {
 			this.$root.admin.splice(admin, 1);

@@ -23,9 +23,12 @@ if ($access == 1) {
             }
         }
         echo "[" . json_encode($s, JSON_PRETTY_PRINT) . ", " . json_encode($a, JSON_PRETTY_PRINT) . ", " . json_encode($c, JSON_PRETTY_PRINT) . ", " . json_encode($u, JSON_PRETTY_PRINT) . "]";
-    } elseif ($_POST['func'] == 'students' || $_POST['func'] == 'admin') {
-        $people = json_decode($_POST[$_POST['func']], $assoc = true);
-        $db->query("DELETE FROM `" . $_POST['func'] . "` WHERE true");
+    } elseif ($_GET['func'] == 'students' || $_GET['func'] == 'admin') {
+        if ($_GET['func'] == 'students') {
+            $db->query("DELETE * FROM `stickers` WHERE true;");
+        }
+        $people = json_decode($_POST[$_GET['func']], $assoc = true);
+        $db->query("DELETE FROM `" . $_GET['func'] . "` WHERE true");
         foreach ($people as $person) {
             if ($person['id']) {
                 if ($person['loginKey'] && $person['loginKey'] != '') {
@@ -33,9 +36,9 @@ if ($access == 1) {
                 } else {
                     $key = 0;
                 }
-                $query = "INSERT INTO `" . $_POST['func'] . "`(`id`, `first_name`, `last_name`, `email`, `login_key`) VALUES (" . sqlize($person['id']) . "," . sqlize($person['firstName']) . "," . sqlize($person['lastName']) . "," . sqlize($person['email']) . "," . sqlize($key) . ");";
+                $query = "INSERT INTO `" . $_GET['func'] . "`(`id`, `first_name`, `last_name`, `email`, `login_key`) VALUES (" . sqlize($person['id']) . "," . sqlize($person['firstName']) . "," . sqlize($person['lastName']) . "," . sqlize($person['email']) . "," . sqlize($key) . ");";
             } else {
-                $query = "INSERT INTO `" . $_POST['func'] . "`(`first_name`, `last_name`, `email`";
+                $query = "INSERT INTO `" . $_GET['func'] . "`(`first_name`, `last_name`, `email`";
                 if(!empty($person['gradYear'])){
                     $query = $query . ", `grad_year`";
                 }
@@ -46,9 +49,6 @@ if ($access == 1) {
                 $query = $query . ");";
             }
             $db->query($query);
-            if ($_POST['func'] == 'students') {
-                $db->query("UPDATE `students` SET `grad_year` = " . sqlize($person['gradYear']) . " WHERE `email` = " . sqlize($person['email']) . ";");
-            }
         }
     } elseif ($_GET['func'] == 'meta') {
         $meta = json_decode($_GET['meta'], $assoc = true);
