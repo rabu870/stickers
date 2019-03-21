@@ -24,7 +24,7 @@ if ($access == 1) {
         }
         echo "[" . json_encode($s, JSON_PRETTY_PRINT) . ", " . json_encode($a, JSON_PRETTY_PRINT) . ", " . json_encode($c, JSON_PRETTY_PRINT) . ", " . json_encode($u, JSON_PRETTY_PRINT) . "]";
     } elseif ($_GET['func'] == 'students' || $_GET['func'] == 'admin') {
-        $people = json_decode($_GET[$_GET['func']], $assoc = true);
+        $people = json_decode($_POST[$_GET['func']], $assoc = true);
         $db->query("DELETE FROM `" . $_GET['func'] . "` WHERE true");
         foreach ($people as $person) {
             if ($person['id']) {
