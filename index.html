@@ -10,8 +10,8 @@
     <script src="./assets/scripts/libraries/vue.js"></script>
     <script src="./assets/scripts/libraries/jquery.min.js"></script>
     <script src="./assets/scripts/libraries/vue-tabs.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.7.0/Sortable.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.17.0/vuedraggable.min.js"></script>
+    <script src="./assets/scripts/libraries/sortable.min.js"></script>
+    <script src="./assets/scripts/libraries/vuedraggable.min.js"></script>
     <script src="./assets/scripts/libraries/arrive.min.js"></script>
 
     <link href="./assets/css/libraries/spectre.min.css" rel="stylesheet" type="text/css" />
@@ -52,7 +52,7 @@
                                         :data-tag='checkTags(item)' v-for="item in notStickered" :key="item.id">
                                         <div class='a-c'>
                                             <span class='class-name' v-html='item.className.truncate(34)'></span>
-                                            <div style='float: right;' class="popover popover-bottom">
+                                            <div style='float: right; cursor: pointer;' class="popover popover-bottom">
                                                 <i class='show-hover icon icon-more-horiz'></i>
                                                 <div class="popover-container">
                                                     <div class="card no-decoration" style='cursor:default; text-decoration: none'>
@@ -226,6 +226,20 @@
                 </div>
             </v-tab>
         </vue-tabs>
+        <div class="confirmation-modal modal modal-sm">
+            <a class="modal-overlay cancel-save" aria-label="Close"></a>
+            <div class="modal-container" role='document'>
+                <div class="modal-header"><a class="btn btn-clear float-right cancel-save" aria-label="Close"></a>
+                    <div class="modal-title h5">Are you sure?</div>
+                    <br>
+                    <p>You haven't stickered any block classes.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="cancel-save btn btn-primary">Cancel</button><a class="btn btn-link save-anyway"
+                        aria-label="Save changes">Save changes</a>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 <script src="./assets/scripts/main.js"></script>
