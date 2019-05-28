@@ -65,7 +65,7 @@ if ($access == 1) {
                 $query = "INSERT into `classes` (`class_name`, `link`, `facilitator`, `is_mega`, `is_block`, `tags`) VALUES (";
                 foreach ($html['channel']['item'] as $class) {
                     // disgusting but it was the only way i could get it to work... strips out everything outside the facilitator
-                    $fac = substr((string) $class['content'], strpos((string) $class['content'],'<p class="facilitator-name">') + 28, -4);
+                    $fac = substr((string) $class['content'], strrpos((string) $class['content'],'<p class="facilitator-name">') + 28, -4);
                     $mega = in_array('mega', $class['category']) ? 1 : 0;
                     $block = in_array('block', $class['category']) ? 1 : 0;
                     $tags = '';
