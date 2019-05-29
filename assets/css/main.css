@@ -182,3 +182,7 @@
 .class-display .column:nth-child(2) .label {
 	background-color: #eef0f3;
 }
+
+.nodrag:active {
+	pointer-events: none;
+}
