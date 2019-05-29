@@ -179,7 +179,7 @@ var vm = new Vue({
             if (val != '') {
                 $(".reg-ns").each(function () {
                     if (!$(this).hasClass('hidden-tags')) {
-                        if ($($($(this).children()[0]).children()[0]).html().toLowerCase().match('^' + val.toLowerCase())) {
+                        if ($($($(this).children()[0]).children()[0]).html().toLowerCase().match('^' + val.toLowerCase()) || $(this).attr('data-facil').toLowerCase().match('^' + val.toLowerCase())) {
                             $(this).show();
                         } else {
                             $(this).hide();
@@ -208,7 +208,7 @@ var vm = new Vue({
             if (val != '') {
                 $(".block-ns").each(function () {
                     if (!$(this).hasClass('hidden-tags-b')) {
-                        if ($($($(this).children()[0]).children()[0]).html().toLowerCase().match('^' + val.toLowerCase())) {
+                        if ($($($(this).children()[0]).children()[0]).html().toLowerCase().match('^' + val.toLowerCase()) || $(this).attr('data-facil').toLowerCase().match('^' + val.toLowerCase())) {
                             $(this).show();
                         } else {
                             $(this).hide();

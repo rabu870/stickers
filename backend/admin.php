@@ -67,7 +67,7 @@ if ($access == 1) {
                 
                 foreach ($html['channel']['item'] as $class) {
                     // disgusting but it was the only way i could get it to work... strips out everything outside the facilitator
-                    $fac = strpos((string) $class['content'],'<p class="facilitator-name">') !== false ? substr((string) $class['content'], strpos((string) $class['content'],'<p class="facilitator-name">') + 28, -4) : ucwords($class['creator']);
+                    $fac = strpos((string) $class['content'],'<p class="facilitator-name">') !== false ? ucwords(substr((string) $class['content'], strpos((string) $class['content'],'<p class="facilitator-name">') + 28, -4)) : ucwords($class['creator']);
                     $mega = in_array('mega', $class['category']) ? 1 : 0;
                     $block = in_array('block', $class['category']) ? 1 : 0;
                     $tags = '';
