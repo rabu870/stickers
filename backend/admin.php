@@ -63,9 +63,10 @@ if ($access == 1) {
                 $xml = simplexml_load_string($data, null, LIBXML_NOCDATA);
                 $html = json_decode(json_encode($xml), $assoc = true);
                 $query = "INSERT into `classes` (`class_name`, `link`, `facilitator`, `is_mega`, `is_block`, `tags`) VALUES (";
+                
                 foreach ($html['channel']['item'] as $class) {
                     // disgusting but it was the only way i could get it to work... strips out everything outside the facilitator
-                    $fac = substr((string) $class['content'], strrpos((string) $class['content'],'<p class="facilitator-name">') + 28, -4);
+                    $fac = substr((string) $class['content'], strpos((string) $class['content'],'<p class="facilitator-name">') + 28, -4);
                     $mega = in_array('mega', $class['category']) ? 1 : 0;
                     $block = in_array('block', $class['category']) ? 1 : 0;
                     $tags = '';
@@ -94,9 +95,8 @@ if ($access == 1) {
     } elseif($_GET['func'] == 'reminder') {
         $mail = new PHPMailer;
         $mail->isSMTP();
-        //will eventually be something like noreply-stickers@pscs.org
         $mail->setFrom('no_reply_stickering@pscs.org', 'PSCS Stickers');
-        $mail->addAddress('no_reply_stickers@pscs.org', 'PSCS Stickers');
+        $mail->addAddress('no_reply_stickering@pscs.org', 'PSCS Stickers');
         $students = $db->query("SELECT * FROM `students` WHERE `stickered` = 0;");
         foreach($students as $student){
             $mail->addBCC($student[email], $student[first_name] . ' ' . $student[last_name]);
@@ -107,7 +107,7 @@ if ($access == 1) {
         $mail->Host = 'email-smtp.us-west-2.amazonaws.com';
         // The subject line of the email
         $mail->Subject = 'Stickering reminder';
-        $mail->Body = 'You haven\'t yet stickered! Please do so as soon as possible.';
+        $mail->Body = 'You haven\'t yet stickered! Please do so as soon as possible by visiting https://stickers.pscs.org. Thank you!';
         $mail->SMTPAuth = true;
         $mail->SMTPSecure = 'tls';
         $mail->Port = 587;
