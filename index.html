@@ -29,8 +29,8 @@
                 <div class='container pad' style='width: unset;'>
                     <div class='menu' style='width: 50%'>
                         <h3>Not Stickered</h3>
-                        <input type='text' @keyup='filterReg()' class='search-reg form-input' placeholder='Search'
-                            maxlength='32'>
+                        <input type='text' @keyup='filterReg()' class='search-reg form-input'
+                            placeholder='Search for classes or facilitators' maxlength='32'>
                         <div class="filter" id='filter-men-reg'>
                             <input type="radio" id="tag-0" @change="chipFilterReg" class="filter-tag"
                                 name="filter-radio-rg" hidden checked>
@@ -52,14 +52,16 @@
                                     :options="{group:'regular', handle: '.a-c', sort: false, animation: 150}"
                                     style='width: 100%; min-height: 25px; display: grid; grid-template-columns: repeat(auto-fill,minmax(310px, 1fr));'
                                     class='reg-ns-container'>
-                                    <div style='width: 100%;' class='menu-item class-style filter-item reg-ns'
-                                        :data-tag='checkTags(item)' :data-facil='item.facilitator'
-                                        v-for="item in notStickered" :key="item.id" :id='genID(item.id, "block")'>
+                                    <div style='width: 100%; border-radius: .1rem;'
+                                        class='menu-item class-style filter-item reg-ns' :data-tag='checkTags(item)'
+                                        :data-facil='item.facilitator' v-for="item in notStickered" :key="item.id"
+                                        :id='genID(item.id, "block")'>
                                         <div class='a-c'>
                                             <span class='class-name' v-html='item.className.truncate(34)'></span>
-                                            <div style='float: right; cursor: pointer;' class="popover popover-bottom">
+                                            <div style='float: right; cursor: pointer;'
+                                                class="popover popover-bottom nodrag">
                                                 <i class='show-hover icon icon-more-horiz'></i>
-                                                <div class="popover-container nodrag">
+                                                <div class="popover-container">
                                                     <div class="card no-decoration"
                                                         style='cursor:default; text-decoration: none'>
                                                         <div style='color: black;' class="card-header">
@@ -140,8 +142,8 @@
                 <div class='container pad' style='width: unset;'>
                     <div class='menu' style='width: 50%'>
                         <h3>Not Stickered</h3>
-                        <input type='text' @keyup='filterBlock()' class='search-block form-input' placeholder='Search'
-                            maxlength='32'>
+                        <input type='text' @keyup='filterBlock()' class='search-block form-input'
+                            placeholder='Search for classes or facilitators' maxlength='32'>
                         <div class="filter">
                             <input type="radio" id="tag-10" @change="chipFilterBlock" class="filter-tag"
                                 name="filter-radio-b" hidden checked>
@@ -160,14 +162,15 @@
                                     :options="{group:'block', sort: false, handle: '.a-c', animation: 150}"
                                     style='width: 100%; min-height: 25px; display: grid; grid-template-columns: repeat(auto-fill,minmax(310px, 1fr));'
                                     class='block-ns-container'>
-                                    <div style='width: 100%;' class='menu-item class-style filter-item block-ns'
+                                    <div style='width: 100%; border-radius: .1rem;'
+                                        class='menu-item class-style filter-item block-ns'
                                         :data-tag='checkTagsBlock(item)' :data-facil='item.facilitator'
                                         v-for="item in notStickeredBlock" :key="item.id" :id='genID(item.id, "block")'>
                                         <div class='a-c'>
                                             <span class='class-name' v-html='item.className.truncate(34)'></span>
-                                            <div style='float: right;' class="popover popover-bottom">
+                                            <div style='float: right;' class="popover popover-bottom nodrag">
                                                 <i class='show-hover icon icon-more-horiz'></i>
-                                                <div class="popover-container nodrag">
+                                                <div class="popover-container">
                                                     <div class="card no-decoration"
                                                         style='cursor:default; text-decoration: none'>
                                                         <div style='color: black;' class="card-header">
