@@ -13,6 +13,7 @@
     <script src="./assets/scripts/libraries/sortable.min.js"></script>
     <script src="./assets/scripts/libraries/vuedraggable.min.js"></script>
     <script src="./assets/scripts/libraries/arrive.min.js"></script>
+    <script src="./assets/scripts/libraries/fuse.min.js"></script>
 
     <link href="./assets/css/libraries/spectre.min.css" rel="stylesheet" type="text/css" />
     <link href="./assets/css/libraries/spectre-icons.min.css" rel="stylesheet" type="text/css" />
@@ -51,7 +52,7 @@
                                     style='width: 100%; min-height: 25px; display: grid; grid-template-columns: repeat(auto-fill,minmax(310px, 1fr));'>
                                     <div style='width: 100%;' class='menu-item class-style filter-item reg-ns'
                                         :data-tag='checkTags(item)' :data-facil='item.facilitator'
-                                        v-for="item in notStickered" :key="item.id">
+                                        v-for="item in notStickered" :key="item.id" :id='genID(item.id, "block")'>
                                         <div class='a-c'>
                                             <span class='class-name' v-html='item.className.truncate(34)'></span>
                                             <div style='float: right; cursor: pointer;' class="popover popover-bottom">
@@ -157,7 +158,7 @@
                                     style='width: 100%; min-height: 25px; display: grid; grid-template-columns: repeat(auto-fill,minmax(310px, 1fr));'>
                                     <div style='width: 100%;' class='menu-item class-style filter-item block-ns'
                                         :data-tag='checkTagsBlock(item)' :data-facil='item.facilitator'
-                                        v-for="item in notStickeredBlock" :key="item.id">
+                                        v-for="item in notStickeredBlock" :key="item.id" :id='genID(item.id, "block")'>
                                         <div class='a-c'>
                                             <span class='class-name' v-html='item.className.truncate(34)'></span>
                                             <div style='float: right;' class="popover popover-bottom">

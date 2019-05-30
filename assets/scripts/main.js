@@ -177,15 +177,31 @@ var vm = new Vue({
         filterReg: function () {
             var val = $('.search-reg').val();
             if (val != '') {
-                $(".reg-ns").each(function () {
-                    if (!$(this).hasClass('hidden-tags')) {
-                        if ($($($(this).children()[0]).children()[0]).html().toLowerCase().match('^' + val.toLowerCase()) || $(this).attr('data-facil').toLowerCase().match('^' + val.toLowerCase())) {
-                            $(this).show();
-                        } else {
-                            $(this).hide();
-                        }
+                var temp = this.notStickered;
+                new Fuse(this.notStickered, {
+                    threshold: 0.3,
+                    location: 0,
+                    distance: 100,
+                    maxPatternLength: 32,
+                    minMatchCharLength: 1,
+                    keys: [
+                        "className",
+                        "facilitator"
+                    ]
+                }).search(val).forEach(item => {
+                    temp = temp.filter(cls => item.id !== cls.id);
+                    id = '#block-ns-' + item.id;
+                    if (!$(id).hasClass('hidden-tags')) {
+                        $(id).show();
                     }
                 });
+
+                temp.forEach(cls => {
+                    id = '#block-ns-' + cls.id;
+                    if (!$(id).hasClass('hidden-tags')) {
+                        $(id).hide();
+                    }
+                })
             } else {
                 $(".reg-ns").each(function () {
                     if (!$(this).hasClass('hidden-tags')) {
@@ -206,15 +222,31 @@ var vm = new Vue({
         filterBlock: function () {
             var val = $('.search-block').val();
             if (val != '') {
-                $(".block-ns").each(function () {
-                    if (!$(this).hasClass('hidden-tags-b')) {
-                        if ($($($(this).children()[0]).children()[0]).html().toLowerCase().match('^' + val.toLowerCase()) || $(this).attr('data-facil').toLowerCase().match('^' + val.toLowerCase())) {
-                            $(this).show();
-                        } else {
-                            $(this).hide();
-                        }
+                var temp = this.notStickeredBlock;
+                new Fuse(this.notStickeredBlock, {
+                    threshold: 0.3,
+                    location: 0,
+                    distance: 100,
+                    maxPatternLength: 32,
+                    minMatchCharLength: 1,
+                    keys: [
+                        "className",
+                        "facilitator"
+                    ]
+                }).search(val).forEach(item => {
+                    temp = temp.filter(cls => item.id !== cls.id);
+                    id = '#block-ns-' + item.id;
+                    if (!$(id).hasClass('hidden-tags-b')) {
+                        $(id).show();
                     }
                 });
+
+                temp.forEach(cls => {
+                    id = '#block-ns-' + cls.id;
+                    if (!$(id).hasClass('hidden-tags-b')) {
+                        $(id).hide();
+                    }
+                })
             } else {
                 $(".block-ns").each(function () {
                     if (!$(this).hasClass('hidden-tags-b')) {
@@ -222,6 +254,9 @@ var vm = new Vue({
                     }
                 });
             }
+        },
+        genID: function (item, type) {
+            return type + "-ns-" + item;
         }
     },
     beforeMount() {
