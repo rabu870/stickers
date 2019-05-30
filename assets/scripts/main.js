@@ -173,9 +173,11 @@ var vm = new Vue({
                     $(this).hide().addClass('hidden-tags');
                 }
             });
+            this.filterReg();
         },
         filterReg: function () {
             var val = $('.search-reg').val();
+            $('.none-found-r').remove();
             if (val != '') {
                 var temp = this.notStickered;
                 new Fuse(this.notStickered, {
@@ -201,7 +203,11 @@ var vm = new Vue({
                     if (!$(id).hasClass('hidden-tags')) {
                         $(id).hide();
                     }
-                })
+                });
+
+                if (temp.length == this.notStickered.length) {
+                    $('.reg-ns-container').append('<div class="menu-item none-found-r">No results found.</div>');
+                }
             } else {
                 $(".reg-ns").each(function () {
                     if (!$(this).hasClass('hidden-tags')) {
@@ -218,9 +224,11 @@ var vm = new Vue({
                     $(this).hide().addClass('hidden-tags-b');
                 }
             });
+            this.filterBlock();
         },
         filterBlock: function () {
             var val = $('.search-block').val();
+            $('.none-found-b').remove();
             if (val != '') {
                 var temp = this.notStickeredBlock;
                 new Fuse(this.notStickeredBlock, {
@@ -247,6 +255,9 @@ var vm = new Vue({
                         $(id).hide();
                     }
                 })
+                if (temp.length == this.notStickeredBlock.length) {
+                    $('.block-ns-container').append('<div class="menu-item none-found-b">No results found.</div>');
+                }
             } else {
                 $(".block-ns").each(function () {
                     if (!$(this).hasClass('hidden-tags-b')) {

@@ -50,7 +50,8 @@
                             <div class='filter-body'>
                                 <draggable v-model='notStickered' @end='onEnd'
                                     :options="{group:'regular', handle: '.a-c', sort: false, animation: 150}"
-                                    style='width: 100%; min-height: 25px; display: grid; grid-template-columns: repeat(auto-fill,minmax(310px, 1fr));'>
+                                    style='width: 100%; min-height: 25px; display: grid; grid-template-columns: repeat(auto-fill,minmax(310px, 1fr));'
+                                    class='reg-ns-container'>
                                     <div style='width: 100%;' class='menu-item class-style filter-item reg-ns'
                                         :data-tag='checkTags(item)' :data-facil='item.facilitator'
                                         v-for="item in notStickered" :key="item.id" :id='genID(item.id, "block")'>
@@ -157,7 +158,8 @@
                             <div class='filter-body'>
                                 <draggable v-model='notStickeredBlock' @end='onEnd'
                                     :options="{group:'block', sort: false, handle: '.a-c', animation: 150}"
-                                    style='width: 100%; min-height: 25px; display: grid; grid-template-columns: repeat(auto-fill,minmax(310px, 1fr));'>
+                                    style='width: 100%; min-height: 25px; display: grid; grid-template-columns: repeat(auto-fill,minmax(310px, 1fr));'
+                                    class='block-ns-container'>
                                     <div style='width: 100%;' class='menu-item class-style filter-item block-ns'
                                         :data-tag='checkTagsBlock(item)' :data-facil='item.facilitator'
                                         v-for="item in notStickeredBlock" :key="item.id" :id='genID(item.id, "block")'>
