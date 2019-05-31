@@ -63,11 +63,13 @@ if ($access == 1) {
                 $data = str_replace("dc:creator","creator",$data);
                 $xml = simplexml_load_string($data, null, LIBXML_NOCDATA);
                 $html = json_decode(json_encode($xml), $assoc = true);
-                $query = "INSERT into `classes` (`class_name`, `link`, `facilitator`, `is_mega`, `is_block`, `tags`) VALUES (";
-                
+                $query = "INSERT into `classes` (`class_name`, `link`, `facilitator`, `is_mega`, `is_block`, `tags`, `mature`, `availability`, `needs`) VALUES (";
                 foreach ($html['channel']['item'] as $class) {
-                    // disgusting but it was the only way i could get it to work... strips out everything outside the facilitator
-                    $fac = strpos((string) $class['content'],'<p class="facilitator-name">') !== false ? ucwords(substr((string) $class['content'], strpos((string) $class['content'],'<p class="facilitator-name">') + 28, -4)) : ucwords($class['creator']);
+                    // disgusting but it was the only way i could get it to work...
+                    $mature = substr(strstr(strstr((string) $class['content'], '<mature-themes>'), '</mature-themes>', true), 15) == 'Yes' ? 1 : 0;
+                    $fac = substr(strstr(strstr((string) $class['content'], '<p class="facilitator-name"'), '</p>', true), 28) !== '' ? ucwords(substr(strstr(strstr((string) $class['content'], '<p class="facilitator-name"'), '</p>', true), 28)) : ucwords($class['creator']);
+                    $availability = substr(strstr(substr((string) $class['content'], strpos((string) $class['content'], '<vol_avail>')), '</vol_avail>', true), 11);
+                    $needs = substr(strstr(strstr((string) $class['content'], '<volunteer-needs>'), '</volunteer-needs>', true), 18) ? substr(strstr(strstr((string) $class['content'], '<volunteer-needs>'), '</volunteer-needs>', true), 18) : '';
                     $mega = in_array('mega', $class['category']) ? 1 : 0;
                     $block = in_array('block', $class['category']) ? 1 : 0;
                     $tags = '';
@@ -76,7 +78,7 @@ if ($access == 1) {
                     } elseif(in_array('ms-only', $class['category'])) {
                         $tags = 'ms-only';
                     }
-                    $query = $query . sqlize($class['title']) . ", " . sqlize($class['link']) . ", " . sqlize($fac) . ", " . sqlize($mega) . ", " . sqlize($block) . ", " . sqlize($tags) . ")";
+                    $query = $query . sqlize($class['title']) . ", " . sqlize($class['link']) . ", " . sqlize($fac) . ", " . sqlize($mega) . ", " . sqlize($block) . ", " . sqlize($tags) . ", " . sqlize($mature) . ", " . sqlize($availability) . ", " . sqlize($needs) . ")";
                     if ($class != $html['channel']['item'][count($html['channel']['item']) - 1]) {
                         $query = $query . ",(";
                     } else {
