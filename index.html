@@ -40,12 +40,15 @@
                                 name="filter-radio-rg" hidden>
                             <input type="radio" id="tag-3" @change="chipFilterReg" class="filter-tag"
                                 name="filter-radio-rg" hidden>
+                            <input type="radio" id="tag-4" @change="chipFilterReg" class="filter-tag"
+                                name="filter-radio-rg" hidden>
 
                             <div class="filter-nav" style='margin-bottom: 10px;'>
                                 <label class="chip" for="tag-0">All</label>
                                 <label class="chip" for="tag-1">HS Only</label>
                                 <label class="chip" for="tag-2">MS Only</label>
                                 <label class="chip" for="tag-3">Mega</label>
+                                <label class="chip" for="tag-4">Mature themes</label>
                             </div>
                             <div class='filter-body'>
                                 <draggable v-model='notStickered' @end='onEnd'
@@ -151,11 +154,14 @@
                                 name="filter-radio-b" hidden>
                             <input type="radio" id="tag-6" @change="chipFilterBlock" class="filter-tag"
                                 name="filter-radio-b" hidden>
+                            <input type="radio" id="tag-7" @change="chipFilterBlock" class="filter-tag"
+                                name="filter-radio-b" hidden>
 
                             <div class="filter-nav" style='margin-bottom: 10px;'>
                                 <label class="chip" for="tag-10">All</label>
                                 <label class="chip" for="tag-5">HS Only</label>
                                 <label class="chip" for="tag-6">MS Only</label>
+                                <label class="chip" for="tag-7">Mature themes</label>
                             </div>
                             <div class='filter-body'>
                                 <draggable v-model='notStickeredBlock' @end='onEnd'

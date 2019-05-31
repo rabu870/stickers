@@ -47,7 +47,8 @@ var vm = new Vue({
                             facilitator: currentClass[3],
                             isMega: parseInt(currentClass[4]) == 1 ? true : false,
                             isBlock: parseInt(currentClass[5]) == 1 ? true : false,
-                            tags: currentClass[6]
+                            tags: currentClass[6],
+                            mature: parseInt(currentClass[7]) == 1 ? true : false
                         })
                     });
                     self.classes = classList;
@@ -120,6 +121,9 @@ var vm = new Vue({
                 if (item.tags.indexOf('ms-only') != -1) {
                     res += 'tag-2 ';
                 }
+                if (item.mature) {
+                    res += 'tag-4 ';
+                }
                 if (res == "") {
                     res = 'tag-0';
                 }
@@ -134,6 +138,9 @@ var vm = new Vue({
                 }
                 if (item.tags.indexOf('ms-only') != -1) {
                     res += 'tag-6 ';
+                }
+                if (item.mature) {
+                    res += 'tag-7 ';
                 }
                 if (res == "") {
                     res = 'tag-10';
@@ -152,6 +159,9 @@ var vm = new Vue({
                 }
                 if (item.tags.indexOf('ms-only') != -1) {
                     res.push('MS only');
+                }
+                if (item.mature) {
+                    res.push('Mature themes');
                 }
                 return res;
             }
