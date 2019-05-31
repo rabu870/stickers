@@ -26,11 +26,14 @@
         
         $html = "<div class='class-display card' style='border: none;'><div class='card-header'>";
         $html .= "<div class='class-name card-title h1'>" . $class_info['class_name'] . '</div>';
-        $html .= "<div class='class-facil card-subtitle h3'>" . $class_info['facilitator'] . '</div><div>';
+        $html .= "<div class='class-facil card-subtitle h3'>" . $class_info['facilitator'] . '</div>';
+        $html .= $class_info['availability'] !== '' ? "<div class='class-availabilty card-subtitle h5'>" . $class_info['availability'] . '</div>' : '';
+        $html .= $class_info['needs'] !== '' ? "<div class='class-needs card-subtitle h5'>" . $class_info['needs'] . '</div><div>' : '<div>';
         $html .= $class_info['tags'] == 'hs-only' ? "<span class='label label-primary' style='font-size:1rem'>HS Only</span>" : "";
         $html .= $class_info['tags'] == 'ms-only' ? "<span class='label label-primary' style='font-size:1rem'>MS Only</span>" : "";
         $html .= $class_info['is_mega'] == '1' ? "<span class='label label-primary' style='font-size:1rem'>Mega</span>" : "";
         $html .= $class_info['is_block'] == '1' ? "<span class='label label-primary' style='font-size:1rem'>Block</span>" : "";
+        $html .= $class_info['mature'] == '1' ? "<span class='label label-primary' style='font-size:1rem'>Mature themes</span>" : "";
         $html .= "</div></div>";
         $html .= "<div class='card-body columns'>";
         $html .= "<div class='sticker-column column'>";

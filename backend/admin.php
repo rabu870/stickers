@@ -69,7 +69,8 @@ if ($access == 1) {
                     $mature = substr(strstr(strstr((string) $class['content'], '<mature-themes>'), '</mature-themes>', true), 15) == 'Yes' ? 1 : 0;
                     $fac = substr(strstr(strstr((string) $class['content'], '<p class="facilitator-name"'), '</p>', true), 28) !== '' ? ucwords(substr(strstr(strstr((string) $class['content'], '<p class="facilitator-name"'), '</p>', true), 28)) : ucwords($class['creator']);
                     $availability = substr(strstr(substr((string) $class['content'], strpos((string) $class['content'], '<vol_avail>')), '</vol_avail>', true), 11);
-                    $needs = substr(strstr(strstr((string) $class['content'], '<volunteer-needs>'), '</volunteer-needs>', true), 18) ? substr(strstr(strstr((string) $class['content'], '<volunteer-needs>'), '</volunteer-needs>', true), 18) : '';
+                    $needs = substr(strstr(strstr((string) $class['content'], '<volunteer-needs>'), '</volunteer-needs>', true), 17) ? substr(strstr(strstr((string) $class['content'], '<volunteer-needs>'), '</volunteer-needs>', true), 17) : '';
+                    echo $needs;
                     $mega = in_array('mega', $class['category']) ? 1 : 0;
                     $block = in_array('block', $class['category']) ? 1 : 0;
                     $tags = '';
