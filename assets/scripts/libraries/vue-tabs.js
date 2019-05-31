@@ -397,7 +397,7 @@
 							}
 						],
 						attrs: {
-							style: 'position: fixed; top: 0; right: 0; left: 0; height: 47px; background-color: white; z-index: 300;'
+							style: 'position: fixed; top: 0; right: 0; left: 0; height: 47px; background-color: white; z-index: 9999999;'
 						}
 					},
 					[

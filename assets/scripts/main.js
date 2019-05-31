@@ -296,6 +296,21 @@ var vm = new Vue({
                 }
             });
         });
+        // var once = true;
+        // $(document).arrive('.reg-ns', function () {
+        //     if (once) {
+        //         hopscotch.startTour({
+        //             id: "main-page",
+        //             steps: [{
+        //                 title: "Drag and drop",
+        //                 content: "Drag classes to the appropriate section on the right. Try it!",
+        //                 target: document.querySelectorAll('.reg-ns')[0],
+        //                 placement: "bottom"
+        //             }]
+        //         });
+        //         once = false;
+        //     }
+        // });
 
         $('.cancel-save').click(function () {
             $('.confirmation-modal').removeClass('active');
