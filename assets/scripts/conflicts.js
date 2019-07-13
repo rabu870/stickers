@@ -13,7 +13,8 @@ var vm = new Vue({
     data: {
         classes: [],
         stickers: [],
-        students: []
+        students: [],
+        slot: [2301, 2302, 2303]
     },
     methods: {
         query: function () {
@@ -30,18 +31,6 @@ var vm = new Vue({
                     });
                     self.classes = classList;
 
-                    //put the stickers in an array for each student
-                    var stickerList = [];
-                    response.data[0].forEach((category, index) => {
-                        stickerList[index] = [parseInt(category[0]), []];
-                        category[1].forEach(sticker => {
-                            stickerList[index][1].push(self.classes.find(x => x.id ===
-                                parseInt(sticker)));
-                        })
-                    });
-
-                    self.stickers = stickerList;
-
                     //compile list of students
 
                     var studentList = [];
@@ -54,16 +43,32 @@ var vm = new Vue({
                     });
                     self.students = studentList;
 
+                    //put the stickers in an array for each class
+                    var stickerList = [];
+                    response.data[0].forEach((category, index) => {
+                        stickerList[index] = [parseInt(category[0]), []];
+                        category[1].forEach(sticker => {
+                            stickerList[index][1] = sticker;
+                        })
+                    });
+
+                    self.stickers = stickerList;
+
                     $('.main-loader').css('display', 'none');
                     $('.pad').css('display', 'block');
                 }
             });
         },
+        genConflicts: function () {
+            let self = this;
+            let conflicts = []
+            this.slot.forEach(item => {
+                conflicts = conflicts.concat(self.classes.find(obj => obj.id == item));
+            });
+            console.log(conflicts);
+        }
     },
     beforeMount() {
         this.query();
-    },
-    mounted() {
-
     }
 });
