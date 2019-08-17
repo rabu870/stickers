@@ -7,9 +7,11 @@
     <link href='../assets/media/favicon.ico' type='image/x-icon' rel='shortcut icon'>
 
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <meta name="google-signin-client_id" content="570971308489-6golgnijuhqlvon7s2av7getpv2j4h4d.apps.googleusercontent.com">
+    <meta name="google-signin-client_id"
+        content="570971308489-6golgnijuhqlvon7s2av7getpv2j4h4d.apps.googleusercontent.com">
     <script src='../assets/scripts/libraries/axios.min.js'></script>
     <script src='../assets/scripts/libraries/sweetalert.min.js'></script>
+    <script src="../assets/scripts/libraries/jquery.min.js"></script>
 
     <link href='../assets/css/libraries/spectre.min.css' rel='stylesheet' type='text/css'>
     <link href='../assets/css/libraries/spectre-icons.min.css' rel='stylesheet' type='text/css'>
@@ -40,17 +42,24 @@
 
 <body style='background-color: #f7f8f9' onload='deleteCookie("login_key", "/")'>
     <div class="empty center">
-        <div class="empty-icon">
-            <i class="icon icon-3x icon-people"></i>
+        <div class='loading loading-lg main-loader' style='display:none;'></div>
+        <div class='container cont' style='width: unset;'>
+            <div class="empty-icon">
+                <i class="icon icon-3x icon-people"></i>
+            </div>
+            <p class="empty-title h5">
+                <div class="g-signin2" style='display: inline-block;' data-onsuccess="onSignIn"></div><br>to PSCS
+                stickering
+            </p>
         </div>
-        <p class="empty-title h5">
-            <div class="g-signin2" style='display: inline-block;' data-onsuccess="onSignIn"></div><br>to PSCS
-            stickering
-        </p>
     </div>
 
     <script>
         function onSignIn(googleUser) {
+            // $('.main-loader').css('display', 'block');
+            // $('.cont').css('display', 'none');
+            $('.main-loader').fadeIn();
+            $('.cont').fadeOut();
             var id_token = googleUser.getAuthResponse().id_token;
             var avatar = googleUser.getBasicProfile().getImageUrl();
             gapi.auth2.getAuthInstance().disconnect().then(function () {

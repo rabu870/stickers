@@ -8,42 +8,42 @@ String.prototype.toTitleCase = function () {
     var smallWords = /^(a|an|and|as|at|but|by|en|for|if|in|nor|of|on|or|per|the|to|v.?|vs.?|via)$/i
     var alphanumericPattern = /([A-Za-z0-9\u00C0-\u00FF])/
     var wordSeparators = /([ :–—-])/
-  
+
     return this.split(wordSeparators)
-      .map(function (current, index, array) {
-        if (
-          /* Check for small words */
-          current.search(smallWords) > -1 &&
-          /* Skip first and last word */
-          index !== 0 &&
-          index !== array.length - 1 &&
-          /* Ignore title end and subtitle start */
-          array[index - 3] !== ':' &&
-          array[index + 1] !== ':' &&
-          /* Ignore small words that start a hyphenated phrase */
-          (array[index + 1] !== '-' ||
-            (array[index - 1] === '-' && array[index + 1] === '-'))
-        ) {
-          return current.toLowerCase()
-        }
-  
-        /* Ignore intentional capitalization */
-        if (current.substr(1).search(/[A-Z]|\../) > -1) {
-          return current
-        }
-  
-        /* Ignore URLs */
-        if (array[index + 1] === ':' && array[index + 2] !== '') {
-          return current
-        }
-  
-        /* Capitalize the first letter */
-        return current.replace(alphanumericPattern, function (match) {
-          return match.toUpperCase()
+        .map(function (current, index, array) {
+            if (
+                /* Check for small words */
+                current.search(smallWords) > -1 &&
+                /* Skip first and last word */
+                index !== 0 &&
+                index !== array.length - 1 &&
+                /* Ignore title end and subtitle start */
+                array[index - 3] !== ':' &&
+                array[index + 1] !== ':' &&
+                /* Ignore small words that start a hyphenated phrase */
+                (array[index + 1] !== '-' ||
+                    (array[index - 1] === '-' && array[index + 1] === '-'))
+            ) {
+                return current.toLowerCase()
+            }
+
+            /* Ignore intentional capitalization */
+            if (current.substr(1).search(/[A-Z]|\../) > -1) {
+                return current
+            }
+
+            /* Ignore URLs */
+            if (array[index + 1] === ':' && array[index + 2] !== '') {
+                return current
+            }
+
+            /* Capitalize the first letter */
+            return current.replace(alphanumericPattern, function (match) {
+                return match.toUpperCase()
+            })
         })
-      })
-      .join('')
-  }
+        .join('')
+}
 
 String.prototype.truncate =
     function (n) {
@@ -127,8 +127,10 @@ var vm = new Vue({
                     if (self.init == false) {
                         $('.nav-tabs').append('<section class="navbar-center"><img src="./assets/media/logo.svg" style="width: 40px; height: 40px;"></section><section style="height: 42px" class="navbar-section"><a href="./login" class="no-outline tooltip tooltip-left" data-tooltip="Log out"><figure class="avatar" style="height: 33px; width: 33px; margin-right: 10px; margin-bottom: 4px;"><img src="' + self.imgurl + '"></figure></a></section>');
                     }
-                    $('.main-loader').css('display', 'none');
-                    $('.pad').css('display', 'block');
+                    // $('.main-loader').css('display', 'none');
+                    // $('.pad').css('display', 'block');
+                    $('.main-loader').fadeOut();
+                    $('.pad').fadeIn();
                     self.init = true;
                 }
             });
