@@ -263,120 +263,237 @@
 						tabId = tab.tabId;
 
 					var active = _this.activeTabIndex === index;
-					return h(
-						'li',
-						babelHelperVueJsxMergeProps([{
-								attrs: {
-									name: 'tab',
-									id: 't-' + tabId,
-									'aria-selected': active,
-									'aria-controls': 'p-' + tabId,
-									role: 'tab'
-								},
-
-								class: [
-									'tab-item',
-									{
-										active: active
+					if (tabId == "Block") {
+						return h(
+							'li',
+							babelHelperVueJsxMergeProps([{
+									attrs: {
+										name: 'tab',
+										id: 't-' + tabId,
+										'aria-selected': active,
+										'aria-controls': 'p-' + tabId,
+										role: 'tab'
 									},
-									{
-										disabled: tab.disabled
-									}
-								],
-								key: title
-							},
-							{
-								on: {
-									click: function click($event) {
-										for (
-											var _len = arguments.length,
-												attrs = Array(
-													_len > 1 ? _len - 1 : 0
-												),
-												_key = 1; _key < _len; _key++
-										) {
-											attrs[_key - 1] = arguments[_key];
-										}
 
-										(function () {
-											return (
-												!tab.disabled &&
-												_this.navigateToTab(
-													index,
-													route
-												)
-											);
-										}.apply(
-											undefined,
-											[$event].concat(attrs)
-										));
+									class: [
+										'tab-item',
+										{
+											active: active
+										},
+										{
+											disabled: tab.disabled
+										}
+									],
+									key: title
+								},
+								{
+									on: {
+										click: function click($event) {
+											for (
+												var _len = arguments.length,
+													attrs = Array(
+														_len > 1 ? _len - 1 : 0
+													),
+													_key = 1; _key < _len; _key++
+											) {
+												attrs[_key - 1] = arguments[_key];
+											}
+
+											(function () {
+												return (
+													!tab.disabled &&
+													_this.navigateToTab(
+														index,
+														route
+													)
+												);
+											}.apply(
+												undefined,
+												[$event].concat(attrs)
+											));
+										}
 									}
 								}
-							}
-						]),
-						[
-							_this.textPosition === 'top' &&
-							_this.renderTabTitle(index, _this.textPosition),
-							h(
-								'a',
-								babelHelperVueJsxMergeProps([{
-										attrs: {
-											href: '#',
+							]),
+							[
+								_this.textPosition === 'top' &&
+								_this.renderTabTitle(index, _this.textPosition),
+								h(
+									'a',
+									babelHelperVueJsxMergeProps([{
+											attrs: {
+												href: '/dont-forget-ur-block-stickers',
 
-											role: 'tab'
-										},
-
-										style: active ?
-											_this.activeTabStyle : _this.tabStyles(tab),
-										class: [{
-												active_tab: active
+												role: 'tab'
 											},
-											'tabs__link'
-										]
-									},
-									{
-										on: {
-											click: function click($event) {
-												for (
-													var _len2 =
-														arguments.length,
-														attrs = Array(
-															_len2 > 1 ?
-															_len2 - 1 :
-															0
-														),
-														_key2 = 1; _key2 < _len2; _key2++
-												) {
-													attrs[_key2 - 1] =
-														arguments[_key2];
-												}
 
-												(function (e) {
-													e.preventDefault();
-													return false;
-												}.apply(
-													undefined,
-													[$event].concat(attrs)
-												));
+											style: active ?
+												_this.activeTabStyle : _this.tabStyles(tab),
+											class: [{
+													active_tab: active
+												},
+												'tabs__link'
+											]
+										},
+										{
+											on: {
+												click: function click($event) {
+													for (
+														var _len2 =
+															arguments.length,
+															attrs = Array(
+																_len2 > 1 ?
+																_len2 - 1 :
+																0
+															),
+															_key2 = 1; _key2 < _len2; _key2++
+													) {
+														attrs[_key2 - 1] =
+															arguments[_key2];
+													}
+
+													(function (e) {
+														e.preventDefault();
+														return false;
+													}.apply(
+														undefined,
+														[$event].concat(attrs)
+													));
+												}
 											}
 										}
+									]),
+									[
+										_this.textPosition !== 'center' &&
+										!tab.$slots.title &&
+										_this.renderIcon(index),
+										_this.textPosition === 'center' &&
+										_this.renderTabTitle(
+											index,
+											_this.textPosition
+										)
+									]
+								),
+								_this.textPosition === 'bottom' &&
+								_this.renderTabTitle(index, _this.textPosition)
+							]
+						);
+					} else {
+						return h(
+							'li',
+							babelHelperVueJsxMergeProps([{
+									attrs: {
+										name: 'tab',
+										id: 't-' + tabId,
+										'aria-selected': active,
+										'aria-controls': 'p-' + tabId,
+										role: 'tab'
+									},
+
+									class: [
+										'tab-item',
+										{
+											active: active
+										},
+										{
+											disabled: tab.disabled
+										}
+									],
+									key: title
+								},
+								{
+									on: {
+										click: function click($event) {
+											for (
+												var _len = arguments.length,
+													attrs = Array(
+														_len > 1 ? _len - 1 : 0
+													),
+													_key = 1; _key < _len; _key++
+											) {
+												attrs[_key - 1] = arguments[_key];
+											}
+
+											(function () {
+												return (
+													!tab.disabled &&
+													_this.navigateToTab(
+														index,
+														route
+													)
+												);
+											}.apply(
+												undefined,
+												[$event].concat(attrs)
+											));
+										}
 									}
-								]),
-								[
-									_this.textPosition !== 'center' &&
-									!tab.$slots.title &&
-									_this.renderIcon(index),
-									_this.textPosition === 'center' &&
-									_this.renderTabTitle(
-										index,
-										_this.textPosition
-									)
-								]
-							),
-							_this.textPosition === 'bottom' &&
-							_this.renderTabTitle(index, _this.textPosition)
-						]
-					);
+								}
+							]),
+							[
+								_this.textPosition === 'top' &&
+								_this.renderTabTitle(index, _this.textPosition),
+								h(
+									'a',
+									babelHelperVueJsxMergeProps([{
+											attrs: {
+												href: '#',
+
+												role: 'tab'
+											},
+
+											style: active ?
+												_this.activeTabStyle : _this.tabStyles(tab),
+											class: [{
+													active_tab: active
+												},
+												'tabs__link'
+											]
+										},
+										{
+											on: {
+												click: function click($event) {
+													for (
+														var _len2 =
+															arguments.length,
+															attrs = Array(
+																_len2 > 1 ?
+																_len2 - 1 :
+																0
+															),
+															_key2 = 1; _key2 < _len2; _key2++
+													) {
+														attrs[_key2 - 1] =
+															arguments[_key2];
+													}
+
+													(function (e) {
+														e.preventDefault();
+														return false;
+													}.apply(
+														undefined,
+														[$event].concat(attrs)
+													));
+												}
+											}
+										}
+									]),
+									[
+										_this.textPosition !== 'center' &&
+										!tab.$slots.title &&
+										_this.renderIcon(index),
+										_this.textPosition === 'center' &&
+										_this.renderTabTitle(
+											index,
+											_this.textPosition
+										)
+									]
+								),
+								_this.textPosition === 'bottom' &&
+								_this.renderTabTitle(index, _this.textPosition)
+							]
+						);
+					}
 				});
 			}
 		},

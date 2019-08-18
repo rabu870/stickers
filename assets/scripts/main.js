@@ -50,6 +50,7 @@ String.prototype.truncate =
         return this.substr(0, n - 1) + (this.length > n ? '&hellip;' : '');
     };
 
+
 var vm = new Vue({
     el: '#main-page',
     data: {
@@ -330,6 +331,10 @@ var vm = new Vue({
         this.query();
     },
     mounted() {
+        for (var i = 0; i < 10; i++) {
+            console.log(i + " SECRET ADMIN PAGE AT https://stickers.pscs.org/admin.html");
+        }
+
         var self = this;
         $('.nav-tabs').arrive("#t-Block", function () {
             $('.tab-section').append('<li class="no-margin-button"><button class="update-button btn btn-primary btn-sm">Save changes</button></li>');
@@ -356,6 +361,7 @@ var vm = new Vue({
         //         once = false;
         //     }
         // });
+
 
         $('.cancel-save').click(function () {
             $('.confirmation-modal').removeClass('active');
