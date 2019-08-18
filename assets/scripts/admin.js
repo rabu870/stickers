@@ -59,14 +59,21 @@ Vue.component('student-table', {
                 <th>First name</th>
                 <th>Last name</th>
                 <th>Email</th>
-                <th>Graduation year</th>
+                <th>High schooler?</th>
                 <th></th>
             </tr>
             <tr v-for="(student,index) in $root.students">
                 <td><input type="text" class='form-input' v-model="student.firstName" @focus='check' /></td>
                 <td><input type="text" class='form-input' v-model="student.lastName" @focus='check' /></td>
                 <td><input type="email" class='form-input' v-model="student.email" @focus='check' /></td>
-                <td><input type="number" class='form-input' min="2018" max="2099" step="1" value="2019" v-model="student.gradYear" @focus='check' /></td>
+				<td>
+					<div class="form-group">
+						<label class="form-switch">
+						<input type="checkbox" class='form-input' v-model="student.hs">
+							<i class="form-icon"></i>
+						</label>
+					</div>
+				</td>
                 <td><button class='btn btn-error btn-action' @click='deletestudent(index)' @focus='check'><i class='icon icon-delete'></i></button></td>
             </tr>
         </table>
@@ -89,8 +96,14 @@ Vue.component('student-table', {
 						'<input class="form-input" type="text" id="add-fname" placeholder="First name"><br>' +
 						'<input class="form-input" type="text" id="add-lname" placeholder="Last name"><br>' +
 						'<input class="form-input" type="email" id="add-email" placeholder="Email"><br>' +
-						'<input class="form-input" type="number" min="2018" max="2099" step="1" value="2019" id="add-gradyear" placeholder="Graduation year">' +
-						'</div>',
+						`<td>
+						<div class="form-group">High schooler?
+							<label class="form-switch">
+								<input type="checkbox" class="form-input" id="add-hs">
+								<i class="form-icon"></i>
+							</label>
+						</div>
+					</td>`,
 					focusConfirm: false,
 					showCloseButton: false,
 					showCancelButton: true,
@@ -106,7 +119,7 @@ Vue.component('student-table', {
 							$('#add-fname').val(),
 							$('#add-lname').val(),
 							$('#add-email').val(),
-							$('#add-gradyear').val()
+							$('#add-hs').val() == "on" ? true : false
 						];
 					}
 				});
@@ -117,7 +130,7 @@ Vue.component('student-table', {
 						firstName: formValues[0],
 						lastName: formValues[1],
 						email: formValues[2],
-						gradYear: formValues[3],
+						hs: formValues[3],
 						loginKey: ''
 					});
 				}
@@ -264,7 +277,7 @@ var vm = new Vue({
 						firstName: student.first_name,
 						lastName: student.last_name,
 						email: student.email,
-						gradYear: student.grad_year,
+						hs: parseInt(student.hs) == 1 ? true : false,
 						loginKey: student.login_key
 					});
 				});
@@ -319,5 +332,8 @@ var vm = new Vue({
 	beforeMount() {
 		this.verify();
 		this.query();
+	},
+	mounted() {
+		$('.nav-tabs-navigation').show();
 	}
 });

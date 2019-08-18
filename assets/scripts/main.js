@@ -64,7 +64,8 @@ var vm = new Vue({
         stickers: [],
         imgurl: "",
         init: false,
-        edited: false
+        edited: false,
+        hs: false
     },
     methods: {
         verify: function () {
@@ -123,6 +124,8 @@ var vm = new Vue({
                         tempClass.id) && !self.stickers[4].find(x => x.id ===
                         tempClass.id) && !self.stickers[5].find(x => x.id ===
                         tempClass.id));
+
+                    self.hs = parseInt(response.data[3]) == 1 ? true : false;
 
                     self.imgurl = decodeURIComponent(getCookieValue('pic'));
                     if (self.init == false) {

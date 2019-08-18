@@ -35,19 +35,14 @@ if ($access == 1) {
                 }
                 $query = "INSERT INTO `" . $_POST['func'] . "`(`id`, `first_name`, `last_name`, `email`, `login_key`) VALUES (" . sqlize($person['id']) . "," . sqlize($person['firstName']) . "," . sqlize($person['lastName']) . "," . sqlize($person['email']) . "," . sqlize($key) . ");";
             } else {
-                $query = "INSERT INTO `" . $_POST['func'] . "`(`first_name`, `last_name`, `email`";
-                if(!empty($person['gradYear'])){
-                    $query = $query . ", `grad_year`";
-                }
+                $query = "INSERT INTO `" . $_POST['func'] . "`(`first_name`, `last_name`, `email`, `hs`";
                 $query = $query . ") VALUES (" . sqlize($person['firstName']) . "," . sqlize($person['lastName']) . "," . sqlize($person['email']);
-                if(!empty($person['gradYear'])){
-                    $query = $query . ", " . sqlize($person['gradYear']);
-                }
+                $query = $query . ", " . sqlize($person['hs']);
                 $query = $query . ");";
             }
             $db->query($query);
             if ($_POST['func'] == 'students') {
-                $db->query("UPDATE `students` SET `grad_year` = " . sqlize($person['gradYear']) . " WHERE `email` = " . sqlize($person['email']) . ";");
+                $db->query("UPDATE `students` SET `hs` = " . sqlize($person['hs']) . " WHERE `email` = " . sqlize($person['email']) . ";");
             }
         }
     } elseif ($_GET['func'] == 'meta') {
