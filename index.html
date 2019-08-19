@@ -105,8 +105,17 @@
                                 <draggable v-model='stickers[0]' @end='onEnd'
                                     :options="{group: {name: 'regular', put: blacksAllotted - stickers[0].length > 0}, sort: false, animation: 150}"
                                     style='min-height: 25px;'>
-                                    <div style='width: 100%;' class='menu-item class-style' v-for="item in stickers[0]"
-                                        :key="item.id"><a>{{item.className}}</a></div>
+                                    <div style='width: 100%;' class='reg-black menu-item class-style'
+                                        v-for="item in stickers[0]" :key="item.id">
+                                        <div class='a-c'>
+                                            <span class='class-name' v-html='item.className'></span>
+                                            <div v-if='warnings(item)' class='flag tooltip tooltip-left'
+                                                :data-tooltip='$root.flagWarning'
+                                                style='float: right; cursor: pointer;'>
+                                                <i class='show-hover icon icon-flag'></i>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </draggable>
                             </div>
                         </div>
@@ -122,8 +131,17 @@
                                 <draggable v-model='stickers[1]' @end='onEnd'
                                     :options="{group:{name: 'regular', put: greysAllotted - stickers[1].length > 0}, sort: false, animation: 150}"
                                     style='min-height: 25px;'>
-                                    <div style='width: 100%;' class='menu-item class-style' v-for="item in stickers[1]"
-                                        :key="item.id"><a>{{item.className}}</a></div>
+                                    <div style='width: 100%;' class='reg-grey menu-item class-style'
+                                        v-for="item in stickers[1]" :key="item.id">
+                                        <div class='a-c'>
+                                            <span class='class-name' v-html='item.className'></span>
+                                            <div v-if='warnings(item)' class='flag tooltip tooltip-left'
+                                                :data-tooltip='$root.flagWarning'
+                                                style='float: right; cursor: pointer;'>
+                                                <i class='show-hover icon icon-flag'></i>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </draggable>
                             </div>
                         </div>
@@ -134,8 +152,17 @@
                             <div class="accordion-body">
                                 <draggable v-model='stickers[2]' @end='onEnd'
                                     :options="{group:'regular', sort: false, animation: 150}" style='min-height: 25px;'>
-                                    <div style='width: 100%;' class='menu-item class-style' v-for="item in stickers[2]"
-                                        :key="item.id"><a>{{item.className}}</a></div>
+                                    <div style='width: 100%;' class='reg-white menu-item class-style'
+                                        v-for="item in stickers[2]" :key="item.id">
+                                        <div class='a-c'>
+                                            <span class='class-name' v-html='item.className'></span>
+                                            <div v-if='warnings(item)' class='flag tooltip tooltip-left'
+                                                :data-tooltip='$root.flagWarning'
+                                                style='float: right; cursor: pointer;'>
+                                                <i class='show-hover icon icon-flag'></i>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </draggable>
                             </div>
                         </div>
@@ -218,8 +245,17 @@
                                 <draggable v-model='stickers[3]' @end='onEnd'
                                     :options="{group: {name: 'block', put: blacksAllottedBlock - stickers[3].length > 0}, sort: false, animation: 150}"
                                     style='min-height: 25px;'>
-                                    <div style='width: 100%;' class='menu-item class-style' v-for="item in stickers[3]"
-                                        :key="item.id"><a>{{item.className}}</a></div>
+                                    <div style='width: 100%;' class='block-black menu-item class-style'
+                                        v-for="item in stickers[3]" :key="item.id">
+                                        <div class='a-c'>
+                                            <span class='class-name' v-html='item.className'></span>
+                                            <div v-if='warnings(item)' class='flag tooltip tooltip-left'
+                                                :data-tooltip='$root.flagWarning'
+                                                style='float: right; cursor: pointer;'>
+                                                <i class='show-hover icon icon-flag'></i>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </draggable>
                             </div>
                         </div>
@@ -236,8 +272,17 @@
                                 <draggable v-model='stickers[4]' @end='onEnd'
                                     :options="{group:{name: 'block', put: greysAllottedBlock - stickers[4].length > 0}, sort: false, animation: 150}"
                                     style='min-height: 25px;'>
-                                    <div style='width: 100%;' class='menu-item class-style' v-for="item in stickers[4]"
-                                        :key="item.id"><a>{{item.className}}</a></div>
+                                    <div style='width: 100%;' class='block-grey menu-item class-style'
+                                        v-for="item in stickers[4]" :key="item.id">
+                                        <div class='a-c'>
+                                            <span class='class-name' v-html='item.className'></span>
+                                            <div v-if='warnings(item)' class='flag tooltip tooltip-left'
+                                                :data-tooltip='$root.flagWarning'
+                                                style='float: right; cursor: pointer;'>
+                                                <i class='show-hover icon icon-flag'></i>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </draggable>
                             </div>
                         </div>
@@ -248,8 +293,17 @@
                             <div class="accordion-body">
                                 <draggable v-model='stickers[5]' @end='onEnd'
                                     :options="{group:'block', sort: false, animation: 150}" style='min-height: 25px;'>
-                                    <div style='width: 100%;' class='menu-item class-style' v-for="item in stickers[5]"
-                                        :key="item.id"><a>{{item.className}}</a></div>
+                                    <div style='width: 100%;' class='block-white menu-item class-style'
+                                        v-for="item in stickers[5]" :key="item.id">
+                                        <div class='a-c'>
+                                            <span class='class-name' v-html='item.className'></span>
+                                            <div v-if='warnings(item)' class='flag tooltip tooltip-left'
+                                                :data-tooltip='$root.flagWarning'
+                                                style='float: right; cursor: pointer;'>
+                                                <i class='show-hover icon icon-flag'></i>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </draggable>
                             </div>
                         </div>

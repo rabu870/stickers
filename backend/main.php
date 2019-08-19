@@ -15,8 +15,8 @@ if ($access == 2) {
                 array_push($stickers, $db->query("SELECT `class_id` FROM `stickers` WHERE `student_id` = " . $id . " AND `priority` = " . $i . " AND `is_block` = true")->fetch_all());
             }
             $classes = $db->query("SELECT * FROM `classes` WHERE true")->fetch_all();
-            $gyear = $db->query("SELECT `grad_year` FROM `students` WHERE `id` = " . $id)->fetch_row()[0];
-            echo "[" . json_encode($stickers, JSON_PRETTY_PRINT) . ", " . json_encode($classes, JSON_PRETTY_PRINT) . ", " . json_encode(utf8ize($allotted), JSON_UNESCAPED_UNICODE) . ", " . json_encode(utf8ize($gyear), JSON_PRETTY_PRINT) . "]";
+            $hs = $db->query("SELECT `hs` FROM `students` WHERE `id` = " . $id)->fetch_row()[0];
+            echo "[" . json_encode($stickers, JSON_PRETTY_PRINT) . ", " . json_encode($classes, JSON_PRETTY_PRINT) . ", " . json_encode(utf8ize($allotted), JSON_UNESCAPED_UNICODE) . ", " . json_encode(utf8ize($hs), JSON_PRETTY_PRINT) . "]";
         } elseif ($_GET['func'] == 'update') {
             $stickers = json_decode($_GET['stickers']);
             $allottedlist = array($allotted[0], $allotted[1], '', $allotted[2], $allotted[3], '');

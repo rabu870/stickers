@@ -65,7 +65,8 @@ var vm = new Vue({
         imgurl: "",
         init: false,
         edited: false,
-        hs: false
+        hs: false,
+        flagWarning: ""
     },
     methods: {
         verify: function () {
@@ -126,6 +127,7 @@ var vm = new Vue({
                         tempClass.id));
 
                     self.hs = parseInt(response.data[3]) == 1 ? true : false;
+                    self.flagWarning = self.hs ? "MS only class." : "HS only class.";
 
                     self.imgurl = decodeURIComponent(getCookieValue('pic'));
                     if (self.init == false) {
@@ -327,7 +329,23 @@ var vm = new Vue({
         },
         genID: function (item, type) {
             return type + "-ns-" + item;
+        },
+        warnings: function (item) {
+            if (this.hs) {
+                if (item.tags.includes('ms-only')) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                if (item.tags.includes('hs-only')) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
         }
+
     },
     beforeMount() {
         this.verify();
