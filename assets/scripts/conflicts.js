@@ -45,27 +45,58 @@ var vm = new Vue({
 
                     //put the stickers in an array for each class
                     var stickerList = [];
-                    response.data[0].forEach((category, index) => {
-                        stickerList[index] = [parseInt(category[0]), []];
-                        category[1].forEach(sticker => {
-                            stickerList[index][1] = sticker;
-                        })
+                    response.data[0].forEach(sticker => {
+                        stickerList.push({
+                            stickerId: parseInt(sticker[0]),
+                            studentId: parseInt(sticker[1]),
+                            classId: parseInt(sticker[2]),
+                            priority: parseInt(sticker[3]),
+                            isBlock: parseInt(sticker[4]) == 1 ? true : false
+                        });
                     });
 
                     self.stickers = stickerList;
 
                     $('.main-loader').css('display', 'none');
                     $('.pad').css('display', 'block');
+
+                    self.genConflicts();
                 }
             });
         },
         genConflicts: function () {
             let self = this;
-            let conflicts = []
-            this.slot.forEach(item => {
-                conflicts = conflicts.concat(self.classes.find(obj => obj.id == item));
+
+            let conflicts = [];
+            let classes = [];
+            classes = _.groupBy(this.stickers, 'classId');
+
+            Object.keys(classes).forEach(cls => {
+                classes[cls].forEach(sticker => {
+                    if (conflicts[sticker.studentId]) {
+                        conflicts[sticker.studentId].push(sticker.stickerId);
+                    } else {
+                        conflicts[sticker.studentId] = [sticker.stickerId];
+                    }
+                });
             });
-            console.log(conflicts);
+            //console.log(self.classes);
+
+            conflicts.forEach((conflict, i) => {
+                if (conflict.length > 1) {
+                    let text = "Conflict (" + self.students.find(x => x.id == i).firstName + "): ";
+                    conflict.forEach((sticker, index) => {
+                        self.stickers.find(x => x.stickerId == sticker)
+                        let temp = self.stickers.find(x => x.stickerId == sticker);
+                        text += self.classes.find(x => x.id === temp.classId).className;
+                        text += " (";
+                        text += temp.priority == 1 ? "B" : temp.priority == 2 ? "G" : "W";
+                        text += ")";
+                        text += index != conflict.length - 1 ? " / " : "";
+                    });
+                    console.log(text);
+                }
+            });
         }
     },
     beforeMount() {
