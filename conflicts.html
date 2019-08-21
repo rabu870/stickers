@@ -65,6 +65,7 @@
                             <p>{{item.text}}</p>
                         </div>
                     </div>
+                    <p v-if='finalConflicts.length == 0'>No conflicts here!</p>
                 </div>
                 <div v-if='!results' style='position: relative; height: 100%'>
                     <button style='position: absolute;top: 50%; left: 50%; transform: translate(-50%, -50%);'
