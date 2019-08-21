@@ -117,6 +117,7 @@ var vm = new Vue({
 
                     self.stickers = stickerList;
 
+                    //figure out which classes aren't stickered
                     self.notStickered = self.classes.filter(tempClass => tempClass.isBlock == false && !self.stickers[0].find(x => x.id ===
                         tempClass.id) && !self.stickers[1].find(x => x.id ===
                         tempClass.id) && !self.stickers[2].find(x => x.id ===

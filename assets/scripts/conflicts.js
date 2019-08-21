@@ -92,8 +92,11 @@ var vm = new Vue({
 
             let conflicts = [];
             let classes = [];
+
+            //group the stickers by class
             classes = _.groupBy(this.stickers, 'classId');
 
+            //sort the stickers into an array for each student
             Object.keys(classes).forEach(cls => {
                 classes[cls].forEach(sticker => {
                     if (conflicts[sticker.studentId]) {
@@ -106,9 +109,11 @@ var vm = new Vue({
             //console.log(self.classes);
 
             conflicts.forEach((conflict, i) => {
+                //if there is a conflict, and if include white stickers is off, check if there is a conflict without including white stickers
                 if (conflict.length > 1 && self.includeWhiteStickers ? true : conflict.filter(x => self.stickers.find(p => p.stickerId == x).priority != 3).length > 1) {
                     let text = "" + self.students.find(x => x.id == i).firstName + " " + self.students.find(x => x.id == i).lastName.charAt(0).toUpperCase() + ": ";
                     conflict.forEach((sticker, index) => {
+                        //fetch the sticker based on the stored stickerId
                         let temp = self.stickers.find(x => x.stickerId == sticker);
                         if (self.includeWhiteStickers ? true : temp.priority != 3) {
                             text += self.classes.find(x => x.id === temp.classId).className;
@@ -132,6 +137,7 @@ var vm = new Vue({
             this.results = false;
         },
         filterClasses: function () {
+            //show and hide block/reg classes based on what the user has selected
             if ($('.is-block-checkbox').is(':checked')) {
                 $('.unselected-classes').each(function () {
                     if ($(this).attr('data-block') == 'true') {
