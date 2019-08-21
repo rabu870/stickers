@@ -80,8 +80,14 @@
                     <p v-if='finalConflicts.length == 0'>No conflicts here!</p>
                 </div>
                 <div v-if='!results' style='position: relative; height: 100%'>
-                    <button style='position: absolute;top: 50%; left: 50%; transform: translate(-50%, -50%);'
-                        :class="isDisabled" @click='fetchStickers'>Get conflicts!</button>
+                    <div
+                        style='position: absolute;top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;'>
+                        <label class="form-checkbox">
+                            Include white sticker conflicts
+                            <input v-model='includeWhiteStickers' type="checkbox"><i class="form-icon"></i>
+                        </label>
+                        <button :class="isDisabled" @click='fetchStickers'>Get conflicts!</button>
+                    </div>
                 </div>
             </div>
         </div>

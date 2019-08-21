@@ -139,6 +139,8 @@ var vm = new Vue({
                     $('.main-loader').fadeOut();
                     $('.pad').fadeIn();
                     self.init = true;
+                } else {
+                    alert("Stickering isn't currently available.");
                 }
             });
         },

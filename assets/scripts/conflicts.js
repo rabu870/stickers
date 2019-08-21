@@ -16,15 +16,16 @@ var vm = new Vue({
         stickers: [],
         students: [],
         slot: [],
+        includeWhiteStickers: false,
         finalConflicts: [],
         results: false
     },
     computed: {
         isDisabled: function () {
             if (this.slot.length == 0) {
-                return 'btn btn-primary disabled';
+                return 'conflict-button btn btn-primary disabled';
             } else {
-                return 'btn btn-primary';
+                return 'conflict-button btn btn-primary';
             }
         }
     },
@@ -65,6 +66,7 @@ var vm = new Vue({
             });
         },
         fetchStickers: function () {
+            $('.conflict-button').addClass('loading');
             let self = this;
             axios.get('./backend/conflicts.php?func=stickers&slot=' + JSON.stringify(self.slot.map(x => x.id))).then(function (response) {
                 var stickerList = [];
@@ -104,16 +106,17 @@ var vm = new Vue({
             //console.log(self.classes);
 
             conflicts.forEach((conflict, i) => {
-                if (conflict.length > 1) {
+                if (conflict.length > 1 && self.includeWhiteStickers ? true : conflict.filter(x => self.stickers.find(p => p.stickerId == x).priority != 3).length > 1) {
                     let text = "" + self.students.find(x => x.id == i).firstName + " " + self.students.find(x => x.id == i).lastName.charAt(0).toUpperCase() + ": ";
                     conflict.forEach((sticker, index) => {
-                        self.stickers.find(x => x.stickerId == sticker)
                         let temp = self.stickers.find(x => x.stickerId == sticker);
-                        text += self.classes.find(x => x.id === temp.classId).className;
-                        text += " (";
-                        text += temp.priority == 1 ? "B" : temp.priority == 2 ? "G" : "W";
-                        text += ")";
-                        text += index != conflict.length - 1 ? " / " : "";
+                        if (self.includeWhiteStickers ? true : temp.priority != 3) {
+                            text += self.classes.find(x => x.id === temp.classId).className;
+                            text += " (";
+                            text += temp.priority == 1 ? "B" : temp.priority == 2 ? "G" : "W";
+                            text += ")";
+                            text += self.includeWhiteStickers ? index != conflict.length - 1 ? " / " : "" : index != conflict.filter(x => self.stickers.find(p => p.stickerId == x).priority != 3).length - 1 ? " / " : "";
+                        }
                     });
 
                     self.finalConflicts.push({
@@ -122,7 +125,7 @@ var vm = new Vue({
                     });
                 }
             });
-
+            $('.conflict-button').removeClass('loading');
             self.results = true;
         },
         onEnd: function () {
