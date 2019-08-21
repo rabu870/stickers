@@ -26,19 +26,31 @@
         <div class='container pad' style='width: unset;'>
             <div class='menu' style='width: 50%'>
                 <h3>All classes</h3>
+                <div class="form-group">
+                    Regular
+                    <label style='display:inline-block;' class="form-switch">
+
+                        <input type="checkbox" class='is-block-checkbox form-input' @change='filterClasses'>
+
+                        <i class="form-icon"></i>
+                        Block
+                    </label>
+
+                </div>
+                <div class='divider'></div>
                 <draggable v-model='notSelected'
                     :options="{group:'stickers', sort: false, handle: '.a-c', animation: 150}" @end='onEnd'
                     style='width: 100%; min-height: 25px; display: grid; grid-template-columns: repeat(auto-fill,minmax(310px, 1fr));'
                     v-if='notSelected != []'>
-                    <div style='width: 100%; border-radius: .1rem;' class='menu-item class-style'
-                        v-for="item in notSelected" :key="item.id">
+                    <div style='width: 100%; border-radius: .1rem;' class='menu-item class-style unselected-classes'
+                        v-for="item in notSelected" :key="item.id" :data-block='"" + item.isBlock'>
                         <div class='a-c'>
                             <span class='class-name' v-html='item.className.truncate(34)'></span>
                         </div>
                     </div>
                 </draggable>
             </div>
-            <div class='menu'
+            <div class=' menu'
                 style='position: fixed; top: 10px; right: 20px; width: 47%; bottom: 50%; overflow-y: scroll; overflow-x:hidden;'>
                 <label class="accordion-header">
                     <span class='h5'>Emulated slot</span>

@@ -39,6 +39,7 @@ var vm = new Vue({
                         classList.push({
                             id: parseInt(currentClass[0]),
                             className: currentClass[1],
+                            isBlock: parseInt(currentClass[5]) == 1 ? true : false
                         })
                     });
                     self.classes = classList;
@@ -56,6 +57,7 @@ var vm = new Vue({
                     });
                     self.students = studentList;
 
+                    self.filterClasses();
 
                     $('.main-loader').css('display', 'none');
                     $('.pad').css('display', 'block');
@@ -125,6 +127,26 @@ var vm = new Vue({
         },
         onEnd: function () {
             this.results = false;
+        },
+        filterClasses: function () {
+            if ($('.is-block-checkbox').is(':checked')) {
+                $('.unselected-classes').each(function () {
+                    if ($(this).attr('data-block') == 'true') {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            } else {
+                $('.unselected-classes').each(function () {
+                    if ($(this).attr('data-block') == 'true') {
+                        $(this).hide();
+                    } else {
+                        $(this).show();
+                    }
+
+                });
+            }
         }
     },
     beforeMount() {
