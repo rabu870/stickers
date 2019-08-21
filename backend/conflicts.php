@@ -10,9 +10,9 @@ if ($_GET['func'] == 'load') {
     $students = [];
     for ($i = 0; $i < count($classes); $i++) {
         if($i !== count($classes) -1) {
-            $q = $q . $classes[$i] . " OR `class_id` = ";
+            $q = $q . intval($classes[$i]) . " OR `class_id` = ";
         } else {
-            $q .= $classes[$i];
+            $q .= intval($classes[$i]);
         }
     }
     echo json_encode($db->query($q)->fetch_all());
