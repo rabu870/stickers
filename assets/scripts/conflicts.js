@@ -103,7 +103,7 @@ var vm = new Vue({
 
             conflicts.forEach((conflict, i) => {
                 if (conflict.length > 1) {
-                    let text = "" + self.students.find(x => x.id == i).firstName + " " + self.students.find(x => x.id == i).lastName.substr(1, 1).toUpperCase() + ": ";
+                    let text = "" + self.students.find(x => x.id == i).firstName + " " + self.students.find(x => x.id == i).lastName.charAt(0).toUpperCase() + ": ";
                     conflict.forEach((sticker, index) => {
                         self.stickers.find(x => x.stickerId == sticker)
                         let temp = self.stickers.find(x => x.stickerId == sticker);
