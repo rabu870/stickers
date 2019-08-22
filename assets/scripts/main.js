@@ -356,7 +356,7 @@ var vm = new Vue({
     },
     mounted() {
         for (var i = 0; i < 10; i++) {
-            console.log(i + " SECRET ADMIN PAGE AT https://stickers.pscs.org/admin.html");
+            console.log(i + " SECRET ADMIN PAGE AT https://stickers.pscs.org/admin");
         }
 
         var self = this;
