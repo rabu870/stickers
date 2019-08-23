@@ -134,6 +134,7 @@ var vm = new Vue({
             self.results = true;
         },
         onEnd: function () {
+            this.filterClasses();
             this.results = false;
         },
         filterClasses: function () {
