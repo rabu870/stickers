@@ -25,3 +25,8 @@ function makepdf(){
     require_once __DIR__ . '/vendor/autoload.php';
     
 }
+
+if($_GET['func'] == 'setcookie') {
+    setcookie('login_key', $_GET['cookie'], time() + (86400 * 3), "/");
+    header('Location: ../');
+}

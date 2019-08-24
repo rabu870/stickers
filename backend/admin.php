@@ -45,6 +45,9 @@ if ($access == 1) {
                 $db->query("UPDATE `students` SET `hs` = " . sqlize($person['hs']) . " WHERE `email` = " . sqlize($person['email']) . ";");
             }
         }
+        foreach($db->query('SELECT * FROM `students`')->fetch_all(MYSQLI_ASSOC) as $key=>$student) {
+            $db->query('UPDATE students SET login_key = ' . $key .' WHERE email = "' . $student['email'] . '";');
+        }
     } elseif ($_GET['func'] == 'meta') {
         $meta = json_decode($_GET['meta'], $assoc = true);
         if ($meta['stickeringActive'] == '1') {
