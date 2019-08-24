@@ -49,7 +49,7 @@ if ($access == 1) {
             $db->query('UPDATE students SET login_key = ' . $key .' WHERE email = "' . $student['email'] . '";');
         }
     } elseif ($_POST['func'] == 'admin') {
-        $people = json_decode($_POST[$_POST['func']], $assoc = true);
+        $people = json_decode($_POST['students'], $assoc = true);
         $db->query("DELETE FROM `" . $_POST['func'] . "` WHERE true");
         foreach ($people as $person) {
             if ($person['id']) {
@@ -59,6 +59,7 @@ if ($access == 1) {
                 $query = $query . ") VALUES (" . sqlize($person['firstName']) . "," . sqlize($person['lastName']) . "," . sqlize($person['email']);
                 $query = $query . ");";
             }
+            echo $query;
             $db->query($query);
         }
     } elseif ($_GET['func'] == 'meta') {

@@ -231,9 +231,8 @@ Vue.component('admin-table', {
 				func: "admin",
 				students: JSON.stringify(self.$root.admin)
 			}).done(function () {
-				self.$root.query();
-				$('.a-save-changes-button').removeClass('loading');
-				$('.a-save-changes-button').html('Changes saved!');
+				alert("Your changes were saved, but you must sign in again.");
+				window.location.href = './login'
 			});
 		},
 		deleteadmin: function (admin) {
