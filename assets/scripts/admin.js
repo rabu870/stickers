@@ -34,16 +34,22 @@ Vue.component('meta-edit', {
 			var self = this;
 			self.$root.meta.stickeringActive =
 				self.$root.meta.stickeringActive == true ? '1' : '0';
-			axios
-				.get(
-					'./backend/admin.php?func=meta&meta=' +
-					JSON.stringify(self.$root.meta)
-				)
-				.then(function (response) {
-					self.$root.query();
-					$('.save-changes-button').removeClass('loading');
-					$('.save-changes-button').html('Changes saved!');
-				});
+			var r = true;
+			if (self.$root.meta.stickeringActive && !self.$root.stickeringActiveInit) {
+				r = confirm("Are you sure? This will delete all sticker data and reset classes!");
+			}
+			if (r) {
+				axios
+					.get(
+						'./backend/admin.php?func=meta&meta=' +
+						JSON.stringify(self.$root.meta)
+					)
+					.then(function (response) {
+						self.$root.query();
+						$('.save-changes-button').removeClass('loading');
+						$('.save-changes-button').html('Changes saved!');
+					});
+			}
 		},
 		check: function () {
 			$('.save-changes-button').html('Save changes');
