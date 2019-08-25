@@ -16,7 +16,7 @@ if ($access == 2) {
             }
             $classes = $db->query("SELECT * FROM `classes` WHERE true")->fetch_all();
             $hs = $db->query("SELECT `hs` FROM `students` WHERE `id` = " . $id)->fetch_row()[0];
-            echo "[" . json_encode($stickers, JSON_PRETTY_PRINT) . ", " . json_encode($classes, JSON_PRETTY_PRINT) . ", " . json_encode(utf8ize($allotted), JSON_UNESCAPED_UNICODE) . ", " . json_encode(utf8ize($hs), JSON_PRETTY_PRINT) . "]";
+            echo "[" . json_encode($stickers, JSON_PRETTY_PRINT) . ", " . json_encode($classes, JSON_PRETTY_PRINT) . ", " . json_encode(utf8ize($allotted), JSON_UNESCAPED_UNICODE) . ", " . json_encode(utf8ize($hs), JSON_PRETTY_PRINT) . ", " . json_encode(utf8ize($db->query('SELECT first_name FROM students WHERE id = ' . $id)->fetch_row()[0]), JSON_PRETTY_PRINT) . "]";
         } elseif ($_GET['func'] == 'update') {
             $stickers = json_decode($_GET['stickers']);
             $allottedlist = array($allotted[0], $allotted[1], '', $allotted[2], $allotted[3], '');
@@ -39,5 +39,6 @@ if ($access == 2) {
         echo '0';
     }
 } else {
+    http_response_code(400);
     die();
 }

@@ -132,7 +132,7 @@ var vm = new Vue({
 
                     self.imgurl = decodeURIComponent(getCookieValue('pic'));
                     if (self.init == false) {
-                        $('.nav-tabs').append('<section class="navbar-center"><img src="./assets/media/logo.svg" style="width: 40px; height: 40px;"></section><section style="height: 42px" class="navbar-section"><a href="./login" class="no-outline tooltip tooltip-left" data-tooltip="Log out"><figure class="avatar" style="height: 33px; width: 33px; margin-right: 10px; margin-bottom: 4px;"><img src="' + self.imgurl + '"></figure></a></section>');
+                        $('.nav-tabs').append('<section class="navbar-center"><img src="./assets/media/logo.svg" style="width: 40px; height: 40px;"></section><section style="height: 42px" class="navbar-section">' + (getCookieValue('staff_pwd') !== '' ? '<span style="margin-right: 5px">Stickering as ' + response.data[4] + '</span>' : '') + '<a href="./login" class="no-outline tooltip tooltip-left" data-tooltip="Log out"><figure class="avatar" style="height: 33px; width: 33px; margin-right: 10px; margin-bottom: 4px;"><img src="' + self.imgurl + '"></figure></a></section>');
                         $('.nav-tabs-navigation').fadeIn();
                     }
                     // $('.main-loader').css('display', 'none');
@@ -161,6 +161,9 @@ var vm = new Vue({
                     function () {
                         $('.update-button').html('Save changes');
                     }, 3000);
+            }).catch(function () {
+                alert('Error! Your changes were not saved. Login again.');
+                window.location.href = './login';
             });
         },
         checkTags: function (item) {
