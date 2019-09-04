@@ -64,6 +64,7 @@ if ($access == 1) {
         }
     } elseif ($_GET['func'] == 'meta') {
         $meta = json_decode($_GET['meta'], $assoc = true);
+        print_r($meta);
         if ($meta['stickeringActive'] == '1') {
             $active = $db->query("SELECT `stickering_active` FROM `meta` WHERE true")->fetch_row();
             if ($active[0] == "0") {
@@ -105,8 +106,17 @@ if ($access == 1) {
             }
 
         }
+        $ga = $meta['greysAllotted'] == '' ? 0 : $meta['greysAllotted'];
+        $ba = $meta['blacksAllotted'] == '' ? 0 : $meta['blacksAllotted'];
+        $bab = $meta['blacksAllottedBlock'] == '' ? 0 : $meta['blacksAllottedBlock'];
+        $gab = $meta['greysAllottedBlock'] == '' ? 0 : $meta['greysAllottedBlock'];
+        $sp = $meta['staffPassword'] == '' ? 0 : '"' . $meta['staffPassword'] . '"';
+
+        echo crypt('act with', 'P9');
         $db->query("DELETE FROM `meta` WHERE true");
-        $query = "INSERT INTO `meta`(`stickering_active`, `blacks_allotted` , `greys_allotted` , `blacks_allotted_block` , `greys_allotted_block`) VALUES (" . sqlize($meta['stickeringActive']) . "," . sqlize($meta['greysAllotted']) . " ," . sqlize($meta['blacksAllotted']) . " ," . sqlize($meta['blacksAllottedBlock']) . " ," . sqlize($meta['greysAllottedBlock']) . ")";
+        $query = "INSERT INTO `meta`(`stickering_active`, `blacks_allotted` , `greys_allotted` , `blacks_allotted_block` , `greys_allotted_block`, `staff_password`) VALUES (" . $meta['stickeringActive'] . "," . $ga . " ," . $ba . " ," . $bab . " ," . $gab ." ," . $sp . ")";
+        print_r($meta);
+        echo $query;
         $db->query($query);
     } elseif($_GET['func'] == 'reminder') {
         $mail = new PHPMailer;

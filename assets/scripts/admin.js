@@ -30,15 +30,16 @@ Vue.component('meta-edit', {
     </div>`,
 	methods: {
 		save: function () {
-			$('.save-changes-button').addClass('loading');
 			var self = this;
-			self.$root.meta.stickeringActive =
-				self.$root.meta.stickeringActive == true ? '1' : '0';
 			var r = true;
+			console.log(self.$root.meta.stickeringActive);
 			if (self.$root.meta.stickeringActive && !self.$root.stickeringActiveInit) {
 				r = confirm("Are you sure? This will delete all sticker data and reset classes!");
 			}
 			if (r) {
+				$('.save-changes-button').addClass('loading');
+				self.$root.meta.stickeringActive =
+					self.$root.meta.stickeringActive == true ? '1' : '0';
 				axios
 					.get(
 						'./backend/admin.php?func=meta&meta=' +
@@ -306,18 +307,18 @@ var vm = new Vue({
 				//meta
 
 				var metaList = {};
-				response.data[2].forEach(data => {
-					metaList = {
-						stickeringActive: data.stickering_active == '1' ? true : false,
-						blacksAllotted: data.blacks_allotted,
-						greysAllotted: data.greys_allotted,
-						blacksAllottedBlock: data.blacks_allotted_block,
-						greysAllottedBlock: data.greys_allotted_block
-					};
-					self.stickeringActiveInit = data.stickering_active == '1' ? true : false;
-				});
+				metaList = {
+					stickeringActive: response.data[2][0].stickering_active == '1' ? true : false,
+					blacksAllotted: response.data[2][0].blacks_allotted,
+					greysAllotted: response.data[2][0].greys_allotted,
+					blacksAllottedBlock: response.data[2][0].blacks_allotted_block,
+					greysAllottedBlock: response.data[2][0].greys_allotted_block,
+					staffPassword: response.data[2][0].staff_password
+				};
+				self.stickeringActiveInit = response.data[2][0].stickering_active == '1' ? true : false;
 
 				self.meta = metaList;
+				console.log(self.meta)
 
 				self.notStickered = response.data[3];
 			});
