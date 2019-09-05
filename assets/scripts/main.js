@@ -70,7 +70,7 @@ var vm = new Vue({
     },
     computed: {
         areBlockClasses: function () {
-            return this.notStickeredBlock != [] || (this.stickers[3] != [] && this.stickers[3].length > 0) || (this.stickers[4] != [] && this.stickers[4].length > 0) || (this.stickers[5] != [] && this.stickers[5].length > 0);
+            return this.notStickeredBlock ? this.notStickeredBlock.length > 0 : false || this.stickers[3].length > 0 || this.stickers[4].length > 0 || this.stickers[5].length > 0;
         }
     },
     methods: {
@@ -139,6 +139,20 @@ var vm = new Vue({
                     if (self.init == false) {
                         $('.nav-tabs').append('<section class="navbar-center"><img src="./assets/media/logo.svg" style="width: 40px; height: 40px;"></section><section style="height: 42px" class="navbar-section">' + (getCookieValue('staff_pwd') !== '' ? '<span style="margin-right: 5px">Stickering as ' + response.data[4] + '</span>' : '') + '<a href="./login" class="no-outline tooltip tooltip-left" data-tooltip="Log out"><figure class="avatar" style="height: 33px; width: 33px; margin-right: 10px; margin-bottom: 4px;"><img src="' + self.imgurl + '"></figure></a></section>');
                         $('.nav-tabs-navigation').fadeIn();
+                    }
+
+                    if (self.areBlockClasses) {
+                        $('.tab-item').each(function () {
+                            if ($(this).attr('id') == 't-Block') {
+                                $(this).attr('style', 'display: block;');
+                            }
+                        });
+                    } else {
+                        $('.tab-item').each(function () {
+                            if ($(this).attr('id') == 't-Block') {
+                                $(this).attr('style', 'display: none;');
+                            }
+                        });
                     }
                     // $('.main-loader').css('display', 'none');
                     // $('.pad').css('display', 'block');

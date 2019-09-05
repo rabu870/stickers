@@ -3,6 +3,9 @@
  * (c) 2018-present cristij <joracristi@gmail.com>
  * Released under the MIT License.
  */
+
+//modified by eli kimchi, don't go using this in any project expecting everything to work...
+
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ?
 		factory(exports) :
