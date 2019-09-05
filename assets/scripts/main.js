@@ -70,7 +70,7 @@ var vm = new Vue({
     },
     computed: {
         areBlockClasses: function () {
-            return this.notStickeredBlock.length > 0 || this.stickers[3].length > 0 || this.stickers[4].length > 0 || this.stickers[5].length > 0;
+            return this.notStickeredBlock != [] || (this.stickers[3] != [] && this.stickers[3].length > 0) || (this.stickers[4] != [] && this.stickers[4].length > 0) || (this.stickers[5] != [] && this.stickers[5].length > 0);
         }
     },
     methods: {
