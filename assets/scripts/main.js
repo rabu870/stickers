@@ -89,6 +89,7 @@ var vm = new Vue({
                 if (response.data !== "0") {
                     //compile list of classes
                     var classList = [];
+
                     response.data[1].forEach(currentClass => {
                         classList.push({
                             id: parseInt(currentClass[0]),
@@ -101,6 +102,18 @@ var vm = new Vue({
                             mature: parseInt(currentClass[7]) == 1 ? true : false
                         })
                     });
+                    // response.data[1].forEach(currentClass => {
+                    //     classList.push({
+                    //         id: parseInt(currentClass[0]),
+                    //         className: currentClass[1],
+                    //         link: currentClass[2],
+                    //         facilitator: currentClass[3].toTitleCase(),
+                    //         isMega: parseInt(currentClass[4]) == 1 ? true : false,
+                    //         isBlock: parseInt(currentClass[5]) == 1 ? true : false,
+                    //         tags: currentClass[6],
+                    //         mature: parseInt(currentClass[7]) == 1 ? true : false
+                    //     })
+                    // });
                     self.classes = classList;
 
                     //parse the allotted stickers
@@ -145,6 +158,8 @@ var vm = new Vue({
                         $('.tab-item').each(function () {
                             if ($(this).attr('id') == 't-Block') {
                                 $(this).attr('style', 'display: block;');
+
+                                $($($(this).children()[0]).children()[0]).html('Mega'); //REMOVE WHEN MEGAS ARE NOT STICKERED SEPERATELY
                             }
                         });
                     } else {
@@ -227,9 +242,10 @@ var vm = new Vue({
         genTags: function (item) {
             var res = [];
             if (item) {
-                if (item.isMega) {
-                    res.push('Mega');
-                }
+
+                // if (item.isMega) {
+                //     res.push('Mega');
+                // }
                 if (item.tags.indexOf('hs-only') != -1) {
                     res.push('HS only');
                 }
