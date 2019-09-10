@@ -18,7 +18,8 @@ var vm = new Vue({
         slot: [],
         includeWhiteStickers: false,
         finalConflicts: [],
-        results: false
+        results: false,
+        isFullscreen: false
     },
     computed: {
         isDisabled: function () {
@@ -116,12 +117,15 @@ var vm = new Vue({
                         //fetch the sticker based on the stored stickerId
                         let temp = self.stickers.find(x => x.stickerId == sticker);
                         if (self.includeWhiteStickers ? true : temp.priority != 3) {
+                            text += "<span class='right-divider'>";
                             text += self.classes.find(x => x.id === temp.classId).className;
                             text += " (";
                             text += temp.priority == 1 ? "B" : temp.priority == 2 ? "G" : "W";
                             text += ")";
-                            text += self.includeWhiteStickers ? index != conflict.length - 1 ? " / " : "" : index != conflict.filter(x => self.stickers.find(p => p.stickerId == x).priority != 3).length - 1 ? " / " : "";
+                            text += "</span>";
+                            //text += self.includeWhiteStickers ? index != conflict.length - 1 ? " / " : "" : index != conflict.filter(x => self.stickers.find(p => p.stickerId == x).priority != 3).length - 1 ? " / " : "";
                         }
+                        console.log(conflict.filter(x => self.stickers.find(p => p.stickerId == x).priority != 3));
                     });
 
                     self.finalConflicts.push({
@@ -157,6 +161,19 @@ var vm = new Vue({
 
                 });
             }
+        },
+        resize: function () {
+            if (this.isFullscreen) {
+                $('.resize-icon').addClass('icon-plus').removeClass('icon-minus');
+                $('.menu-results').attr('style', 'position: fixed; top: 52%; right: 20px; width: 47%; bottom: 10px; overflow-y: scroll; overflow-x:hidden;');
+                this.isFullscreen = false;
+            } else {
+                console.log($('.resize-icon'));
+                $('.resize-icon').addClass('icon-minus').removeClass('icon-plus');
+                $('.menu-results').attr('style', 'position: fixed; top: 10px; right: 20px; left: 15px; bottom: 10px; overflow-y: scroll; overflow-x:hidden;');
+                this.isFullscreen = true;
+            }
+
         }
     },
     beforeMount() {

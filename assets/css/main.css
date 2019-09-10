@@ -186,3 +186,27 @@
 .nodrag:active {
 	pointer-events: none;
 }
+
+.right-divider:not(:last-of-type)::after {
+	content: " / "
+}
+
+.resize-button {
+	background: 0 0;
+	border: 0;
+	color: black;
+	height: 1rem;
+	line-height: .8rem;
+	margin-left: .2rem;
+	margin-right: 4px;
+	opacity: 1;
+	padding: .1rem;
+	text-decoration: none;
+	width: 1rem;
+	vertical-align: text-bottom;
+}
+
+.resize-button:hover {
+	background: rgba(247, 248, 249, .5);
+	opacity: .95;
+}

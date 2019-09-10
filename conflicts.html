@@ -33,7 +33,7 @@
                         <input type="checkbox" class='is-block-checkbox form-input' @change='filterClasses'>
 
                         <i class="form-icon"></i>
-                        Block
+                        Mega
                     </label>
 
                 </div>
@@ -66,15 +66,15 @@
                     </draggable>
                 </div>
             </div>
-            <div class='menu'
+            <div class='menu menu-results'
                 style='position: fixed; top: 52%; right: 20px; width: 47%; bottom: 10px; overflow-y: scroll; overflow-x:hidden;'>
                 <div v-if='results'>
                     <label class="accordion-header">
-                        <span class='h5'>Results</span>
+                        <span class='h5'> <a style='display: inline-block' class="btn resize-button" @click='resize'
+                                aria-label="Fullscreen"><i class='resize-icon icon icon-plus'></i></a>Results</span>
                     </label>
                     <div class="accordion-body">
-                        <div v-for='(item, index) in finalConflicts' :key='index'>
-                            <p>{{item.text}}</p>
+                        <div v-for='(item, index) in finalConflicts' :key='index' v-html='item.text'>
                         </div>
                     </div>
                     <p v-if='finalConflicts.length == 0'>No conflicts here!</p>
