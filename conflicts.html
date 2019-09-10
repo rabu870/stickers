@@ -42,8 +42,9 @@
                     :options="{group:'stickers', sort: false, handle: '.a-c', animation: 150}" @end='onEnd'
                     style='width: 100%; min-height: 25px; display: grid; grid-template-columns: repeat(auto-fill,minmax(310px, 1fr));'
                     v-if='notSelected != []'>
-                    <div style='width: 100%; border-radius: .1rem;' class='menu-item class-style unselected-classes'
-                        v-for="item in notSelected" :key="item.id" :data-block='"" + item.isBlock'>
+                    <div class='menu-item class-style unselected-classes' v-for="item in notSelected" :key="item.id"
+                        :data-block='"" + item.isBlock'
+                        :style="{ width: 100%; border-radius: .1rem; display: item.isBlock ? none : block }">
                         <div class='a-c'>
                             <span class='class-name' v-html='item.className.truncate(34)'></span>
                         </div>
