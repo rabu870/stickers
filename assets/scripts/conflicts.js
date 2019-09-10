@@ -132,6 +132,8 @@ var vm = new Vue({
                         stickers: conflict,
                         text: text
                     });
+
+                    self.filterClasses();
                 }
             });
             $('.conflict-button').removeClass('loading');
