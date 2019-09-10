@@ -143,24 +143,24 @@ var vm = new Vue({
         },
         filterClasses: function () {
             //show and hide block/reg classes based on what the user has selected
-            if ($('.is-block-checkbox').is(':checked')) {
-                $('.unselected-classes').each(function () {
-                    if ($(this).attr('data-block') == 'true') {
-                        $(this).show();
-                    } else {
-                        $(this).hide();
-                    }
-                });
-            } else {
-                $('.unselected-classes').each(function () {
-                    if ($(this).attr('data-block') == 'true') {
-                        $(this).hide();
-                    } else {
-                        $(this).show();
-                    }
+            // if ($('.is-block-checkbox').is(':checked')) {
+            //     $('.unselected-classes').each(function () {
+            //         if ($(this).attr('data-block') == 'true') {
+            //             $(this).show();
+            //         } else {
+            //             $(this).hide();
+            //         }
+            //     });
+            // } else {
+            //     $('.unselected-classes').each(function () {
+            //         if ($(this).attr('data-block') == 'true') {
+            //             $(this).hide();
+            //         } else {
+            //             $(this).show();
+            //         }
 
-                });
-            }
+            //     });
+            // }
         },
         resize: function () {
             if (this.isFullscreen) {

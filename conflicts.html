@@ -26,7 +26,7 @@
         <div class='container pad' style='width: unset;'>
             <div class='menu' style='width: 50%'>
                 <h3>All classes</h3>
-                <div class="form-group">
+                <!-- <div class="form-group">
                     Regular
                     <label style='display:inline-block;' class="form-switch">
 
@@ -36,15 +36,14 @@
                         Mega
                     </label>
 
-                </div>
+                </div> -->
                 <div class='divider'></div>
                 <draggable v-model='notSelected'
                     :options="{group:'stickers', sort: false, handle: '.a-c', animation: 150}" @end='onEnd'
                     style='width: 100%; min-height: 25px; display: grid; grid-template-columns: repeat(auto-fill,minmax(310px, 1fr));'
                     v-if='notSelected != []'>
-                    <div class='menu-item class-style unselected-classes' v-for="item in notSelected" :key="item.id"
-                        :data-block='"" + item.isBlock'
-                        :style="{ width: 100%; border-radius: .1rem; display: item.isBlock ? none : block }">
+                    <div style='width: 100%; border-radius: .1rem;' class='menu-item class-style unselected-classes'
+                        v-for="item in notSelected" :key="item.id" :data-block='"" + item.isBlock'>
                         <div class='a-c'>
                             <span class='class-name' v-html='item.className.truncate(34)'></span>
                         </div>
