@@ -49,10 +49,12 @@
 
 ?>
 
-<pre>
         <?php
             global $classes;
             global $stickers;
+
+            header('Content-Type: application/json');
+
             if(empty($_GET['class'])){
                 echo '[';
                 foreach($classes as $key=>$c) {
@@ -67,4 +69,3 @@
                 echo ']';
             }
         ?>
-        </pre>
