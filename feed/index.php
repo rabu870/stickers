@@ -1,5 +1,5 @@
 <?php
-    require_once './backend/connection.php';
+    require_once '../backend/connection.php';
     global $stickers;
     global $classes;
     global $students;
@@ -16,7 +16,7 @@
     if(empty($_GET['class'])){
         $stickers = $db->query('SELECT * FROM `stickers` WHERE true ORDER BY `priority` ASC')->fetch_all($resulttype = MYSQLI_ASSOC);
         $classes = $db->query('SELECT * FROM `classes` WHERE true')->fetch_all($resulttype = MYSQLI_ASSOC);
-    }else{
+    } else{
         $stickers = $db->query('SELECT * FROM `stickers` WHERE `class_id` = "' . $_GET['class'] . '"')->fetch_all($resulttype = MYSQLI_ASSOC);
         array_push($classes, $db->query('SELECT * FROM `classes` WHERE `id` = "' . $_GET['class'] . '"')->fetch_all($resulttype = MYSQLI_ASSOC)[0]);
     }
@@ -33,7 +33,8 @@
         $html .= '"stickers": [';
         for($i = 0; $i < count($class_stickers); $i++) {
             $sticker = array_values($class_stickers)[$i];
-            $html .= '{"student": "' . $students[$sticker['student_id']]['first_name'] . " " . $students[$sticker['student_id']]['last_name'] . '",';
+            $html .= '{"studentName": "' . $students[$sticker['student_id']]['first_name'] . " " . $students[$sticker['student_id']]['last_name'] . '",';
+            $html .= '"studentId": "' . $sticker['student_id'] . '",';
             $html .= '"priority": "' . $sticker['priority'] . '"';
             $html .= '}';
             if($i + 1 <count($class_stickers)) {
