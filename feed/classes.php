@@ -26,6 +26,7 @@
 
         $html = '{';
         $html .= '"className": "' . $class_info['class_name'] . '",';
+        $html .= '"classId": "' . $class_info['id'] . '",';
         $html .= '"facilitator": "' . $class_info['facilitator'] . '",';
         $html .= '"isMega": "' . $class_info['is_mega'] . '",';
         $html .= '"isBlock": "' . $class_info['is_block'] . '",';
