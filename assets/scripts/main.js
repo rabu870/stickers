@@ -401,7 +401,7 @@ var vm = new Vue({
         $('.nav-tabs').arrive("#t-Block", function () {
             $('.tab-section').append('<li class="no-margin-button"><button class="update-button btn btn-primary btn-sm">Save changes</button></li>');
             $('.update-button').click(function () {
-                if (!self.stickers[3].length && !self.stickers[4].length && !self.stickers[5].length) {
+                if (!self.stickers[3].length && !self.stickers[4].length && !self.stickers[5].length && this.areBlockClasses) {
                     $('.confirmation-modal').addClass('active');
                 } else {
                     self.update();
