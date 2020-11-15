@@ -13,9 +13,13 @@
     <script src="./assets/scripts/libraries/lodash.min.js"></script>
     <script src="./assets/scripts/libraries/sortable.min.js"></script>
     <script src="./assets/scripts/libraries/vuedraggable.min.js"></script>
+    <script src="./assets/scripts/libraries/sweetalert.min.js"></script>
     <script src="./assets/scripts/libraries/fuse.min.js"></script>
+    <script src="./assets/scripts/libraries/arrive.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <link href="./assets/css/libraries/spectre.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link href="./assets/css/libraries/spectre-icons.min.css" rel="stylesheet" type="text/css" />
     <link href="./assets/css/main.css" rel="stylesheet" type="text/css" />
 </head>
@@ -53,11 +57,12 @@
             <div class=' menu'
                 style='position: fixed; top: 10px; right: 20px; width: 47%; bottom: 50%; overflow-y: scroll; overflow-x:hidden;'>
                 <label class="accordion-header">
-                    <span class='h5'>Emulated slot</span>
+                    <span class='h5'>Emulated slot <button class='btn btn-primary' @click='customClass'>Add
+                            class</button></span>
                 </label>
                 <div class="accordion-body">
                     <draggable v-model='slot' :options="{group: {name: 'stickers'}, sort: false, animation: 150}"
-                        @end='onEnd' style='min-height: 25px;'>
+                        @end='onEnd' style='min-height: 150px;'>
                         <div style='width: 100%;' class='menu-item class-style' v-for="item in slot" :key="item.id">
                             <div class='a-c'>
                                 <span class='class-name' v-html='item.className'></span>
@@ -74,7 +79,8 @@
                                 aria-label="Fullscreen"><i class='resize-icon icon icon-plus'></i></a>Results</span>
                     </label>
                     <div class="accordion-body">
-                        <div v-for='(item, index) in finalConflicts' :key='index' v-html='item.text'>
+                        <div style='margin-bottom: 3px;' v-for='(item, index) in finalConflicts' :key='index'
+                            v-html='item.text'>
                         </div>
                     </div>
                     <p v-if='finalConflicts.length == 0'>No conflicts here!</p>

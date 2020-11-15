@@ -85,7 +85,7 @@ if ($access == 1) {
                     $needs = substr(strstr(strstr((string) $class['content'], '<volunteer-needs>'), '</volunteer-needs>', true), 17) ? substr(strstr(strstr((string) $class['content'], '<volunteer-needs>'), '</volunteer-needs>', true), 17) : '';
                     echo $needs;
                     $mega = in_array('mega', $class['category']) ? 1 : 0;
-                    //secondary category is mega, change back if block!
+                    //secondary category is mega, change back if block... probably should make this automatic.
                     //$block = in_array('block', $class['category']) ? 1 : 0;
                     $block = in_array('mega', $class['category']) ? 1 : 0;
                     $tags = '';

@@ -44,6 +44,8 @@ var vm = new Vue({
                             isBlock: parseInt(currentClass[5]) == 1 ? true : false
                         })
                     });
+
+                    classList.sort((a, b) => (a.className > b.className) ? 1 : -1);
                     self.classes = classList;
                     self.notSelected = classList;
 
@@ -174,6 +176,124 @@ var vm = new Vue({
                 this.isFullscreen = true;
             }
 
+        },
+        customClass: function () {
+            var self = this;
+
+            (async function getFormValues() {
+                var availableTags = [
+                    "ActionScript",
+                    "AppleScript",
+                    "Asp",
+                    "BASIC",
+                    "C",
+                    "C++",
+                    "Clojure",
+                    "COBOL",
+                    "ColdFusion",
+                    "Erlang",
+                    "Fortran",
+                    "Groovy",
+                    "Haskell",
+                    "Java",
+                    "JavaScript",
+                    "Lisp",
+                    "Perl",
+                    "PHP",
+                    "Python",
+                    "Ruby",
+                    "Scala",
+                    "Scheme"
+                ];
+
+                function split(val) {
+                    return val.split(/,\s*/);
+                }
+
+                function extractLast(term) {
+                    return split(term).pop();
+                }
+                $(document).arrive('#tags', function () {
+                    alert('test');
+                    $("#tags")
+                        // don't navigate away from the field on tab when selecting an item
+                        .on("keydown", function (event) {
+                            if (event.keyCode === $.ui.keyCode.TAB &&
+                                $(this).autocomplete("instance").menu.active) {
+                                event.preventDefault();
+                            }
+                        })
+                        .autocomplete({
+                            minLength: 0,
+                            source: function (request, response) {
+                                // delegate back to autocomplete, but extract the last term
+                                response($.ui.autocomplete.filter(
+                                    availableTags, extractLast(request.term)));
+                            },
+                            focus: function () {
+                                // prevent value inserted on focus
+                                return false;
+                            },
+                            select: function (event, ui) {
+                                var terms = split(this.value);
+                                // remove the current input
+                                terms.pop();
+                                // add the selected item
+                                terms.push(ui.item.value);
+                                // add placeholder to get the comma-and-space at the end
+                                terms.push("");
+                                this.value = terms.join(", ");
+                                return false;
+                            }
+                        });
+                });
+                const {
+                    value: formValues
+                } = await Swal.fire({
+                    title: 'Add a custom class or advising',
+                    html: '<div class="form-group">' +
+                        '<input class="form-input" type="text" id="add-name" placeholder="Name"><br>' +
+                        '<input class="form-input" type="text" id="add-black-stickers" placeholder="Black stickers"><br>' +
+                        '<input class="form-input" type="text" id="add-grey-stickers" placeholder="Grey stickers"><br>' +
+                        '<input class="form-input" type="text" id="add-white-stickers" placeholder="White stickers"><br>' +
+                        '<input class="form-input" type="text" id="tags" placeholder="White stickers"><br>' +
+                        `<label class="form-checkbox">
+                        Save class locally so you can use it again after you close this page
+                        <input class="form-input" id="add-save-local" type="checkbox"><i class="form-icon"></i>
+                    </label>`,
+                    focusConfirm: false,
+                    showCloseButton: false,
+                    showCancelButton: true,
+                    focusConfirm: false,
+                    confirmButtonText: '<i class="icon icon-check"></i>',
+                    confirmButtonAriaLabel: 'Add class',
+                    confirmButtonColor: '#4b48d6',
+                    cancelButtonText: '<i class="icon icon-cross"></i>',
+                    cancelButtonAriaLabel: 'Cancel',
+                    cancelButtonColor: '#aaa',
+                    preConfirm: () => {
+                        return [
+                            $('#add-name').val(),
+                            $('#add-black-stickers').val(),
+                            $('#add-grey-stickers').val(),
+                            $('#add-white-stickers').val(),
+                            $('#add-save-local').prop("checked") == true,
+                            $('#tags')
+                        ];
+                    }
+                });
+
+                if (formValues) {
+                    self.$root.students.push({
+                        id: '',
+                        firstName: formValues[0],
+                        lastName: formValues[1],
+                        email: formValues[2],
+                        hs: formValues[3],
+                        loginKey: ''
+                    });
+                }
+            })();
         }
     },
     beforeMount() {

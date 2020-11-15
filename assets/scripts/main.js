@@ -86,7 +86,7 @@ var vm = new Vue({
         query: function () {
             var self = this;
             axios.get('./backend/main.php?func=load').then(function (response) {
-                if (response.data !== "0") {
+                if (response.data != "0") {
                     //compile list of classes
                     var classList = [];
 
@@ -175,7 +175,7 @@ var vm = new Vue({
                     $('.pad').fadeIn();
                     self.init = true;
                 } else {
-                    alert("Stickering isn't currently available.");
+                    alert("Stickering hasn't been turned on yet. If you think this is a mistake, talk to Tim.");
                 }
             });
         },
