@@ -71,7 +71,14 @@ if ($access == 1) {
                 $db->query("UPDATE `students` SET `stickered` = 0 WHERE true");
                 $db->query("DELETE FROM `classes` WHERE true;");
                 $db->query("DELETE FROM `stickers` WHERE true;");
-                $data = file_get_contents('https://classes.pscs.org/feed');
+                $opts = array(
+                    'ssl' => array(
+                      'verify_peer' => false,
+                      'verify_peer_name' => false,
+                    )
+                  );
+                $context = stream_context_create($opts);
+                $data = file_get_contents('https://classes.pscs.org/feed', false, $context);
                 $data = str_replace("content:encoded","content",$data);
                 $data = str_replace("dc:creator","creator",$data);
                 $xml = simplexml_load_string($data, null, LIBXML_NOCDATA);
