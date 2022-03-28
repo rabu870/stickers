@@ -68,6 +68,7 @@ if ($access == 1) {
         if ($meta['stickeringActive'] == '1') {
             $active = $db->query("SELECT `stickering_active` FROM `meta` WHERE true")->fetch_row();
             if ($active[0] == "0") {
+                echo "test 1";
                 $db->query("UPDATE `students` SET `stickered` = 0 WHERE true");
                 $db->query("DELETE FROM `classes` WHERE true;");
                 $db->query("DELETE FROM `stickers` WHERE true;");
@@ -91,16 +92,31 @@ if ($access == 1) {
                     $availability = substr(strstr(substr((string) $class['content'], strpos((string) $class['content'], '<vol_avail>')), '</vol_avail>', true), 11);
                     $needs = substr(strstr(strstr((string) $class['content'], '<volunteer-needs>'), '</volunteer-needs>', true), 17) ? substr(strstr(strstr((string) $class['content'], '<volunteer-needs>'), '</volunteer-needs>', true), 17) : '';
                     echo $needs;
-                    $mega = in_array('mega', $class['category']) ? 1 : 0;
-                    //secondary category is mega, change back if block... probably should make this automatic.
-                    //$block = in_array('block', $class['category']) ? 1 : 0;
-                    $block = in_array('mega', $class['category']) ? 1 : 0;
+                    
                     $tags = '';
-                    if(in_array('hs-only', $class['category'])) {
-                        $tags = 'hs-only';
-                    } elseif(in_array('ms-only', $class['category'])) {
-                        $tags = 'ms-only';
+                    if(gettype($class['category']) == "array") {
+                        $mega = in_array('mega', $class['category']) ? 1 : 0;
+                        //secondary category is mega, change back if block... probably should make this automatic.
+                        //$block = in_array('block', $class['category']) ? 1 : 0;
+                        $block = in_array('mega', $class['category']) ? 1 : 0;
+                        
+                        if(in_array('hs-only', $class['category'])) {
+                            $tags = 'hs-only';
+                        } elseif(in_array('ms-only', $class['category'])) {
+                            $tags = 'ms-only';
+                        }
+                    } else {
+                        $mega = $class['category'] == 'mega' ? 1 : 0;
+                        $block = $class['category'] == 'mega' ? 1 : 0;
+                        
+                        if($class['category'] == 'hs-only') {
+                            $tags = 'hs-only';
+                        } elseif($class['category'] == 'ms-only') {
+                            $tags = 'ms-only';
+                        }
                     }
+                    
+                    
                     $query = $query . sqlize($class['title']) . ", " . sqlize($class['link']) . ", " . sqlize($fac) . ", " . sqlize($mega) . ", " . sqlize($block) . ", " . sqlize($tags) . ", " . sqlize($mature) . ", " . sqlize($availability) . ", " . sqlize($needs) . ")";
                     if ($class != $html['channel']['item'][count($html['channel']['item']) - 1]) {
                         $query = $query . ",(";
@@ -115,6 +131,7 @@ if ($access == 1) {
             }
 
         }
+        echo "test";
         $ga = $meta['greysAllotted'] == '' ? 0 : $meta['greysAllotted'];
         $ba = $meta['blacksAllotted'] == '' ? 0 : $meta['blacksAllotted'];
         $bab = $meta['blacksAllottedBlock'] == '' ? 0 : $meta['blacksAllottedBlock'];
